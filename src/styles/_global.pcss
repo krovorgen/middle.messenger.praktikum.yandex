@@ -1,0 +1,29 @@
+body {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  font-family: 'Inter', sans-serif;
+  line-height: 1.25;
+  font-size: 12px;
+  color: #1E1E1E;
+}
+
+.link-list {
+  margin: auto;
+  text-align: center;
+
+  li {
+    &:not(:last-child) {
+      margin-bottom: 8px;
+    }
+  }
+
+  a {
+    color: #7f0000;
+    font-size: 24px;
+
+    &:hover {
+      text-decoration-line: underline;
+    }
+  }
+}
