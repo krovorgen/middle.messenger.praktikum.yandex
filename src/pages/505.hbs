@@ -1,12 +1,15 @@
-{{!< main}}
-<div class="error-page">
-    <h2 class="error-page__title">
-        500
-    </h2>
-    <p class="error-page__text">
-        Мы уже фиксим
-    </p>
-    <a class="link error-page__title" href="index.hbs">
-        Назад к чатам
-    </a>
-</div>
+{{#extend "main" title="500" }}
+    {{#content "content" }}
+        <div class="error-page">
+            <h2 class="error-page__title">
+                500
+            </h2>
+            <p class="error-page__text">
+                Мы уже фиксим
+            </p>
+            <a class="error-page__link link link--sm link--primary" href="index.hbs">
+                Назад к чатам
+            </a>
+        </div>
+    {{/content}}
+{{/extend}}

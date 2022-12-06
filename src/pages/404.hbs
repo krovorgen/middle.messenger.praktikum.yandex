@@ -1,12 +1,15 @@
-{{!< main}}
-<div class="error-page">
-    <h2 class="error-page__title">
-        404
-    </h2>
-    <p class="error-page__text">
-        Не туда попали
-    </p>
-    <a class="link error-page__title" href="index.hbs">
-        Назад к чатам
-    </a>
-</div>
+{{#extend "main" title="404" }}
+    {{#content "content" }}
+        <div class="error-page">
+            <h2 class="error-page__title">
+                404
+            </h2>
+            <p class="error-page__text">
+                Не туда попали
+            </p>
+            <a class="error-page__link link link--sm link--primary" href="index.hbs">
+                Назад к чатам
+            </a>
+        </div>
+    {{/content}}
+{{/extend}}

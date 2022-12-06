@@ -1,18 +1,20 @@
-{{!< main}}
-<ul class="link-list">
-    <li>
-        <a href="home.hbs">Home</a>
-    </li>
-    <li>
-        <a href="404.hbs">404</a>
-    </li>
-    <li>
-        <a href="505.hbs">505</a>
-    </li>
-    <li>
-        <a href="login.hbs">Login</a>
-    </li>
-    <li>
-        <a href="registration.hbs">Registration</a>
-    </li>
-</ul>
+---
+links: [
+    {href: "home.hbs", text: "Home"},
+    {href: "404.hbs", text: "404"},
+    {href: "505.hbs", text: "505"},
+    {href: "login.hbs", text: "Login"},
+    {href: "registration.hbs", text: "Registration"},
+]
+---
+{{#extend "main" title="Страница ссылок" }}
+    {{#content "content" }}
+        <ul class="link-list">
+            {{#each links}}
+                <li>
+                    <a href="{{href}}">{{text}}</a>
+                </li>
+            {{/each}}
+        </ul>
+    {{/content}}
+{{/extend}}

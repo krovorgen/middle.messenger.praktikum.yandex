@@ -1,2 +1,17 @@
-{{!< main}}
-Логин
+{{#extend "main" title="Вход" }}
+    {{#content "content" }}
+        <div class="auth-box">
+            <h2 class="auth-box__title">
+                Вход
+            </h2>
+            <form class="auth-box__form">
+                <input class="input auth-box__label" type="text" name="login" placeholder="Логин">
+                <input class="input auth-box__label" type="password" name="password" placeholder="Пароль">
+                {{> "button/button" text="Авторизоваться" size="sm" variant="primary" addClass="auth-box__submit" type="submit"}}
+                <a class="auth-box__link link link--sm link--primary" href="index.hbs">
+                    Назад к чатам
+                </a>
+            </form>
+        </div>
+    {{/content}}
+{{/extend}}
