@@ -1,21 +1,26 @@
-.input {
-  width: 100%;
-  border: none;
-  background-color: #fff;
-  font-weight: 500;
-  font-size: 13px;
-  line-height: 13px;
-  min-height: 27px;
-  border-bottom: 1px solid #3369F3;
-  outline: none;
-
-  &::placeholder {
+.form-control {
+  display: block;
+  &__input {
+    width: 100%;
+    min-height: 27px;
+    outline: none;
+    border: 1px solid transparent;
+    border-bottom-color: #3369f3;
     font-weight: 500;
     font-size: 13px;
-    line-height: 1;
-    color: #999999;
-  }
+    line-height: 13px;
+    background-color: #fff;
 
-  &:focus, &:active {
+    &:focus,
+    &:active {
+      border-color: #3369f3;
+    }
+
+    &::placeholder {
+      font-weight: 500;
+      font-size: 13px;
+      line-height: 1;
+      color: #999;
+    }
   }
 }

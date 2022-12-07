@@ -7,9 +7,7 @@
             <p class="error-page__text">
                 Мы уже фиксим
             </p>
-            <a class="error-page__link link link--sm link--primary" href="index.hbs">
-                Назад к чатам
-            </a>
+            {{> "link/link" text="Назад к чатам" size="sm" variant="primary" addClass="error-page__link" href="index.hbs"}}
         </div>
     {{/content}}
 {{/extend}}

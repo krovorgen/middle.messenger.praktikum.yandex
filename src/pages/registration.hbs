@@ -5,13 +5,13 @@
                 Регистрация
             </h2>
             <form class="auth-box__form">
-                <input class="input auth-box__label" type="email" name="email" placeholder="Почта">
-                <input class="input auth-box__label" type="tel" name="phone" placeholder="Телефон">
-                <input class="input auth-box__label" type="text" name="first_name" placeholder="Имя">
-                <input class="input auth-box__label" type="text" name="second_name" placeholder="Фамилия">
-                <input class="input auth-box__label" type="text" name="login" placeholder="Логин">
-                <input class="input auth-box__label" type="password" name="password" placeholder="Пароль">
-                <input class="input auth-box__label" type="password" placeholder="Пароль (ещё раз)">
+                {{> "input/input" addClass="auth-box__label" type="email" name="email" placeholder="Почта"}}
+                {{> "input/input" addClass="auth-box__label" type="tel" name="phone" placeholder="Телефон"}}
+                {{> "input/input" addClass="auth-box__label" type="text" name="first_name" placeholder="Имя"}}
+                {{> "input/input" addClass="auth-box__label" type="text" name="second_name" placeholder="Фамилия"}}
+                {{> "input/input" addClass="auth-box__label" type="text" name="login" placeholder="Логин"}}
+                {{> "input/input" addClass="auth-box__label" type="password" name="password" placeholder="Пароль"}}
+                {{> "input/input" addClass="auth-box__label" type="password" name="repeatPassword" placeholder="Пароль (ещё раз)"}}
                 {{> "button/button" text="Зарегистрироваться" size="sm" variant="primary" addClass="auth-box__submit" type="submit"}}
                 <a class="auth-box__link link link--sm link--primary" href="index.hbs">
                     Назад к чатам
