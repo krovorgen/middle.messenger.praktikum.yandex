@@ -3,8 +3,8 @@
   "version": "1.0.0",
   "description": "",
   "scripts": {
-    "start": "npm run recreate-dist && parcel src/pages/index.hbs -p 3000 --no-cache",
-    "build": "npm run recreate-dist && parcel build src/pages/index.hbs && node ./server.js",
+    "dev": "npm run recreate-dist && parcel src/pages/index.hbs -p 3000 --no-cache",
+    "start": "npm run recreate-dist && parcel build src/pages/index.hbs && node ./server.js",
     "recreate-dist": "rm -Rf dist"
   },
   "repository": {
