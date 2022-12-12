@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "",
   "scripts": {
-    "dev": "npm run recreate-dist && parcel src/pages/index.hbs -p 3000 --no-cache",
+    "dev": "npm run recreate-dist && parcel src/pages/index.hbs -p 3000 --open chrome --no-cache",
     "start": "npm run build && node server.js",
     "build": "parcel build src/pages/index.hbs",
     "recreate-dist": "rm -Rf dist"
@@ -20,14 +20,14 @@
   },
   "homepage": "https://github.com/krovorgen/messanger#readme",
   "devDependencies": {
-    "@anikin/parcel-transformer-handlebars": "^1.0.9",
-    "parcel": "^2.8.0",
-    "postcss-import": "^15.0.1",
-    "postcss-mixins": "^9.0.4",
-    "postcss-nested": "^6.0.0",
-    "postcss-simple-vars": "^7.0.1"
+    "@anikin/parcel-transformer-handlebars": "1.0.9",
+    "parcel": "2.8.0",
+    "postcss-import": "15.0.1",
+    "postcss-mixins": "9.0.4",
+    "postcss-nested": "6.0.0",
+    "postcss-simple-vars": "7.0.1"
   },
   "dependencies": {
-    "express": "^4.18.2"
+    "express": "4.18.2"
   }
 }
