@@ -4,7 +4,8 @@
   "description": "",
   "scripts": {
     "dev": "parcel src/pages/index.hbs -p 3000 --no-cache",
-    "start": "parcel build src/pages/index.hbs && node ./server.js",
+    "start": "node ./server.js",
+    "build": "parcel build src/pages/index.hbs",
     "recreate-dist": "rm -Rf dist"
   },
   "repository": {
