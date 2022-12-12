@@ -1,4 +1,5 @@
 .form-control {
+  position: relative;
   display: block;
 
   &__input {
@@ -12,6 +13,10 @@
     line-height: 13px;
     background-color: #fff;
 
+    .form-control--error & {
+      color: #FF2F2F;
+    }
+
     &:focus,
     &:active {
       border-color: #3369f3;
@@ -20,8 +25,16 @@
     &::placeholder {
       font-weight: 500;
       font-size: 13px;
-      line-height: 1;
       color: #999;
     }
+  }
+
+  &__error-msg {
+    font-weight: 400;
+    font-size: 10px;
+    color: #FF2F2F;
+    position: absolute;
+    left: 0;
+    bottom: -14px;
   }
 }

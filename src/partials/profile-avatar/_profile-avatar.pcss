@@ -1,0 +1,36 @@
+.profile-avatar {
+  width: 130px;
+  height: 130px;
+  border-radius: 50%;
+  position: relative;
+  outline: none;
+  margin: 0 auto 20px;
+
+  &:hover,
+  &:focus {
+    .profile-avatar__change {
+      display: flex;
+    }
+  }
+
+  &__img {
+
+  }
+  &__change {
+    display: none;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(0,0,0, 0.5);
+    font-weight: 500;
+    font-size: 13px;
+    text-align: center;
+    color: #FFFFFF;
+    border-radius: 50%;
+    cursor: pointer;
+  }
+}
