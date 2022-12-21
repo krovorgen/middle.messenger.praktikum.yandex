@@ -1,28 +1,29 @@
 .dialog-item {
   display: flex;
-  cursor: pointer;
   padding: 12px 10px;
-
-  &--active {
-    background-color: #E4EDFD;
-  }
+  cursor: pointer;
 
   &:hover {
-    background-color: #E4EDFD;
+    background-color: #e4edfd;
   }
 
   &:not(:last-child) {
-    border-top: 1px solid #EAEAEA;
+    border-top: 1px solid #eaeaea;
   }
+
+  &--active {
+    background-color: #e4edfd;
+  }
+
   &__avatar {
     margin-right: 10px;
 
     img {
       display: block;
-      min-width: 47px;
       height: 47px;
-      object-fit: cover;
+      min-width: 47px;
       border-radius: 50%;
+      object-fit: cover;
     }
   }
 
@@ -38,18 +39,19 @@
   }
 
   &__name {
+    margin-right: 15px;
     font-weight: 600;
     font-size: 13px;
-    color: #1E1E1E;
-    margin-right: 15px;
+    color: #1e1e1e;
+
     @mixin line-clamp 1;
   }
 
   &__time {
     font-weight: 500;
     font-size: 9px;
-    color: #999999;
     white-space: nowrap;
+    color: #999;
   }
 
   &__body {
@@ -58,27 +60,27 @@
   }
 
   &__msg {
-    @mixin line-clamp 2;
-
+    margin-right: 20px;
     font-weight: 500;
     font-size: 12px;
     line-height: 1.25;
-    color: #999999;
-    margin-right: 20px;
+    color: #999;
+
+    @mixin line-clamp 2;
   }
 
   &__counter {
-    font-weight: 500;
-    font-size: 11px;
-    text-align: center;
-    color: #FFFFFF;
     display: flex;
     align-items: center;
     justify-content: center;
-    min-width: 20px;
-    height: 20px;
     padding: 0 3px;
-    background: $accent-color;
+    height: 20px;
+    min-width: 20px;
     border-radius: 10px;
+    font-weight: 500;
+    font-size: 11px;
+    text-align: center;
+    color: #fff;
+    background: $accent-color;
   }
 }

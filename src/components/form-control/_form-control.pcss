@@ -13,10 +13,6 @@
     line-height: 13px;
     background-color: #fff;
 
-    .form-control--error & {
-      color: #FF2F2F;
-    }
-
     &:focus,
     &:active {
       border-color: $accent-color;
@@ -27,14 +23,18 @@
       font-size: 13px;
       color: #999;
     }
+
+    .form-control--error & {
+      color: #ff2f2f;
+    }
   }
 
   &__error-msg {
-    font-weight: 400;
-    font-size: 10px;
-    color: #FF2F2F;
     position: absolute;
     left: 0;
     bottom: -14px;
+    font-weight: 400;
+    font-size: 10px;
+    color: #ff2f2f;
   }
 }
