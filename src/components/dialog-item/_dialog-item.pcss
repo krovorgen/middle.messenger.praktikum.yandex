@@ -1,0 +1,84 @@
+.dialog-item {
+  display: flex;
+  cursor: pointer;
+  padding: 12px 10px;
+
+  &--active {
+    background-color: #E4EDFD;
+  }
+
+  &:hover {
+    background-color: #E4EDFD;
+  }
+
+  &:not(:last-child) {
+    border-top: 1px solid #EAEAEA;
+  }
+  &__avatar {
+    margin-right: 10px;
+
+    img {
+      display: block;
+      min-width: 47px;
+      height: 47px;
+      object-fit: cover;
+      border-radius: 50%;
+    }
+  }
+
+  &__info {
+
+  }
+
+  &__head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 4px;
+  }
+
+  &__name {
+    font-weight: 600;
+    font-size: 13px;
+    color: #1E1E1E;
+    margin-right: 15px;
+    @mixin line-clamp 1;
+  }
+
+  &__time {
+    font-weight: 500;
+    font-size: 9px;
+    color: #999999;
+    white-space: nowrap;
+  }
+
+  &__body {
+    display: flex;
+    align-items: flex-end;
+  }
+
+  &__msg {
+    @mixin line-clamp 2;
+
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 1.25;
+    color: #999999;
+    margin-right: 20px;
+  }
+
+  &__counter {
+    font-weight: 500;
+    font-size: 11px;
+    text-align: center;
+    color: #FFFFFF;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 20px;
+    height: 20px;
+    padding: 0 3px;
+    background: $accent-color;
+    border-radius: 10px;
+  }
+}

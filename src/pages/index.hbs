@@ -1,0 +1,24 @@
+---
+links: [
+    {href: "home.hbs", text: "Home"},
+    {href: "404.hbs", text: "404"},
+    {href: "505.hbs", text: "505"},
+    {href: "login.hbs", text: "Login"},
+    {href: "registration.hbs", text: "Registration"},
+    {href: "profile.hbs", text: "Profile"},
+    {href: "profile-editable.hbs", text: "Profile (редактирование)"},
+    {href: "profile-password-editable.hbs", text: "Profile (редактирование пароля)"},
+    {href: "profile-avatar-editable.hbs", text: "Profile (редактирование аватара)"},
+]
+---
+{{#extend "main" title="Страница ссылок" }}
+    {{#content "content" }}
+        <ul class="link-list">
+            {{#each links}}
+                <li>
+                    <a href="{{href}}">{{text}}</a>
+                </li>
+            {{/each}}
+        </ul>
+    {{/content}}
+{{/extend}}

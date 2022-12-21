@@ -1,0 +1,15 @@
+{{#extend "main" title="Вход" }}
+    {{#content "content" }}
+        <div class="auth-box">
+            <h2 class="auth-box__title">
+                Вход
+            </h2>
+            <form class="auth-box__form">
+                {{> "form-control/form-control" addClass="auth-box__label" errorMsg="Error" type="text" name="login" placeholder="Логин"}}
+                {{> "form-control/form-control" addClass="auth-box__label" type="password" name="password" placeholder="Пароль"}}
+                {{> "button/button" text="Авторизоваться" size="sm" variant="primary" addClass="auth-box__submit" type="submit"}}
+                {{> "link/link" text="Назад к чатам" size="sm" variant="primary" addClass="auth-box__link" href="index.hbs"}}
+            </form>
+        </div>
+    {{/content}}
+{{/extend}}

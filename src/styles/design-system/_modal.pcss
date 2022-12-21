@@ -1,0 +1,38 @@
+.modal {
+  background-color: rgba(0,0,0,.7);
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  top: 0;
+  display: flex;
+
+  &__content {
+    position: relative;
+    margin: auto;
+    max-width: 340px;
+    width: 100%;
+    padding: 40px 30px;
+    background-color: #FFFFFF;
+    box-shadow: 0 0 6px rgba(0, 0, 0, 0.14);
+    border-radius: 12px;
+
+    @mixin media $xs {
+      padding: 16px 30px;
+    }
+  }
+
+  &__close {
+    background-color: transparent;
+    border: none;
+    margin: 0;
+    padding: 0;
+    position: absolute;
+    right: -28px;
+    top: 4px;
+
+    @mixin media $xs {
+      right: 4px;
+    }
+  }
+}

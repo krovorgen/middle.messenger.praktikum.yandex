@@ -1,0 +1,18 @@
+@define-mixin media $width {
+  @media only screen and (max-width: $(width)) {
+    @mixin-content;
+  }
+}
+
+@define-mixin min-media $width {
+  @media only screen and (min-width: $(width)) {
+    @mixin-content;
+  }
+}
+
+@define-mixin line-clamp $property {
+  -webkit-line-clamp: $property;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}

@@ -1,0 +1,12 @@
+<label class="edited-label">
+    <span class="edited-label__label">
+        {{text}}
+    </span>
+    {{#if editable}}
+        <input class="edited-label__input" type="{{type}}" name="{{name}}" value="{{value}}">
+    {{else}}
+        <span class="edited-label__value">
+            {{value}}
+        </span>
+    {{/if}}
+</label>
