@@ -8,9 +8,13 @@ export default class Block {
     FLOW_RENDER: 'flow:render',
   };
 
-  _element = null;
+  private _element: HTMLElement | null = null;
 
-  _meta = null;
+  private _meta: { tagName: string, props: any };
+
+  private props: any;
+
+  private eventBus: () => EventBus;
 
   constructor(tagName = 'div', props = {}) {
     const eventBus = new EventBus();
@@ -27,7 +31,7 @@ export default class Block {
     eventBus.emit(Block.EVENTS.INIT);
   }
 
-  _registerEvents(eventBus) {
+  _registerEvents(eventBus: EventBus) {
     eventBus.on(Block.EVENTS.INIT, this.init.bind(this));
     eventBus.on(Block.EVENTS.FLOW_CDM, this._componentDidMount.bind(this));
     eventBus.on(Block.EVENTS.FLOW_CDU, this._componentDidUpdate.bind(this));
@@ -45,18 +49,20 @@ export default class Block {
   }
 
   _componentDidMount() {
-    this.componentDidMount();
+    this.componentDidMount({});
     this.eventBus().emit(Block.EVENTS.FLOW_RENDER);
   }
 
   // Может переопределять пользователь, необязательно трогать
-  componentDidMount(oldProps) {}
+  componentDidMount(oldProps: any) {
+    console.log(oldProps);
+  }
 
   dispatchComponentDidMount() {
     this.eventBus().emit(Block.EVENTS.FLOW_CDM);
   }
 
-  _componentDidUpdate(oldProps, newProps) {
+  _componentDidUpdate(oldProps: any, newProps: any) {
     const response = this.componentDidUpdate(oldProps, newProps);
     if (!response) {
       return;
@@ -64,11 +70,12 @@ export default class Block {
     this.eventBus().emit(Block.EVENTS.FLOW_RENDER);
   }
 
-  componentDidUpdate(oldProps, newProps) {
+  componentDidUpdate(oldProps: any, newProps: any) {
+    console.log(oldProps, newProps);
     return true;
   }
 
-  setProps = (nextProps) => {
+  setProps = (nextProps: any) => {
     if (!nextProps) {
       return;
     }
@@ -77,13 +84,13 @@ export default class Block {
   };
 
   get element(): HTMLElement {
-    return this._element;
+    return this._element!;
   }
 
   _render() {
     const block = this.render();
     this._removeEvents();
-    this._element.innerHTML = block;
+    this._element!.innerHTML = block;
     this._addEvents();
   }
 
@@ -96,21 +103,15 @@ export default class Block {
     return this.element;
   }
 
-  _makePropsProxy(props) {
-    // Можно и так передать this
-    // Такой способ больше не применяется с приходом ES6+
-
+  _makePropsProxy(props: any) {
     const self = this;
-    return new Proxy(props, {
-      get(target, prop) {
-        if (prop.indexOf('_') === 0) {
-          throw new Error('Отказано в доступе');
-        }
 
+    return new Proxy(props as unknown as object, {
+      get(target: Record<string, unknown>, prop: string) {
         const value = target[prop];
         return typeof value === 'function' ? value.bind(target) : value;
       },
-      set(target, prop, value, receiver) {
+      set(target: Record<string, unknown>, prop: string, value: unknown) {
         target[prop] = value;
         self.eventBus().emit(Block.EVENTS.FLOW_CDU, { ...target }, target);
         return true;
@@ -121,7 +122,7 @@ export default class Block {
     });
   }
 
-  _createDocumentElement(tagName) {
+  _createDocumentElement(tagName: string) {
     // Можно сделать метод, который через фрагменты в цикле создаёт сразу несколько блоков
     const element = document.createElement(tagName);
     element.textContent = this.props.text;
@@ -130,7 +131,7 @@ export default class Block {
   }
 
   _removeEvents() {
-    const { events } = this.props as any;
+    const { events }: Record<string, () => void> = this.props as any;
 
     if (!events || !this._element) {
       return;
@@ -142,7 +143,7 @@ export default class Block {
   }
 
   _addEvents() {
-    const { events } = this.props as any;
+    const { events }: Record<string, () => void> = this.props as any;
 
     if (!events) {
       return;
