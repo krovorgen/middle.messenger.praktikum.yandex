@@ -1,55 +1,73 @@
 import tpl from './index.hbs';
-import button from '../../components/button';
+import link from '../../components/link';
 import linkBack from '../../components/link-back';
 import profileAvatar from '../../components/profile-avatar';
 import editedLabel from '../../components/edited-label';
+import avatarLoading from '../../components/avatar-loading';
+import button from '../../components/button';
 
-document.getElementById('root').innerHTML = tpl({
-  linkBack: linkBack('../index.html', 'Назад к чатам', 'error-page__link'),
+document.getElementById('root')!.innerHTML = tpl({
+  linkBack: linkBack(),
   profileAvatar: profileAvatar('profile-page__avatar'),
   editedEmail: editedLabel(
     'Почта',
     'pochta@yandex.ru',
-    'email',
-    true,
     'email',
   ),
   editedLogin: editedLabel(
     'Логин',
     'ivanivanov',
     'login',
-    true,
   ),
   editedFirstName: editedLabel(
     'Имя',
     'Иван',
     'first_name',
-    true,
   ),
   editedSecondName: editedLabel(
     'Фамилия',
     'Иванов',
     'second_name',
-    true,
   ),
   editedDisplayName: editedLabel(
     'Имя в чате',
     'Иван',
     'display_name',
-    true,
   ),
   editedPhone: editedLabel(
     'Телефон',
     '+7 (909) 967 30 30',
     'phone',
-    true,
   ),
-  saveBtn: button(
-    'Сохранить',
-    'submit',
+  editData: link(
+    '../profile-editable.hbs',
+    'Изменить данные',
     '',
-    'sm',
+    'md',
     'primary',
-    true,
   ),
+  editPassword: link(
+    '../profile-password-editable.hbs',
+    'Изменить пароль',
+    '',
+    'md',
+    'primary',
+  ),
+  exitBtn: link(
+    '../index.html',
+    'Выйти',
+    '',
+    'md',
+    'accent',
+  ),
+  avatarLoading: avatarLoading({
+    button: button(
+      'Поменять',
+      'submit',
+      '',
+      'sm',
+      'primary',
+      true,
+    ),
+  }),
 });

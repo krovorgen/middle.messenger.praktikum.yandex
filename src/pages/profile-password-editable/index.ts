@@ -4,8 +4,8 @@ import linkBack from '../../components/link-back';
 import profileAvatar from '../../components/profile-avatar';
 import editedLabel from '../../components/edited-label';
 
-document.getElementById('root').innerHTML = tpl({
-  linkBack: linkBack('../index.html', 'Назад к чатам', 'error-page__link'),
+document.getElementById('root')!.innerHTML = tpl({
+  linkBack: linkBack(),
   profileAvatar: profileAvatar('profile-page__avatar'),
   oldPassword: editedLabel(
     'Старый пароль',

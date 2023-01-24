@@ -3,7 +3,7 @@ import link from '../../components/link';
 import formControl from '../../components/form-control';
 import button from '../../components/button';
 
-document.getElementById('root').innerHTML = tpl({
+document.getElementById('root')!.innerHTML = tpl({
   loginField: formControl(
     'login',
     'Логин',

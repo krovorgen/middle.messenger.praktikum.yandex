@@ -4,15 +4,39 @@ import linkBack from '../../components/link-back';
 import profileAvatar from '../../components/profile-avatar';
 import editedLabel from '../../components/edited-label';
 
-document.getElementById('root').innerHTML = tpl({
-  linkBack: linkBack('../index.html', 'Назад к чатам', 'error-page__link'),
+document.getElementById('root')!.innerHTML = tpl({
+  linkBack: linkBack(),
   profileAvatar: profileAvatar('profile-page__avatar'),
-  editedEmail: editedLabel('Почта', 'pochta@yandex.ru'),
-  editedLogin: editedLabel('Логин', 'ivanivanov'),
-  editedFirstName: editedLabel('Имя', 'Иван'),
-  editedSecondName: editedLabel('Фамилия', 'Иванов'),
-  editedDisplayName: editedLabel('Имя в чате', 'Иван'),
-  editedPhone: editedLabel('Телефон', '+7 (909) 967 30 30'),
+  editedEmail: editedLabel(
+    'Почта',
+    'pochta@yandex.ru',
+    'email',
+  ),
+  editedLogin: editedLabel(
+    'Логин',
+    'ivanivanov',
+    'login',
+  ),
+  editedFirstName: editedLabel(
+    'Имя',
+    'Иван',
+    'first_name',
+  ),
+  editedSecondName: editedLabel(
+    'Фамилия',
+    'Иванов',
+    'second_name',
+  ),
+  editedDisplayName: editedLabel(
+    'Имя в чате',
+    'Иван',
+    'display_name',
+  ),
+  editedPhone: editedLabel(
+    'Телефон',
+    '+7 (909) 967 30 30',
+    'phone',
+  ),
   editData: link(
     '../profile-editable.hbs',
     'Изменить данные',
