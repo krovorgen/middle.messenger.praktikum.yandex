@@ -1,19 +1,12 @@
 import tpl from './index.hbs';
-// import link from '../../components/link';
 import { renderDom } from '../../utils/renderDom';
 import { Block } from '../../utils/Block';
-
-// document.getElementById('root')!.innerHTML = tpl({
-//   link: link(
-//     '../index.html',
-//     'Назад к чатам',
-//     'error-page__link',
-//   ),
-// });
+import { Link } from '../../components/link';
 
 interface Error404PageProps {
-  title: string;
+  title: string
   attr?: Record<string, string>
+  link: Block
 }
 
 class Error404Page extends Block<Error404PageProps> {
@@ -22,10 +15,19 @@ class Error404Page extends Block<Error404PageProps> {
   }
 }
 
+const link = new Link('span', {
+  href: '../index.html',
+  text: 'Назад к чатам',
+  target: '_self',
+  variant: 'primary',
+  size: 'sm',
+});
+
 window.addEventListener('DOMContentLoaded', () => {
-  const homePage = new Error404Page('div', {
+  const homePage = new Error404Page('fragment', {
     title: 'hello world',
     attr: { class: 'error-page' },
+    link,
   });
 
   renderDom('#app', homePage);
