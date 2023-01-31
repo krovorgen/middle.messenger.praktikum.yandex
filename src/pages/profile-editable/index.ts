@@ -1,55 +1,93 @@
 import tpl from './index.hbs';
-import button from '../../components/button';
-import linkBack from '../../components/link-back';
-import profileAvatar from '../../components/profile-avatar';
-import editedLabel from '../../components/edited-label';
+import { renderDom } from '../../utils/renderDom';
+import { Block } from '../../utils/Block';
+import { LinkBack } from '../../components/link-back';
+import { EditedLabel } from '../../components/edited-label';
+import { Button } from '../../components/button';
 
-document.getElementById('root')!.innerHTML = tpl({
-  linkBack: linkBack(),
-  profileAvatar: profileAvatar('profile-page__avatar'),
-  editedEmail: editedLabel(
-    'Почта',
-    'pochta@yandex.ru',
-    'email',
-    true,
-    'email',
-  ),
-  editedLogin: editedLabel(
-    'Логин',
-    'ivanivanov',
-    'login',
-    true,
-  ),
-  editedFirstName: editedLabel(
-    'Имя',
-    'Иван',
-    'first_name',
-    true,
-  ),
-  editedSecondName: editedLabel(
-    'Фамилия',
-    'Иванов',
-    'second_name',
-    true,
-  ),
-  editedDisplayName: editedLabel(
-    'Имя в чате',
-    'Иван',
-    'display_name',
-    true,
-  ),
-  editedPhone: editedLabel(
-    'Телефон',
-    '+7 (909) 967 30 30',
-    'phone',
-    true,
-  ),
-  saveBtn: button(
-    'Сохранить',
-    'submit',
-    '',
-    'sm',
-    'primary',
-    true,
-  ),
+interface ProfileEditablePageProps {
+  linkBack: Block
+  saveBtn: Block
+  editedEmail: Block
+  editedLogin: Block
+  editedFirstName: Block
+  editedSecondName: Block
+  editedDisplayName: Block
+  editedPhone: Block
+  addClass?: string
+  attr?: Record<string, string>
+}
+
+class ProfileEditablePage extends Block<ProfileEditablePageProps> {
+  render() {
+    return this.compile(tpl, this.props);
+  }
+}
+
+const linkBack = new LinkBack({});
+const editedEmail = new EditedLabel({
+  text: 'Почта',
+  editable: true,
+  value: 'pochta@yandex.ru',
+  type: 'email',
+  name: 'email',
+});
+const editedLogin = new EditedLabel({
+  text: 'Логин',
+  editable: true,
+  value: 'ivanivanov',
+  type: 'text',
+  name: 'login',
+});
+const editedFirstName = new EditedLabel({
+  text: 'Имя',
+  editable: true,
+  value: 'Иван',
+  type: 'text',
+  name: 'first_name',
+});
+const editedSecondName = new EditedLabel({
+  text: 'Фамилия',
+  editable: true,
+  value: 'Иванов',
+  type: 'text',
+  name: 'second_name',
+});
+const editedDisplayName = new EditedLabel({
+  text: 'Имя в чате',
+  editable: true,
+  value: 'Иван',
+  type: 'text',
+  name: 'display_name',
+});
+const editedPhone = new EditedLabel({
+  text: 'Телефон',
+  editable: true,
+  value: '+7 (909) 967 30 30',
+  type: 'tel',
+  name: 'phone',
+});
+const saveBtn = new Button({
+  size: 'sm',
+  variant: 'primary',
+  center: true,
+  text: 'Сохранить',
+  attr: {
+    type: 'submit',
+  },
+});
+
+window.addEventListener('DOMContentLoaded', () => {
+  const profileEditablePage = new ProfileEditablePage('div', {
+    linkBack,
+    editedEmail,
+    editedLogin,
+    editedFirstName,
+    editedSecondName,
+    editedDisplayName,
+    editedPhone,
+    saveBtn,
+  });
+
+  renderDom('#app', profileEditablePage);
 });

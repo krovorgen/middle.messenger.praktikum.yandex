@@ -10,7 +10,7 @@ interface LinkBackProps {
 
 export class LinkBack extends Block<LinkBackProps> {
   constructor(props: LinkBackProps) {
-    super('button', {
+    super('a', {
       ...props,
       arrowImgPath: arrow,
       attr: {

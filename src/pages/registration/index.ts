@@ -105,7 +105,7 @@ const repeatPasswordField = new FormControl({
 });
 
 window.addEventListener('DOMContentLoaded', () => {
-  const homePage = new RegistrationPage({
+  const registrationPage = new RegistrationPage({
     button,
     link,
     emailField,
@@ -117,5 +117,5 @@ window.addEventListener('DOMContentLoaded', () => {
     repeatPasswordField,
   });
 
-  renderDom('#app', homePage);
+  renderDom('#app', registrationPage);
 });

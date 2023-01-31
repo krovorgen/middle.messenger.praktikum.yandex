@@ -65,12 +65,12 @@ const passwordField = new FormControl({
 });
 
 window.addEventListener('DOMContentLoaded', () => {
-  const homePage = new LoginPage({
+  const loginPage = new LoginPage({
     button,
     link,
     loginField,
     passwordField,
   });
 
-  renderDom('#app', homePage);
+  renderDom('#app', loginPage);
 });
