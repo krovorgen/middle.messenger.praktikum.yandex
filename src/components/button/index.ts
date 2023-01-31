@@ -15,7 +15,7 @@ export class Button extends Block<ButtonProps> {
     super('button', {
       ...props,
       attr: {
-        class: `btn btn--${props.size} btn--${props.variant} ${props.center ? 'btn--center' : ''} ${props.addClass}`,
+        class: `btn btn--${props.size} btn--${props.variant} ${props.center ? 'btn--center' : ''} ${props.addClass ?? ''}`,
         ...props.attr,
       },
     });
