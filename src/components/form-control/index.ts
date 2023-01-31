@@ -1,11 +1,27 @@
 import tpl from './form-control.hbs';
+import { Block } from '../../utils/Block';
 
-export default (
-  name: string,
-  placeholder: string,
-  errorMsg: string | null,
-  type: string = 'text',
-  addClass: string = '',
-) => tpl({
-  name, placeholder, errorMsg, type, addClass,
-});
+interface FormControlProps {
+  type: string
+  name: string
+  placeholder: string
+  errorMsg?: string
+  attr?: Record<string, string>
+  addClass?: string
+}
+
+export class FormControl extends Block<FormControlProps> {
+  constructor(props: FormControlProps) {
+    super('label', {
+      ...props,
+      attr: {
+        class: `form-control ${props.addClass ?? ''} ${props.errorMsg ? 'form-control--error' : ''}`,
+        ...props.attr,
+      },
+    });
+  }
+
+  render() {
+    return this.compile(tpl, this.props);
+  }
+}

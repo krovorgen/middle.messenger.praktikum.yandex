@@ -1,8 +1,6 @@
-<label class="form-control {{addClass}} {{#if errorMsg}}form-control--error{{/if}}">
-    <input class="form-control__input" type="{{type}}" name="{{name}}" placeholder="{{placeholder}}">
-    {{#if errorMsg}}
-        <span class="form-control__error-msg">
-            {{errorMsg}}
-        </span>
-    {{/if}}
-</label>
+<input class="form-control__input" type="{{type}}" name="{{name}}" placeholder="{{placeholder}}">
+{{#if errorMsg}}
+    <span class="form-control__error-msg">
+        {{errorMsg}}
+    </span>
+{{/if}}
