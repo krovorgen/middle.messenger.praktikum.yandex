@@ -4,31 +4,40 @@ import { Block } from '../../utils/Block';
 import { Link } from '../../components/link';
 
 interface Error404PageProps {
-  title: string
+  addClass?: string
   attr?: Record<string, string>
   link: Block
 }
 
 class Error404Page extends Block<Error404PageProps> {
+  constructor(props: Error404PageProps) {
+    super('div', {
+      ...props,
+      attr: {
+        class: `error-page ${props.addClass ?? ''}`,
+        ...props.attr,
+      },
+    });
+  }
+
   render() {
     return this.compile(tpl, this.props);
   }
 }
 
-const link = new Link('span', {
-  href: '../index.html',
+const link = new Link({
   text: 'Назад к чатам',
-  target: '_self',
   variant: 'primary',
   size: 'sm',
+  attr: {
+    href: '../index.html',
+  },
 });
 
 window.addEventListener('DOMContentLoaded', () => {
-  const homePage = new Error404Page('fragment', {
-    title: 'hello world',
-    attr: { class: 'error-page' },
+  const error404Page = new Error404Page({
     link,
   });
 
-  renderDom('#app', homePage);
+  renderDom('#app', error404Page);
 });

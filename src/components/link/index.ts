@@ -2,16 +2,24 @@ import tpl from './link.hbs';
 import { Block } from '../../utils/Block';
 
 interface LinkProps {
-  href: string
   text: string
   addClass?: string
   size: 'sm' | 'md'
   variant: 'primary' | 'accent'
-  target: '_self' | '_blank'
-  attr?: Record<string, string>
+  attr?: Record<string, string> | HTMLLinkElement
 }
 
 export class Link extends Block<LinkProps> {
+  constructor(props: LinkProps) {
+    super('a', {
+      ...props,
+      attr: {
+        class: `link link--${props.size} link--${props.variant} ${props.addClass ?? ''}`,
+        ...props.attr,
+      },
+    });
+  }
+
   render() {
     return this.compile(tpl, this.props);
   }

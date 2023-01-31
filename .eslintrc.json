@@ -6,7 +6,7 @@
     "project": "./tsconfig.json"
   },
   "rules": {
-    "max-len": [2, 100],
+    "max-len": [2, 120],
     "@typescript-eslint/no-unused-vars": 2,
     "no-underscore-dangle": "off",
     "class-methods-use-this": "off",
