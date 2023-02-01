@@ -4,18 +4,21 @@ import { Block } from '../../utils/Block';
 import { LinkBack } from '../../components/link-back';
 import { Link } from '../../components/link';
 import { EditedLabel } from '../../components/edited-label';
+import { ProfileAvatar } from '../../components/profile-avatar';
+import avatarStub from '../../../static/icons/not-avatar.svg';
 
 interface ProfilePageProps {
   linkBack: Block
-  editData: Block
-  editPassword: Block
-  exitBtn: Block
+  profileAvatar: Block
   editedEmail: Block
   editedLogin: Block
   editedFirstName: Block
   editedSecondName: Block
   editedDisplayName: Block
   editedPhone: Block
+  editData: Block
+  editPassword: Block
+  exitBtn: Block
   addClass?: string
   attr?: Record<string, string>
 }
@@ -27,30 +30,7 @@ class ProfilePage extends Block<ProfilePageProps> {
 }
 
 const linkBack = new LinkBack({});
-const editData = new Link({
-  size: 'md',
-  variant: 'primary',
-  text: 'Изменить данные',
-  attr: {
-    href: '../profile-editable/index.html',
-  },
-});
-const editPassword = new Link({
-  size: 'md',
-  variant: 'primary',
-  text: 'Изменить пароль',
-  attr: {
-    href: '../profile-password-editable/index.html',
-  },
-});
-const exitBtn = new Link({
-  size: 'md',
-  variant: 'accent',
-  text: 'Выйти',
-  attr: {
-    href: '../index.html',
-  },
-});
+const profileAvatar = new ProfileAvatar({ avatarPath: avatarStub, login: 'Иван' });
 const editedEmail = new EditedLabel({
   text: 'Почта',
   editable: false,
@@ -81,19 +61,44 @@ const editedPhone = new EditedLabel({
   editable: false,
   value: '+7 (909) 967 30 30',
 });
+const editData = new Link({
+  size: 'md',
+  variant: 'primary',
+  text: 'Изменить данные',
+  attr: {
+    href: '../profile-editable/index.html',
+  },
+});
+const editPassword = new Link({
+  size: 'md',
+  variant: 'primary',
+  text: 'Изменить пароль',
+  attr: {
+    href: '../profile-password-editable/index.html',
+  },
+});
+const exitBtn = new Link({
+  size: 'md',
+  variant: 'accent',
+  text: 'Выйти',
+  attr: {
+    href: '../index.html',
+  },
+});
 
 window.addEventListener('DOMContentLoaded', () => {
   const profilePage = new ProfilePage('div', {
     linkBack,
-    editData,
-    editPassword,
-    exitBtn,
+    profileAvatar,
     editedEmail,
     editedLogin,
     editedFirstName,
     editedSecondName,
     editedDisplayName,
     editedPhone,
+    editData,
+    editPassword,
+    exitBtn,
   });
 
   renderDom('#app', profilePage);

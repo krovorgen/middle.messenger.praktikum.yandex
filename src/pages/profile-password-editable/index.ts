@@ -4,15 +4,18 @@ import { LinkBack } from '../../components/link-back';
 import { EditedLabel } from '../../components/edited-label';
 import { Block } from '../../utils/Block';
 import { renderDom } from '../../utils/renderDom';
+import { ProfileAvatar } from '../../components/profile-avatar';
+import avatarStub from '../../../static/icons/not-avatar.svg';
 
 //   profileAvatar: profileAvatar('profile-page__avatar'),
 
 interface ProfilePasswordEditablePageProps {
   linkBack: Block
-  saveBtn: Block
+  profileAvatar: Block
   oldPassword: Block
   newPassword: Block
   repeatPassword: Block
+  saveBtn: Block
   addClass?: string
   attr?: Record<string, string>
 }
@@ -24,6 +27,7 @@ class ProfilePasswordEditablePage extends Block<ProfilePasswordEditablePageProps
 }
 
 const linkBack = new LinkBack({});
+const profileAvatar = new ProfileAvatar({ avatarPath: avatarStub, login: 'Иван' });
 const oldPassword = new EditedLabel({
   text: 'Старый пароль',
   editable: true,
@@ -58,6 +62,7 @@ const saveBtn = new Button({
 window.addEventListener('DOMContentLoaded', () => {
   const profilePasswordEditablePage = new ProfilePasswordEditablePage('div', {
     linkBack,
+    profileAvatar,
     oldPassword,
     newPassword,
     repeatPassword,

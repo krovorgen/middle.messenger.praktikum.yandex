@@ -4,9 +4,12 @@ import { Block } from '../../utils/Block';
 import { LinkBack } from '../../components/link-back';
 import { EditedLabel } from '../../components/edited-label';
 import { Button } from '../../components/button';
+import { ProfileAvatar } from '../../components/profile-avatar';
+import avatarStub from '../../../static/icons/not-avatar.svg';
 
 interface ProfileEditablePageProps {
   linkBack: Block
+  profileAvatar: Block
   saveBtn: Block
   editedEmail: Block
   editedLogin: Block
@@ -25,6 +28,7 @@ class ProfileEditablePage extends Block<ProfileEditablePageProps> {
 }
 
 const linkBack = new LinkBack({});
+const profileAvatar = new ProfileAvatar({ avatarPath: avatarStub, login: 'Иван' });
 const editedEmail = new EditedLabel({
   text: 'Почта',
   editable: true,
@@ -80,6 +84,7 @@ const saveBtn = new Button({
 window.addEventListener('DOMContentLoaded', () => {
   const profileEditablePage = new ProfileEditablePage('div', {
     linkBack,
+    profileAvatar,
     editedEmail,
     editedLogin,
     editedFirstName,
