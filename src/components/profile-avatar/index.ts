@@ -13,6 +13,7 @@ interface ProfileAvatarProps {
   addClass?: string
   avatarPath: string
   attr?: Record<string, string>
+  events?: Record<string, unknown>
 }
 
 export class ProfileAvatar extends Block<ProfileAvatarProps> {
