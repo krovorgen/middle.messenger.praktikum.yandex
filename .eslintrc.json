@@ -11,7 +11,8 @@
     "no-underscore-dangle": "off",
     "class-methods-use-this": "off",
     "@typescript-eslint/default-param-last" : "off",
-    "import/prefer-default-export" : "off"
+    "import/prefer-default-export" : "off",
+    "no-param-reassign" : "off"
   },
   "globals": {
     "document": false

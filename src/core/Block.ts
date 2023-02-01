@@ -11,7 +11,7 @@ export class Block<P extends Record<string, any> = any> {
 
   protected props: P;
 
-  public children: Record<string, Block>;
+  public _children: Record<string, Block>;
 
   public id: string;
 
@@ -28,8 +28,8 @@ export class Block<P extends Record<string, any> = any> {
 
     this.eventBus = () => eventBus;
     this.id = v4();
-    this.children = children;
-    this.props = this._makePropsProxy(props);
+    this._children = this._makePropsProxy(children);
+    this.props = this._makePropsProxy(props) as P;
     this._meta = {
       tagName,
       props,
@@ -122,7 +122,7 @@ export class Block<P extends Record<string, any> = any> {
   protected compile(template: (context: any) => string, context: any) {
     const contextAndStubs = { ...context };
 
-    Object.entries(this.children).forEach(([name, component]) => {
+    Object.entries(this._children).forEach(([name, component]) => {
       contextAndStubs[name] = `<div data-id="${component.id}"></div>`;
     });
 
@@ -132,7 +132,7 @@ export class Block<P extends Record<string, any> = any> {
 
     temp.innerHTML = html;
 
-    Object.entries(this.children).forEach(([_, component]) => {
+    Object.entries(this._children).forEach(([_, component]) => {
       const stub = temp.content.querySelector(`[data-id="${component.id}"]`);
 
       if (!stub) {
@@ -148,7 +148,7 @@ export class Block<P extends Record<string, any> = any> {
 
   _componentDidMount() {
     this.componentDidMount();
-    Object.values(this.children).forEach((child) => child.dispatchComponentDidMount());
+    Object.values(this._children).forEach((child) => child.dispatchComponentDidMount());
   }
 
   // Может переопределять пользователь, необязательно трогать
@@ -156,7 +156,7 @@ export class Block<P extends Record<string, any> = any> {
 
   dispatchComponentDidMount() {
     this.eventBus().emit(Block.EVENTS.FLOW_CDM);
-    if (Object.keys(this.children).length) {
+    if (Object.keys(this._children).length) {
       this.eventBus().emit(Block.EVENTS.FLOW_RENDER);
     }
   }
@@ -191,7 +191,7 @@ export class Block<P extends Record<string, any> = any> {
     return this.element;
   }
 
-  _makePropsProxy(props: P) {
+  _makePropsProxy(props: Record<string, any>) {
     // Ещё один способ передачи this, но он больше не применяется с приходом ES6+
     const self = this;
 
