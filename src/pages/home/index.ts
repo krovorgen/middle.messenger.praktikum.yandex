@@ -1,6 +1,6 @@
 import tpl from './index.hbs';
-import { renderDom } from '../../utils/renderDom';
-import { Block } from '../../utils/Block';
+import { renderDom } from '../../core/renderDom';
+import { Block } from '../../core/Block';
 import { EmptyChooseMessage } from '../../components/empty-choose-message';
 import { DialogItem } from '../../components/dialog-item';
 import notAvatarImagePath from '../../../static/icons/not-avatar.svg';

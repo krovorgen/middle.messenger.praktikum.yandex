@@ -1,5 +1,5 @@
 import tpl from './edited-label.hbs';
-import { Block } from '../../utils/Block';
+import { Block } from '../../core/Block';
 
 interface EditedLabelProps {
   text: string

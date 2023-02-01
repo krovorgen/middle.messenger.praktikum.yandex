@@ -1,5 +1,5 @@
 import tpl from './link.hbs';
-import { Block } from '../../utils/Block';
+import { Block } from '../../core/Block';
 
 interface LinkProps {
   text: string

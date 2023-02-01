@@ -2,8 +2,8 @@ import tpl from './index.hbs';
 import { Button } from '../../components/button';
 import { LinkBack } from '../../components/link-back';
 import { EditedLabel } from '../../components/edited-label';
-import { Block } from '../../utils/Block';
-import { renderDom } from '../../utils/renderDom';
+import { Block } from '../../core/Block';
+import { renderDom } from '../../core/renderDom';
 import { ProfileAvatar } from '../../components/profile-avatar';
 import avatarStub from '../../../static/icons/not-avatar.svg';
 

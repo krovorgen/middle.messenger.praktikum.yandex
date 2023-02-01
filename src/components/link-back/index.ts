@@ -1,6 +1,6 @@
 import tpl from './link-back.hbs';
 import arrow from '../../../static/icons/circle-arrow-left.svg';
-import { Block } from '../../utils/Block';
+import { Block } from '../../core/Block';
 
 interface LinkBackProps {
   attr?: Record<string, string>

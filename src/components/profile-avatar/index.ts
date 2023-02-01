@@ -1,6 +1,6 @@
 import tpl from './profile-avatar.hbs';
 import avatarStub from '../../../static/icons/not-avatar.svg';
-import { Block } from '../../utils/Block';
+import { Block } from '../../core/Block';
 
 export default (
   login: string,

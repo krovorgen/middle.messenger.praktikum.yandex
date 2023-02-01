@@ -1,5 +1,5 @@
 import tpl from './form-control.hbs';
-import { Block } from '../../utils/Block';
+import { Block } from '../../core/Block';
 
 interface FormControlProps {
   type: string

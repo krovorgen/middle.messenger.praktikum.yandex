@@ -1,6 +1,6 @@
 import tpl from './index.hbs';
-import { renderDom } from '../../utils/renderDom';
-import { Block } from '../../utils/Block';
+import { renderDom } from '../../core/renderDom';
+import { Block } from '../../core/Block';
 import { LinkBack } from '../../components/link-back';
 import { EditedLabel } from '../../components/edited-label';
 import { Button } from '../../components/button';
