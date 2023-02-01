@@ -39,12 +39,14 @@ export class Block<P extends Record<string, any> = any> {
     eventBus.emit(Block.EVENTS.INIT);
   }
 
-  _getChildrenAndProps(childrenAndProps: P): { props: P, children: Record<string, Block> } {
+  _getChildrenAndProps(childrenAndProps: P): { props: P, children: Record<string, Block | Block[]> } {
     const props: Record<string, unknown> = {};
-    const children: Record<string, Block> = {};
+    const children: Record<string, Block | Block[]> = {};
 
     Object.entries(childrenAndProps).forEach(([key, value]) => {
-      if (value instanceof Block) {
+      if (Array.isArray(value) && value.length > 0 && value.every((v) => v instanceof Block)) {
+        children[key as string] = value;
+      } else if (value instanceof Block) {
         children[key as string] = value;
       } else {
         props[key] = value;
@@ -123,7 +125,11 @@ export class Block<P extends Record<string, any> = any> {
     const contextAndStubs = { ...context };
 
     Object.entries(this._children).forEach(([name, component]) => {
-      contextAndStubs[name] = `<div data-id="${component.id}"></div>`;
+      if (Array.isArray(component)) {
+        contextAndStubs[name] = component.map((child) => `<div data-id="${child.id}"></div>`);
+      } else {
+        contextAndStubs[name] = `<div data-id="${component.id}"></div>`;
+      }
     });
 
     const html = template(contextAndStubs);
@@ -132,7 +138,7 @@ export class Block<P extends Record<string, any> = any> {
 
     temp.innerHTML = html;
 
-    Object.entries(this._children).forEach(([_, component]) => {
+    const replaceStub = (component: Block) => {
       const stub = temp.content.querySelector(`[data-id="${component.id}"]`);
 
       if (!stub) {
@@ -142,23 +148,36 @@ export class Block<P extends Record<string, any> = any> {
       component.getContent()?.append(...Array.from(stub.childNodes));
 
       stub.replaceWith(component.getContent()!);
+    };
+
+    Object.entries(this._children).forEach(([name, component]) => {
+      console.log(name);
+      if (Array.isArray(component)) {
+        component.forEach(replaceStub);
+      } else {
+        replaceStub(component);
+      }
     });
+
     return temp.content;
   }
 
   _componentDidMount() {
     this.componentDidMount();
-    Object.values(this._children).forEach((child) => child.dispatchComponentDidMount());
+
+    Object.values(this._children).forEach((child) => {
+      if (Array.isArray(child)) {
+        child.forEach((ch) => ch.dispatchComponentDidMount());
+      } else {
+        child.dispatchComponentDidMount();
+      }
+    });
   }
 
-  // Может переопределять пользователь, необязательно трогать
   componentDidMount() {}
 
   dispatchComponentDidMount() {
     this.eventBus().emit(Block.EVENTS.FLOW_CDM);
-    if (Object.keys(this._children).length) {
-      this.eventBus().emit(Block.EVENTS.FLOW_RENDER);
-    }
   }
 
   _componentDidUpdate(oldProps: P, newProps: P) {
@@ -175,7 +194,6 @@ export class Block<P extends Record<string, any> = any> {
   }
 
   setProps = (nextProps: P) => {
-    // TODO: другая реализация
     if (!nextProps) {
       return;
     }
