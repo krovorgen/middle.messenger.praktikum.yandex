@@ -32,10 +32,8 @@ class ProfilePage extends Block<ProfilePageProps> {
 }
 
 const modal = new Modal();
-
 const linkBack = new LinkBack({});
 const avatarLoading = new AvatarLoading({});
-
 const profileAvatar = new ProfileAvatar({
   avatarPath: avatarStub,
   login: 'Иван',
