@@ -2,8 +2,6 @@ import tpl from './avatar-loading.hbs';
 import { Block } from '../../core/Block';
 import { Button } from '../button';
 
-export default (button: any) => tpl({ button });
-
 interface AvatarLoadingProps {
   addClass?: string
   attr?: Record<string, string>

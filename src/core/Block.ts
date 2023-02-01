@@ -1,5 +1,5 @@
 import { v4 } from 'uuid';
-import EventBus from './EventBus';
+import { EventBus } from './EventBus';
 
 export class Block<P extends Record<string, any> = any> {
   static EVENTS = {
