@@ -44,7 +44,6 @@ const button = new Button({
     type: 'submit',
   },
 });
-
 const link = new Link({
   text: 'Назад к чатам',
   addClass: 'auth-box__link',
@@ -54,49 +53,42 @@ const link = new Link({
     href: '../index.html',
   },
 });
-
 const emailField = new FormControl({
   type: 'email',
   name: 'email',
   placeholder: 'Почта',
   addClass: 'auth-box__label',
 });
-
 const phoneField = new FormControl({
   type: 'tel',
   name: 'phone',
   placeholder: 'Телефон',
   addClass: 'auth-box__label',
 });
-
 const firstNameField = new FormControl({
   type: 'text',
   name: 'first_name',
   placeholder: 'Имя',
   addClass: 'auth-box__label',
 });
-
 const secondNameField = new FormControl({
   type: 'text',
   name: 'second_name',
   placeholder: 'Фамилия',
   addClass: 'auth-box__label',
 });
-
 const loginField = new FormControl({
   type: 'text',
   name: 'login',
   placeholder: 'Логин',
   addClass: 'auth-box__label',
 });
-
 const passwordField = new FormControl({
   type: 'password',
   name: 'password',
   placeholder: 'Пароль',
   addClass: 'auth-box__label',
 });
-
 const repeatPasswordField = new FormControl({
   type: 'password',
   name: 'repeat_password',
