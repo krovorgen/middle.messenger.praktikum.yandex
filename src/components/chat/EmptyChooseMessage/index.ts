@@ -1,5 +1,5 @@
 import tpl from './empty-choose-message.hbs';
-import { Block } from '../../core/Block';
+import { Block } from '../../../core/Block';
 
 interface EmptyChooseMessageProps {
   addClass?: string

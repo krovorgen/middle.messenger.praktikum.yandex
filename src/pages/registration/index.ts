@@ -1,9 +1,9 @@
 import tpl from './index.hbs';
 import { Block } from '../../core/Block';
 import { renderDom } from '../../core/renderDom';
-import { Button } from '../../components/button';
-import { Link } from '../../components/link';
-import { FormControl } from '../../components/form-control';
+import { Button } from '../../components/Button';
+import { Link } from '../../components/Link';
+import { FormControl } from '../../components/FormControl';
 
 interface RegistrationPageProps {
   button: Block

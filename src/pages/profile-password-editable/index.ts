@@ -1,10 +1,10 @@
 import tpl from './index.hbs';
-import { Button } from '../../components/button';
-import { LinkBack } from '../../components/link-back';
-import { EditedLabel } from '../../components/edited-label';
+import { Button } from '../../components/Button';
+import { LinkBack } from '../../components/LinkBack';
+import { EditedLabel } from '../../components/EditedLabel';
 import { Block } from '../../core/Block';
 import { renderDom } from '../../core/renderDom';
-import { ProfileAvatar } from '../../components/profile-avatar';
+import { ProfileAvatar } from '../../components/ProfileAvatar';
 import avatarStub from '../../../static/icons/not-avatar.svg';
 
 //   profileAvatar: profileAvatar('profile-page__avatar'),

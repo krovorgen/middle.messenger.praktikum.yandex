@@ -1,0 +1,39 @@
+.content-message {
+  margin-top: 12px;
+  margin-bottom: 12px;
+  max-width: 400px;
+  width: fit-content;
+  border-radius: 6px;
+  overflow: hidden;
+  position: relative;
+
+  &--my {
+    margin-left: auto;
+
+    .content-message__time {
+      color: #3369f3;
+    }
+  }
+
+  &--opponent {
+    background-color: #f8f8f8;
+
+    .content-message__time {
+      color: #999;
+    }
+  }
+
+  &__time {
+    position: absolute;
+    bottom: 4px;
+    right: 4px;
+    font-weight: 500;
+    font-size: 9px;
+    line-height: 1;
+    text-align: right;
+    padding: 2px 4px;
+    background-color: #f8f8f8;
+    border-radius: 3px;
+    color: #1e1e1e;
+  }
+}

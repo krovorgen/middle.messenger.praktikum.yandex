@@ -1,7 +1,7 @@
 import tpl from './index.hbs';
 import { renderDom } from '../../core/renderDom';
 import { Block } from '../../core/Block';
-import { Link } from '../../components/link';
+import { Link } from '../../components/Link';
 
 interface Error505PageProps {
   addClass?: string

@@ -1,6 +1,6 @@
 import tpl from './avatar-loading.hbs';
 import { Block } from '../../core/Block';
-import { Button } from '../button';
+import { Button } from '../Button';
 
 interface AvatarLoadingProps {
   addClass?: string

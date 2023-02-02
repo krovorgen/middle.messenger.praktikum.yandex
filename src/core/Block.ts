@@ -193,7 +193,7 @@ export class Block<P extends Record<string, any> = any> {
     return true;
   }
 
-  setProps = (nextProps: P) => {
+  setProps = (nextProps: Partial<P>) => {
     if (!nextProps) {
       return;
     }

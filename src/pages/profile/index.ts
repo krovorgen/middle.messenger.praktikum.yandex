@@ -1,13 +1,13 @@
 import tpl from './index.hbs';
 import { renderDom } from '../../core/renderDom';
 import { Block } from '../../core/Block';
-import { LinkBack } from '../../components/link-back';
-import { Link } from '../../components/link';
-import { EditedLabel } from '../../components/edited-label';
-import { ProfileAvatar } from '../../components/profile-avatar';
+import { LinkBack } from '../../components/LinkBack';
+import { Link } from '../../components/Link';
+import { EditedLabel } from '../../components/EditedLabel';
+import { ProfileAvatar } from '../../components/ProfileAvatar';
 import avatarStub from '../../../static/icons/not-avatar.svg';
 import { Modal } from '../../core/Modal';
-import { AvatarLoading } from '../../components/avatar-loading';
+import { AvatarLoading } from '../../components/AvatarLoading';
 
 interface ProfilePageProps {
   linkBack: Block

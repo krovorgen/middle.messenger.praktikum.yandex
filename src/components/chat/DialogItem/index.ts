@@ -1,5 +1,5 @@
 import tpl from './dialog-item.hbs';
-import { Block } from '../../core/Block';
+import { Block } from '../../../core/Block';
 
 interface DialogItemProps {
   avatarUrl: string
