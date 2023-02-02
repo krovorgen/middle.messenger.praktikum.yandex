@@ -8,10 +8,12 @@
 </div>
 <div class="column__center">
     {{#if isSelectedMessage}}
-        {{{ dateMessages }}}
-        {{{ myMessage }}}
-        {{{ opponentMessage }}}
-        {{{ contentMessage }}}
+        <div class="messages-items">
+            {{{ dateMessages }}}
+            {{{ myMessage }}}
+            {{{ opponentMessage }}}
+            {{{ contentMessage }}}
+        </div>
     {{else}}
         {{{ emptyChooseMessage }}}
     {{/if}}
