@@ -7,7 +7,7 @@ import { EditedLabel } from '../../components/EditedLabel';
 import { ProfileAvatar } from '../../components/ProfileAvatar';
 import avatarStub from '../../../static/icons/not-avatar.svg';
 import { Modal } from '../../core/Modal';
-import { AvatarLoading } from '../../components/AvatarLoading';
+import { LoadImg } from '../../components/AvatarLoading';
 
 interface ProfilePageProps {
   linkBack: Block
@@ -33,14 +33,14 @@ class ProfilePage extends Block<ProfilePageProps> {
 
 const modal = new Modal();
 const linkBack = new LinkBack({});
-const avatarLoading = new AvatarLoading({});
+const loadImg = new LoadImg({});
 const profileAvatar = new ProfileAvatar({
   avatarPath: avatarStub,
   login: 'Иван',
   events: {
     click: () => {
       modal.show(
-        avatarLoading.getContent(),
+        loadImg.getContent(),
       );
     },
   },

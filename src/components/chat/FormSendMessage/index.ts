@@ -2,7 +2,7 @@ import { Block } from '../../../core/Block';
 import tpl from './form-send-message.hbs';
 import { notifications } from '../../Notification';
 import { Modal } from '../../../core/Modal';
-import { AvatarLoading } from '../../AvatarLoading';
+import { LoadImg } from '../../AvatarLoading';
 
 interface FormSendMessageProps {
   inputPattern: string
@@ -47,7 +47,7 @@ export class FormSendMessage extends Block<FormSendMessageProps> {
 
     uploadFileBtn.addEventListener('click', () => {
       new Modal().show(
-        new AvatarLoading({}).getContent(),
+        new LoadImg({}).getContent(),
       );
     });
 
