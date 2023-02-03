@@ -9,6 +9,8 @@ import avatarStub from '../../../static/icons/not-avatar.svg';
 import { notifications } from '../../components/Notification';
 import { checkRegexp } from '../../core/CheckRegexp';
 import { showEventValidation } from '../../core/showEventValidation';
+import { AvatarLoading } from '../../components/AvatarLoading';
+import { Modal } from '../../core/Modal';
 
 interface ProfileEditablePageProps {
   linkBack: Block
@@ -78,8 +80,20 @@ class ProfileEditablePage extends Block<ProfileEditablePageProps> {
   }
 }
 
+const modal = new Modal();
 const linkBack = new LinkBack({});
-const profileAvatar = new ProfileAvatar({ avatarPath: avatarStub, login: 'Иван' });
+const avatarLoading = new AvatarLoading({});
+const profileAvatar = new ProfileAvatar({
+  avatarPath: avatarStub,
+  login: 'Иван',
+  events: {
+    click: () => {
+      modal.show(
+        avatarLoading.getContent(),
+      );
+    },
+  },
+});
 const editedEmail = new EditedLabel({
   text: 'Почта',
   editable: true,

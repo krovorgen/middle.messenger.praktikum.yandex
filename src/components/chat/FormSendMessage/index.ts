@@ -1,6 +1,8 @@
 import { Block } from '../../../core/Block';
 import tpl from './form-send-message.hbs';
 import { notifications } from '../../Notification';
+import { Modal } from '../../../core/Modal';
+import { AvatarLoading } from '../../AvatarLoading';
 
 interface FormSendMessageProps {
   inputPattern: string
@@ -23,6 +25,7 @@ export class FormSendMessage extends Block<FormSendMessageProps> {
   _addEvents() {
     const form: HTMLFormElement = this.element.querySelector('.form-send-message__form')!;
     const formInput: HTMLInputElement = form.querySelector('input')!;
+    const uploadFileBtn: HTMLButtonElement = form.querySelector('.form-send-message__file')!;
 
     form.addEventListener('submit', (e) => {
       e.preventDefault();
@@ -41,6 +44,13 @@ export class FormSendMessage extends Block<FormSendMessageProps> {
 
       console.log(message);
     });
+
+    uploadFileBtn.addEventListener('click', () => {
+      new Modal().show(
+        new AvatarLoading({}).getContent(),
+      );
+    });
+
     super._addEvents();
   }
 
