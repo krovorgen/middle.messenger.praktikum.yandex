@@ -4,12 +4,15 @@ import { renderDom } from '../../core/renderDom';
 import { Button } from '../../components/Button';
 import { Link } from '../../components/Link';
 import { FormControl } from '../../components/FormControl';
+import { notifications } from '../../components/Notification';
+import { checkRegexp } from '../../core/CheckRegexp';
 
 interface LoginPageProps {
   button: Block
   link: Block
   loginField: Block
   passwordField: Block
+  notifications: Block
   addClass?: string
   attr?: Record<string, string>
 }
@@ -31,6 +34,23 @@ class LoginPage extends Block<LoginPageProps> {
 
   _addEvents() {
     const form: HTMLFormElement = this.element.querySelector('.auth-box__form')!;
+    const formInputs: NodeListOf<HTMLInputElement> = form.querySelectorAll('input')!;
+
+    formInputs.forEach((el) => {
+      el.addEventListener('focus', () => {
+        const pattern = new RegExp(el.pattern);
+        if (!pattern.test(el.value)) {
+          notifications.addNotification(`Для поля ${el.placeholder} необходимо:\n ${el.title}`, 'warning');
+        }
+      });
+      el.addEventListener('blur', () => {
+        const pattern = new RegExp(el.pattern);
+        if (!pattern.test(el.value)) {
+          notifications.addNotification(`Для поля ${el.placeholder} необходимо:\n ${el.title}`, 'warning');
+        }
+      });
+    });
+
     form.addEventListener('submit', (e) => {
       e.preventDefault();
 
@@ -41,6 +61,14 @@ class LoginPage extends Block<LoginPageProps> {
         login: { value: string };
         password: { value: string };
       };
+
+      formInputs.forEach((el) => {
+        if (!el.checkValidity()) {
+          notifications.addNotification(el.title, 'error');
+        } else {
+          notifications.addNotification(`Поле ${el.placeholder} заполнено верно`, 'success');
+        }
+      });
 
       console.log({
         login,
@@ -74,12 +102,16 @@ const loginField = new FormControl({
   name: 'login',
   placeholder: 'Логин',
   addClass: 'auth-box__label',
+  pattern: checkRegexp.login.pattern,
+  inputTitle: checkRegexp.login.msg,
 });
 const passwordField = new FormControl({
   type: 'password',
   name: 'password',
   placeholder: 'Пароль',
   addClass: 'auth-box__label',
+  pattern: checkRegexp.password.pattern,
+  inputTitle: checkRegexp.password.msg,
 });
 
 window.addEventListener('DOMContentLoaded', () => {
@@ -88,6 +120,7 @@ window.addEventListener('DOMContentLoaded', () => {
     link,
     loginField,
     passwordField,
+    notifications,
   });
 
   renderDom('#app', loginPage);
