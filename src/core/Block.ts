@@ -210,18 +210,16 @@ export class Block<P extends Record<string, any> = any> {
   }
 
   _makePropsProxy(props: Record<string, any>) {
-    // Ещё один способ передачи this, но он больше не применяется с приходом ES6+
-    const self = this;
-
     return new Proxy(props, {
       get(target, prop: string) {
         const value = target[prop];
         return typeof value === 'function' ? value.bind(target) : value;
       },
-      set(target: P, prop: string, value) {
+      set: (target: P, prop: string, value) => {
         target[prop as keyof P] = value;
 
-        self.eventBus().emit(Block.EVENTS.FLOW_CDU, { ...target }, target);
+        this.eventBus()
+          .emit(Block.EVENTS.FLOW_CDU, { ...target }, target);
         return true;
       },
       deleteProperty() {
