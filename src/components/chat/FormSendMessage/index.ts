@@ -36,7 +36,7 @@ export class FormSendMessage extends Block<FormSendMessageProps> {
       if (!formInput.checkValidity()) {
         notifications.addNotification(formInput.title, 'error');
       } else {
-        notifications.addNotification(`Поле ${formInput.placeholder} заполнено верно`, 'success');
+        notifications.addNotification(`Поле ${formInput.name} заполнено верно`, 'success');
       }
 
       console.log(message);

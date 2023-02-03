@@ -8,6 +8,7 @@ import { ProfileAvatar } from '../../components/ProfileAvatar';
 import avatarStub from '../../../static/icons/not-avatar.svg';
 import { notifications } from '../../components/Notification';
 import { checkRegexp } from '../../core/CheckRegexp';
+import { showEventValidation } from '../../core/showEventValidation';
 
 interface ProfileEditablePageProps {
   linkBack: Block
@@ -34,18 +35,7 @@ class ProfileEditablePage extends Block<ProfileEditablePageProps> {
     const formInputs: NodeListOf<HTMLInputElement> = form.querySelectorAll('input')!;
 
     formInputs.forEach((el) => {
-      el.addEventListener('blur', () => {
-        const pattern = new RegExp(el.pattern);
-        if (!pattern.test(el.value)) {
-          notifications.addNotification(`Для поля ${el.name} необходимо:\n ${el.title}`, 'warning');
-        }
-      });
-      el.addEventListener('focus', () => {
-        const pattern = new RegExp(el.pattern);
-        if (!pattern.test(el.value)) {
-          notifications.addNotification(`Для поля ${el.name} необходимо:\n ${el.title}`, 'warning');
-        }
-      });
+      showEventValidation(el);
     });
 
     form.addEventListener('submit', (e) => {

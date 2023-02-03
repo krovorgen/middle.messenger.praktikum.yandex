@@ -21,7 +21,7 @@ interface NotificationServiceProps {
   attr?: Record<string, string>
 }
 
-class NotificationService extends Block<NotificationServiceProps> {
+export class NotificationService extends Block<NotificationServiceProps> {
   constructor(props: NotificationServiceProps) {
     super('div', {
       ...props,

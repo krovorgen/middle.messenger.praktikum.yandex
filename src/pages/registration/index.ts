@@ -6,6 +6,7 @@ import { Link } from '../../components/Link';
 import { FormControl } from '../../components/FormControl';
 import { checkRegexp } from '../../core/CheckRegexp';
 import { notifications } from '../../components/Notification';
+import { showEventValidation } from '../../core/showEventValidation';
 
 interface RegistrationPageProps {
   button: Block
@@ -117,18 +118,7 @@ class RegistrationPage extends Block<RegistrationPageProps> {
     const formInputs: NodeListOf<HTMLInputElement> = form.querySelectorAll('input')!;
 
     formInputs.forEach((el) => {
-      el.addEventListener('blur', () => {
-        const pattern = new RegExp(el.pattern);
-        if (!pattern.test(el.value)) {
-          notifications.addNotification(`Для поля ${el.placeholder} необходимо:\n ${el.title}`, 'warning');
-        }
-      });
-      el.addEventListener('focus', () => {
-        const pattern = new RegExp(el.pattern);
-        if (!pattern.test(el.value)) {
-          notifications.addNotification(`Для поля ${el.placeholder} необходимо:\n ${el.title}`, 'warning');
-        }
-      });
+      showEventValidation(el);
     });
 
     form.addEventListener('submit', (e) => {
@@ -161,7 +151,7 @@ class RegistrationPage extends Block<RegistrationPageProps> {
         if (!el.checkValidity()) {
           notifications.addNotification(el.title, 'error');
         } else {
-          notifications.addNotification(`Поле ${el.placeholder} заполнено верно`, 'success');
+          notifications.addNotification(`Поле ${el.name} заполнено верно`, 'success');
         }
       });
 

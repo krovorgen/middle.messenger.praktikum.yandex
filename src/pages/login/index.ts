@@ -6,6 +6,7 @@ import { Link } from '../../components/Link';
 import { FormControl } from '../../components/FormControl';
 import { notifications } from '../../components/Notification';
 import { checkRegexp } from '../../core/CheckRegexp';
+import { showEventValidation } from '../../core/showEventValidation';
 
 interface LoginPageProps {
   button: Block
@@ -37,18 +38,7 @@ class LoginPage extends Block<LoginPageProps> {
     const formInputs: NodeListOf<HTMLInputElement> = form.querySelectorAll('input')!;
 
     formInputs.forEach((el) => {
-      el.addEventListener('blur', () => {
-        const pattern = new RegExp(el.pattern);
-        if (!pattern.test(el.value)) {
-          notifications.addNotification(`Для поля ${el.placeholder} необходимо:\n ${el.title}`, 'warning');
-        }
-      });
-      el.addEventListener('focus', () => {
-        const pattern = new RegExp(el.pattern);
-        if (!pattern.test(el.value)) {
-          notifications.addNotification(`Для поля ${el.placeholder} необходимо:\n ${el.title}`, 'warning');
-        }
-      });
+      showEventValidation(el);
     });
 
     form.addEventListener('submit', (e) => {
@@ -66,7 +56,7 @@ class LoginPage extends Block<LoginPageProps> {
         if (!el.checkValidity()) {
           notifications.addNotification(el.title, 'error');
         } else {
-          notifications.addNotification(`Поле ${el.placeholder} заполнено верно`, 'success');
+          notifications.addNotification(`Поле ${el.name} заполнено верно`, 'success');
         }
       });
 
