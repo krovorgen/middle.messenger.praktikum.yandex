@@ -7,6 +7,7 @@ import { FormControl } from '../../components/FormControl';
 import { checkRegexp } from '../../core/CheckRegexp';
 import { notifications } from '../../components/Notification';
 import { showEventValidation } from '../../core/showEventValidation';
+import { checkValidityInput } from '../../core/checkValidityInput';
 
 interface RegistrationPageProps {
   button: Block
@@ -21,6 +22,9 @@ interface RegistrationPageProps {
   passwordField: Block
   repeatPasswordField: Block
   notifications: Block
+  events: {
+    submit: (e: SubmitEvent) => void
+  }
 }
 
 const button = new Button({
@@ -48,6 +52,10 @@ const emailField = new FormControl({
   addClass: 'auth-box__label',
   pattern: checkRegexp.email.pattern,
   inputTitle: checkRegexp.email.msg,
+  events: {
+    blur: showEventValidation,
+    focus: showEventValidation,
+  },
 });
 const phoneField = new FormControl({
   type: 'tel',
@@ -56,6 +64,10 @@ const phoneField = new FormControl({
   addClass: 'auth-box__label',
   pattern: checkRegexp.phone.pattern,
   inputTitle: checkRegexp.phone.msg,
+  events: {
+    blur: showEventValidation,
+    focus: showEventValidation,
+  },
 });
 const firstNameField = new FormControl({
   type: 'text',
@@ -64,6 +76,10 @@ const firstNameField = new FormControl({
   addClass: 'auth-box__label',
   pattern: checkRegexp.personalName.pattern,
   inputTitle: checkRegexp.personalName.msg,
+  events: {
+    blur: showEventValidation,
+    focus: showEventValidation,
+  },
 });
 const secondNameField = new FormControl({
   type: 'text',
@@ -72,6 +88,10 @@ const secondNameField = new FormControl({
   addClass: 'auth-box__label',
   pattern: checkRegexp.personalName.pattern,
   inputTitle: checkRegexp.personalName.msg,
+  events: {
+    blur: showEventValidation,
+    focus: showEventValidation,
+  },
 });
 const loginField = new FormControl({
   type: 'text',
@@ -80,6 +100,10 @@ const loginField = new FormControl({
   addClass: 'auth-box__label',
   pattern: checkRegexp.login.pattern,
   inputTitle: checkRegexp.login.msg,
+  events: {
+    blur: showEventValidation,
+    focus: showEventValidation,
+  },
 });
 const passwordField = new FormControl({
   type: 'password',
@@ -88,6 +112,10 @@ const passwordField = new FormControl({
   addClass: 'auth-box__label',
   pattern: checkRegexp.password.pattern,
   inputTitle: checkRegexp.password.msg,
+  events: {
+    blur: showEventValidation,
+    focus: showEventValidation,
+  },
 });
 const repeatPasswordField = new FormControl({
   type: 'password',
@@ -96,6 +124,10 @@ const repeatPasswordField = new FormControl({
   addClass: 'auth-box__label',
   pattern: checkRegexp.password.pattern,
   inputTitle: checkRegexp.password.msg,
+  events: {
+    blur: showEventValidation,
+    focus: showEventValidation,
+  },
 });
 
 class RegistrationPage extends Block<RegistrationPageProps> {
@@ -112,61 +144,6 @@ class RegistrationPage extends Block<RegistrationPageProps> {
   render() {
     return this.compile(tpl, this.props);
   }
-
-  _addEvents() {
-    const form: HTMLFormElement = this.element.querySelector('.auth-box__form')!;
-    const formInputs: NodeListOf<HTMLInputElement> = form.querySelectorAll('input')!;
-
-    formInputs.forEach((el) => {
-      showEventValidation(el);
-    });
-
-    form.addEventListener('submit', (e) => {
-      e.preventDefault();
-
-      const {
-        email: { value: email },
-        phone: { value: phone },
-        first_name: { value: first_name },
-        second_name: { value: second_name },
-        login: { value: login },
-        password: { value: password },
-        repeat_password: { value: repeat_password },
-      } = e.currentTarget! as typeof e.currentTarget & {
-        email: { value: string };
-        phone: { value: string };
-        first_name: { value: string };
-        second_name: { value: string };
-        login: { value: string };
-        password: { value: string };
-        repeat_password: { value: string };
-      };
-
-      if (password !== repeat_password) {
-        notifications.addNotification('Пароли не совпадают', 'warning');
-        return;
-      }
-
-      formInputs.forEach((el) => {
-        if (!el.checkValidity()) {
-          notifications.addNotification(el.title, 'error');
-        } else {
-          notifications.addNotification(`Поле ${el.name} заполнено верно`, 'success');
-        }
-      });
-
-      console.log({
-        email,
-        phone,
-        first_name,
-        second_name,
-        login,
-        password,
-        repeat_password,
-      });
-    });
-    super._addEvents();
-  }
 }
 
 window.addEventListener('DOMContentLoaded', () => {
@@ -181,6 +158,47 @@ window.addEventListener('DOMContentLoaded', () => {
     passwordField,
     repeatPasswordField,
     notifications,
+    events: {
+      submit(e) {
+        e.preventDefault();
+        e.stopPropagation();
+
+        const {
+          email: { value: email },
+          phone: { value: phone },
+          first_name: { value: first_name },
+          second_name: { value: second_name },
+          login: { value: login },
+          password: { value: password },
+          repeat_password: { value: repeat_password },
+        } = e.target! as typeof e.target & {
+          email: { value: string };
+          phone: { value: string };
+          first_name: { value: string };
+          second_name: { value: string };
+          login: { value: string };
+          password: { value: string };
+          repeat_password: { value: string };
+        };
+
+        if (password !== repeat_password) {
+          notifications.addNotification('Пароли не совпадают', 'warning');
+          return;
+        }
+
+        ((e.target! as HTMLFormElement).querySelectorAll('input') as NodeListOf<HTMLInputElement>).forEach(checkValidityInput);
+
+        console.log({
+          email,
+          phone,
+          first_name,
+          second_name,
+          login,
+          password,
+          repeat_password,
+        });
+      },
+    },
   });
 
   renderDom('#app', registrationPage);

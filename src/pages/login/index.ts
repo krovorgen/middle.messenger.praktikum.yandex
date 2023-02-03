@@ -7,6 +7,7 @@ import { FormControl } from '../../components/FormControl';
 import { notifications } from '../../components/Notification';
 import { checkRegexp } from '../../core/CheckRegexp';
 import { showEventValidation } from '../../core/showEventValidation';
+import { checkValidityInput } from '../../core/checkValidityInput';
 
 interface LoginPageProps {
   button: Block
@@ -16,6 +17,9 @@ interface LoginPageProps {
   notifications: Block
   addClass?: string
   attr?: Record<string, string>
+  events: {
+    submit: (e: SubmitEvent) => void
+  }
 }
 
 class LoginPage extends Block<LoginPageProps> {
@@ -34,37 +38,6 @@ class LoginPage extends Block<LoginPageProps> {
   }
 
   _addEvents() {
-    const form: HTMLFormElement = this.element.querySelector('.auth-box__form')!;
-    const formInputs: NodeListOf<HTMLInputElement> = form.querySelectorAll('input')!;
-
-    formInputs.forEach((el) => {
-      showEventValidation(el);
-    });
-
-    form.addEventListener('submit', (e) => {
-      e.preventDefault();
-
-      const {
-        login: { value: login },
-        password: { value: password },
-      } = e.currentTarget! as typeof e.currentTarget & {
-        login: { value: string };
-        password: { value: string };
-      };
-
-      formInputs.forEach((el) => {
-        if (!el.checkValidity()) {
-          notifications.addNotification(el.title, 'error');
-        } else {
-          notifications.addNotification(`Поле ${el.name} заполнено верно`, 'success');
-        }
-      });
-
-      console.log({
-        login,
-        password,
-      });
-    });
     super._addEvents();
   }
 }
@@ -94,6 +67,10 @@ const loginField = new FormControl({
   addClass: 'auth-box__label',
   pattern: checkRegexp.login.pattern,
   inputTitle: checkRegexp.login.msg,
+  events: {
+    blur: showEventValidation,
+    focus: showEventValidation,
+  },
 });
 const passwordField = new FormControl({
   type: 'password',
@@ -102,6 +79,10 @@ const passwordField = new FormControl({
   addClass: 'auth-box__label',
   pattern: checkRegexp.password.pattern,
   inputTitle: checkRegexp.password.msg,
+  events: {
+    blur: showEventValidation,
+    focus: showEventValidation,
+  },
 });
 
 window.addEventListener('DOMContentLoaded', () => {
@@ -111,6 +92,27 @@ window.addEventListener('DOMContentLoaded', () => {
     loginField,
     passwordField,
     notifications,
+    events: {
+      submit(e: SubmitEvent) {
+        e.preventDefault();
+        e.stopPropagation();
+
+        const {
+          login: { value: login },
+          password: { value: password },
+        } = e.target! as typeof e.target & {
+          login: { value: string };
+          password: { value: string };
+        };
+
+        ((e.target! as HTMLFormElement).querySelectorAll('input') as NodeListOf<HTMLInputElement>).forEach(checkValidityInput);
+
+        console.log({
+          login,
+          password,
+        });
+      },
+    },
   });
 
   renderDom('#app', loginPage);

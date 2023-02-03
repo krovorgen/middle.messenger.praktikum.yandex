@@ -11,6 +11,10 @@ interface EditedLabelProps {
   value: string
   addClass?: string
   attr?: Record<string, string>
+  events?: {
+    blur: (el: Event) => void
+    focus: (el: Event) => void
+  }
 }
 
 export class EditedLabel extends Block<EditedLabelProps> {
@@ -22,6 +26,17 @@ export class EditedLabel extends Block<EditedLabelProps> {
         ...props.attr,
       },
     });
+  }
+
+  _addEvents() {
+    const input = this.element.querySelector('input');
+    if (input && this.props.events?.blur) {
+      input!.addEventListener('blur', this.props.events.blur);
+    }
+    if (input && this.props.events?.focus) {
+      input!.addEventListener('focus', this.props.events.focus);
+    }
+    super._addEvents();
   }
 
   render() {

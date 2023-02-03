@@ -1,3 +1,5 @@
+type HTTPMethod = (url: string, options?: unknown) => Promise<unknown>;
+
 export class HttpClient {
   private baseUrl: string;
 
@@ -29,24 +31,24 @@ export class HttpClient {
     return `${url}?${queryString}`;
   }
 
-  get(path: string, params?: any) {
+  get: HTTPMethod = (path, params?) => {
     const url = this.baseUrl + path;
     const queryStringUrl = params ? this.addQueryString(url, params) : url;
     return this.createRequest('GET', queryStringUrl);
-  }
+  };
 
-  post(path: string, data?: any) {
+  post: HTTPMethod = (path, data?) => {
     const url = this.baseUrl + path;
     return this.createRequest('POST', url, data);
-  }
+  };
 
-  put(path: string, data?: any) {
+  put: HTTPMethod = (path, data?) => {
     const url = this.baseUrl + path;
     return this.createRequest('PUT', url, data);
-  }
+  };
 
-  delete(path: string) {
+  delete: HTTPMethod = (path) => {
     const url = this.baseUrl + path;
     return this.createRequest('DELETE', url);
-  }
+  };
 }

@@ -11,6 +11,7 @@ import { checkRegexp } from '../../core/CheckRegexp';
 import { showEventValidation } from '../../core/showEventValidation';
 import { LoadImg } from '../../components/AvatarLoading';
 import { Modal } from '../../core/Modal';
+import { checkValidityInput } from '../../core/checkValidityInput';
 
 interface ProfileEditablePageProps {
   linkBack: Block
@@ -25,58 +26,14 @@ interface ProfileEditablePageProps {
   notifications: Block
   addClass?: string
   attr?: Record<string, string>
+  events: {
+    submit: (e: SubmitEvent) => void
+  }
 }
 
 class ProfileEditablePage extends Block<ProfileEditablePageProps> {
   render() {
     return this.compile(tpl, this.props);
-  }
-
-  _addEvents() {
-    const form: HTMLFormElement = this.element.querySelector('.border-list__form')!;
-    const formInputs: NodeListOf<HTMLInputElement> = form.querySelectorAll('input')!;
-
-    formInputs.forEach((el) => {
-      showEventValidation(el);
-    });
-
-    form.addEventListener('submit', (e) => {
-      e.preventDefault();
-
-      const {
-        email: { value: email },
-        login: { value: login },
-        first_name: { value: first_name },
-        second_name: { value: second_name },
-        display_name: { value: display_name },
-        phone: { value: phone },
-      } = e.currentTarget! as typeof e.currentTarget & {
-        email: { value: string };
-        login: { value: string };
-        first_name: { value: string };
-        second_name: { value: string };
-        display_name: { value: string };
-        phone: { value: string };
-      };
-
-      formInputs.forEach((el) => {
-        if (!el.checkValidity()) {
-          notifications.addNotification(el.title, 'error');
-        } else {
-          notifications.addNotification(`Поле ${el.name} заполнено верно`, 'success');
-        }
-      });
-
-      console.log({
-        email,
-        login,
-        first_name,
-        second_name,
-        display_name,
-        phone,
-      });
-    });
-    super._addEvents();
   }
 }
 
@@ -102,6 +59,10 @@ const editedEmail = new EditedLabel({
   name: 'email',
   inputPattern: checkRegexp.email.pattern,
   inputTitle: checkRegexp.email.msg,
+  events: {
+    blur: showEventValidation,
+    focus: showEventValidation,
+  },
 });
 const editedLogin = new EditedLabel({
   text: 'Логин',
@@ -111,6 +72,10 @@ const editedLogin = new EditedLabel({
   name: 'login',
   inputPattern: checkRegexp.login.pattern,
   inputTitle: checkRegexp.login.msg,
+  events: {
+    blur: showEventValidation,
+    focus: showEventValidation,
+  },
 });
 const editedFirstName = new EditedLabel({
   text: 'Имя',
@@ -120,6 +85,10 @@ const editedFirstName = new EditedLabel({
   name: 'first_name',
   inputPattern: checkRegexp.personalName.pattern,
   inputTitle: checkRegexp.personalName.msg,
+  events: {
+    blur: showEventValidation,
+    focus: showEventValidation,
+  },
 });
 const editedSecondName = new EditedLabel({
   text: 'Фамилия',
@@ -129,6 +98,10 @@ const editedSecondName = new EditedLabel({
   name: 'second_name',
   inputPattern: checkRegexp.personalName.pattern,
   inputTitle: checkRegexp.personalName.msg,
+  events: {
+    blur: showEventValidation,
+    focus: showEventValidation,
+  },
 });
 const editedDisplayName = new EditedLabel({
   text: 'Имя в чате',
@@ -138,6 +111,10 @@ const editedDisplayName = new EditedLabel({
   name: 'display_name',
   inputPattern: checkRegexp.message.pattern,
   inputTitle: checkRegexp.message.msg,
+  events: {
+    blur: showEventValidation,
+    focus: showEventValidation,
+  },
 });
 const editedPhone = new EditedLabel({
   text: 'Телефон',
@@ -147,6 +124,10 @@ const editedPhone = new EditedLabel({
   name: 'phone',
   inputPattern: checkRegexp.phone.pattern,
   inputTitle: checkRegexp.phone.msg,
+  events: {
+    blur: showEventValidation,
+    focus: showEventValidation,
+  },
 });
 const saveBtn = new Button({
   size: 'sm',
@@ -170,6 +151,39 @@ window.addEventListener('DOMContentLoaded', () => {
     editedPhone,
     saveBtn,
     notifications,
+    events: {
+      submit(e: SubmitEvent) {
+        e.preventDefault();
+        e.stopPropagation();
+
+        const {
+          email: { value: email },
+          login: { value: login },
+          first_name: { value: first_name },
+          second_name: { value: second_name },
+          display_name: { value: display_name },
+          phone: { value: phone },
+        } = e.target! as typeof e.target & {
+          email: { value: string };
+          login: { value: string };
+          first_name: { value: string };
+          second_name: { value: string };
+          display_name: { value: string };
+          phone: { value: string };
+        };
+
+        ((e.target! as HTMLFormElement).querySelectorAll('input') as NodeListOf<HTMLInputElement>).forEach(checkValidityInput);
+
+        console.log({
+          email,
+          login,
+          first_name,
+          second_name,
+          display_name,
+          phone,
+        });
+      },
+    },
   });
 
   renderDom('#app', profileEditablePage);

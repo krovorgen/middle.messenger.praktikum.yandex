@@ -5,6 +5,10 @@ interface FormControlProps {
   type: string
   name: string
   placeholder: string
+  events?: {
+    blur: (el: Event) => void
+    focus: (el: Event) => void
+  }
   errorMsg?: string
   attr?: Record<string, string>
   addClass?: string
@@ -21,6 +25,17 @@ export class FormControl extends Block<FormControlProps> {
         ...props.attr,
       },
     });
+  }
+
+  _addEvents() {
+    const input = this.element.querySelector('input');
+    if (input && this.props.events?.blur) {
+      input!.addEventListener('blur', this.props.events.blur);
+    }
+    if (input && this.props.events?.focus) {
+      input!.addEventListener('focus', this.props.events.focus);
+    }
+    super._addEvents();
   }
 
   render() {

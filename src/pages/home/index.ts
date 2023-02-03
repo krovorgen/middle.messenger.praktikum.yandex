@@ -10,6 +10,9 @@ import { ContentMessage } from '../../components/chat/ContentMessage';
 import { FormSendMessage } from '../../components/chat/FormSendMessage';
 import { checkRegexp } from '../../core/CheckRegexp';
 import { notifications } from '../../components/Notification';
+import { checkValidityInput } from '../../core/checkValidityInput';
+import { Modal } from '../../core/Modal';
+import { LoadImg } from '../../components/AvatarLoading';
 
 interface HomePageProps {
   addClass?: string
@@ -53,6 +56,25 @@ const contentMessage = new ContentMessage({
 const formSendMessage = new FormSendMessage({
   inputPattern: checkRegexp.message.pattern,
   inputTitle: checkRegexp.message.msg,
+  events: {
+    submit(e) {
+      e.preventDefault();
+      e.stopPropagation();
+
+      const { message: { value: message } } = e.target! as typeof e.target & {
+        message: { value: string };
+      };
+
+      ((e.target! as HTMLFormElement).querySelectorAll('input') as NodeListOf<HTMLInputElement>).forEach(checkValidityInput);
+
+      console.log(message);
+    },
+    uploadFile() {
+      new Modal().show(
+        new LoadImg({}).getContent(),
+      );
+    },
+  },
 });
 const dialogItem = new DialogItem({
   avatarUrl: notAvatarImagePath,

@@ -11,65 +11,26 @@ import { checkRegexp } from '../../core/CheckRegexp';
 import { showEventValidation } from '../../core/showEventValidation';
 import { Modal } from '../../core/Modal';
 import { LoadImg } from '../../components/AvatarLoading';
+import { checkValidityInput } from '../../core/checkValidityInput';
 
 interface ProfilePasswordEditablePageProps {
   linkBack: Block
   profileAvatar: Block
-  oldPassword: Block
-  newPassword: Block
-  repeatPassword: Block
+  oldPasswordInput: Block
+  newPasswordInput: Block
+  repeatPasswordInput: Block
   saveBtn: Block
   notifications: Block
   addClass?: string
   attr?: Record<string, string>
+  events: {
+    submit: (e: SubmitEvent) => void
+  }
 }
 
 class ProfilePasswordEditablePage extends Block<ProfilePasswordEditablePageProps> {
   render() {
     return this.compile(tpl, this.props);
-  }
-
-  _addEvents() {
-    const form: HTMLFormElement = this.element.querySelector('.border-list__form')!;
-    const formInputs: NodeListOf<HTMLInputElement> = form.querySelectorAll('input')!;
-
-    formInputs.forEach((el) => {
-      showEventValidation(el);
-    });
-
-    form.addEventListener('submit', (e) => {
-      e.preventDefault();
-
-      const {
-        oldPassword: { value: oldPassword },
-        newPassword: { value: newPassword },
-        repeat_password: { value: repeat_password },
-      } = e.currentTarget! as typeof e.currentTarget & {
-        oldPassword: { value: string };
-        newPassword: { value: string };
-        repeat_password: { value: string };
-      };
-
-      if (repeat_password !== newPassword) {
-        notifications.addNotification('Пароли не совпадают', 'warning');
-        return;
-      }
-
-      formInputs.forEach((el) => {
-        if (!el.checkValidity()) {
-          notifications.addNotification(el.title, 'error');
-        } else {
-          notifications.addNotification(`Поле ${el.name} заполнено верно`, 'success');
-        }
-      });
-
-      console.log({
-        oldPassword,
-        newPassword,
-        repeat_password,
-      });
-    });
-    super._addEvents();
   }
 }
 
@@ -87,7 +48,7 @@ const profileAvatar = new ProfileAvatar({
     },
   },
 });
-const oldPassword = new EditedLabel({
+const oldPasswordInput = new EditedLabel({
   text: 'Старый пароль',
   editable: true,
   value: '123123123A',
@@ -95,8 +56,12 @@ const oldPassword = new EditedLabel({
   name: 'oldPassword',
   inputPattern: checkRegexp.password.pattern,
   inputTitle: checkRegexp.password.msg,
+  events: {
+    blur: showEventValidation,
+    focus: showEventValidation,
+  },
 });
-const newPassword = new EditedLabel({
+const newPasswordInput = new EditedLabel({
   text: 'Новый пароль',
   editable: true,
   value: '1234567890A',
@@ -104,8 +69,12 @@ const newPassword = new EditedLabel({
   name: 'newPassword',
   inputPattern: checkRegexp.password.pattern,
   inputTitle: checkRegexp.password.msg,
+  events: {
+    blur: showEventValidation,
+    focus: showEventValidation,
+  },
 });
-const repeatPassword = new EditedLabel({
+const repeatPasswordInput = new EditedLabel({
   text: 'Повторите новый пароль',
   editable: true,
   value: '1234567890A',
@@ -113,6 +82,10 @@ const repeatPassword = new EditedLabel({
   name: 'repeat_password',
   inputPattern: checkRegexp.password.pattern,
   inputTitle: checkRegexp.password.msg,
+  events: {
+    blur: showEventValidation,
+    focus: showEventValidation,
+  },
 });
 const saveBtn = new Button({
   size: 'sm',
@@ -128,11 +101,40 @@ window.addEventListener('DOMContentLoaded', () => {
   const profilePasswordEditablePage = new ProfilePasswordEditablePage('div', {
     linkBack,
     profileAvatar,
-    oldPassword,
-    newPassword,
-    repeatPassword,
+    oldPasswordInput,
+    newPasswordInput,
+    repeatPasswordInput,
     saveBtn,
     notifications,
+    events: {
+      submit(e) {
+        e.preventDefault();
+        e.stopPropagation();
+
+        const {
+          oldPassword: { value: oldPassword },
+          newPassword: { value: newPassword },
+          repeat_password: { value: repeat_password },
+        } = e.target! as typeof e.target & {
+          oldPassword: { value: string };
+          newPassword: { value: string };
+          repeat_password: { value: string };
+        };
+
+        if (repeat_password !== newPassword) {
+          notifications.addNotification('Пароли не совпадают', 'warning');
+          return;
+        }
+
+        ((e.target! as HTMLFormElement).querySelectorAll('input') as NodeListOf<HTMLInputElement>).forEach(checkValidityInput);
+
+        console.log({
+          oldPassword,
+          newPassword,
+          repeat_password,
+        });
+      },
+    },
   });
 
   renderDom('#app', profilePasswordEditablePage);

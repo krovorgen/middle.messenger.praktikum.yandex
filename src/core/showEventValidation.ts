@@ -1,16 +1,9 @@
 import { notifications } from '../components/Notification';
 
-export const showEventValidation = (el: HTMLInputElement) => {
-  el.addEventListener('blur', () => {
-    const pattern = new RegExp(el.pattern);
-    if (!pattern.test(el.value)) {
-      notifications.addNotification(`Для поля ${el.name} необходимо:\n ${el.title}`, 'warning');
-    }
-  });
-  el.addEventListener('focus', () => {
-    const pattern = new RegExp(el.pattern);
-    if (!pattern.test(el.value)) {
-      notifications.addNotification(`Для поля ${el.name} необходимо:\n ${el.title}`, 'warning');
-    }
-  });
+export const showEventValidation = (el: Event) => {
+  const input = (el.target as HTMLInputElement);
+  const pattern = new RegExp(input.pattern);
+  if (!pattern.test(input.value)) {
+    notifications.addNotification(`Для поля ${input.name} необходимо:\n ${input.title}`, 'warning');
+  }
 };
