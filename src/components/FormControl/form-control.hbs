@@ -1,4 +1,12 @@
-<input class="form-control__input" type="{{type}}" name="{{name}}" placeholder="{{placeholder}}">
+<input
+    class="form-control__input"
+    type="{{type}}"
+    name="{{name}}"
+    pattern="{{pattern}}"
+    title="{{inputTitle}}"
+    placeholder="{{placeholder}}"
+    autocomplete="off"
+>
 {{#if errorMsg}}
     <span class="form-control__error-msg">
         {{errorMsg}}

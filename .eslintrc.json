@@ -12,7 +12,11 @@
     "class-methods-use-this": "off",
     "@typescript-eslint/default-param-last" : "off",
     "import/prefer-default-export" : "off",
-    "no-param-reassign" : "off"
+    "no-param-reassign" : "off",
+    "no-console": "off",
+    "max-classes-per-file": "off",
+    "no-useless-escape": "off",
+    "@typescript-eslint/naming-convention": "off"
   },
   "globals": {
     "document": false

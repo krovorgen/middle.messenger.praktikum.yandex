@@ -28,6 +28,27 @@ class LoginPage extends Block<LoginPageProps> {
   render() {
     return this.compile(tpl, this.props);
   }
+
+  _addEvents() {
+    const form: HTMLFormElement = this.element.querySelector('.auth-box__form')!;
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+
+      const {
+        login: { value: login },
+        password: { value: password },
+      } = e.currentTarget! as typeof e.currentTarget & {
+        login: { value: string };
+        password: { value: string };
+      };
+
+      console.log({
+        login,
+        password,
+      });
+    });
+    super._addEvents();
+  }
 }
 
 const button = new Button({
@@ -39,7 +60,6 @@ const button = new Button({
     type: 'submit',
   },
 });
-
 const link = new Link({
   text: 'Назад к чатам',
   addClass: 'auth-box__link',
@@ -49,14 +69,12 @@ const link = new Link({
     href: '../index.html',
   },
 });
-
 const loginField = new FormControl({
   type: 'text',
   name: 'login',
   placeholder: 'Логин',
   addClass: 'auth-box__label',
 });
-
 const passwordField = new FormControl({
   type: 'password',
   name: 'password',

@@ -8,6 +8,8 @@ interface FormControlProps {
   errorMsg?: string
   attr?: Record<string, string>
   addClass?: string
+  pattern?: string
+  inputTitle?: string
 }
 
 export class FormControl extends Block<FormControlProps> {

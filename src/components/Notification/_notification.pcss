@@ -1,0 +1,28 @@
+.notification {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  width: 300px;
+
+  &__item {
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgb(0 0 0 / 30%);
+    margin-bottom: 10px;
+
+    &.success {
+      background-color: green;
+      color: white;
+    }
+
+    &.error {
+      background-color: red;
+      color: white;
+    }
+
+    &.warning {
+      background-color: yellow;
+      color: black;
+    }
+  }
+}
