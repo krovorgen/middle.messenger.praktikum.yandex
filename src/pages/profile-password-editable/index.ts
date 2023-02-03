@@ -37,6 +37,12 @@ class ProfilePasswordEditablePage extends Block<ProfilePasswordEditablePageProps
           notifications.addNotification(`Для поля ${el.placeholder} необходимо:\n ${el.title}`, 'warning');
         }
       });
+      el.addEventListener('focus', () => {
+        const pattern = new RegExp(el.pattern);
+        if (!pattern.test(el.value)) {
+          notifications.addNotification(`Для поля ${el.placeholder} необходимо:\n ${el.title}`, 'warning');
+        }
+      });
     });
 
     form.addEventListener('submit', (e) => {

@@ -40,6 +40,12 @@ class ProfileEditablePage extends Block<ProfileEditablePageProps> {
           notifications.addNotification(`Для поля ${el.name} необходимо:\n ${el.title}`, 'warning');
         }
       });
+      el.addEventListener('focus', () => {
+        const pattern = new RegExp(el.pattern);
+        if (!pattern.test(el.value)) {
+          notifications.addNotification(`Для поля ${el.name} необходимо:\n ${el.title}`, 'warning');
+        }
+      });
     });
 
     form.addEventListener('submit', (e) => {
