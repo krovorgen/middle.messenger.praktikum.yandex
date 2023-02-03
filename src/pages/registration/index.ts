@@ -120,13 +120,13 @@ class RegistrationPage extends Block<RegistrationPageProps> {
       el.addEventListener('focus', () => {
         const pattern = new RegExp(el.pattern);
         if (!pattern.test(el.value)) {
-          notifications.addNotification(el.title, 'error');
+          notifications.addNotification(`Для поля ${el.placeholder} необходимо:\n ${el.title}`, 'warning');
         }
       });
       el.addEventListener('blur', () => {
         const pattern = new RegExp(el.pattern);
         if (!pattern.test(el.value)) {
-          notifications.addNotification(el.title, 'error');
+          notifications.addNotification(`Для поля ${el.placeholder} необходимо:\n ${el.title}`, 'warning');
         }
       });
     });
