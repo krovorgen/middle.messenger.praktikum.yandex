@@ -8,6 +8,8 @@ import { DateMessages } from '../../components/chat/DateMessages';
 import { Message } from '../../components/chat/Message';
 import { ContentMessage } from '../../components/chat/ContentMessage';
 import { FormSendMessage } from '../../components/chat/FormSendMessage';
+import { checkRegexp } from '../../core/CheckRegexp';
+import { notifications } from '../../components/Notification';
 
 interface HomePageProps {
   addClass?: string
@@ -18,6 +20,7 @@ interface HomePageProps {
   opponentMessage: Block
   contentMessage: Block
   formSendMessage: Block
+  notifications: Block
   attr?: Record<string, string>
   isSelectedMessage: boolean
 }
@@ -47,7 +50,10 @@ const contentMessage = new ContentMessage({
   time: '17:00',
   myMessage: true,
 });
-const formSendMessage = new FormSendMessage({});
+const formSendMessage = new FormSendMessage({
+  inputPattern: checkRegexp.message.pattern,
+  inputTitle: checkRegexp.message.msg,
+});
 const dialogItem = new DialogItem({
   avatarUrl: notAvatarImagePath,
 });
@@ -61,6 +67,7 @@ window.addEventListener('DOMContentLoaded', () => {
     opponentMessage,
     contentMessage,
     formSendMessage,
+    notifications,
     isSelectedMessage: true,
   });
 

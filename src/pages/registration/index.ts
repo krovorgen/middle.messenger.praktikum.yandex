@@ -117,12 +117,6 @@ class RegistrationPage extends Block<RegistrationPageProps> {
     const formInputs: NodeListOf<HTMLInputElement> = form.querySelectorAll('input')!;
 
     formInputs.forEach((el) => {
-      el.addEventListener('focus', () => {
-        const pattern = new RegExp(el.pattern);
-        if (!pattern.test(el.value)) {
-          notifications.addNotification(`Для поля ${el.placeholder} необходимо:\n ${el.title}`, 'warning');
-        }
-      });
       el.addEventListener('blur', () => {
         const pattern = new RegExp(el.pattern);
         if (!pattern.test(el.value)) {
@@ -154,6 +148,7 @@ class RegistrationPage extends Block<RegistrationPageProps> {
 
       if (password !== repeat_password) {
         notifications.addNotification('Пароли не совпадают', 'warning');
+        return;
       }
 
       formInputs.forEach((el) => {

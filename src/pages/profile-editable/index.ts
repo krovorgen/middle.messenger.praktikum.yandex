@@ -6,6 +6,8 @@ import { EditedLabel } from '../../components/EditedLabel';
 import { Button } from '../../components/Button';
 import { ProfileAvatar } from '../../components/ProfileAvatar';
 import avatarStub from '../../../static/icons/not-avatar.svg';
+import { notifications } from '../../components/Notification';
+import { checkRegexp } from '../../core/CheckRegexp';
 
 interface ProfileEditablePageProps {
   linkBack: Block
@@ -17,6 +19,7 @@ interface ProfileEditablePageProps {
   editedSecondName: Block
   editedDisplayName: Block
   editedPhone: Block
+  notifications: Block
   addClass?: string
   attr?: Record<string, string>
 }
@@ -24,6 +27,58 @@ interface ProfileEditablePageProps {
 class ProfileEditablePage extends Block<ProfileEditablePageProps> {
   render() {
     return this.compile(tpl, this.props);
+  }
+
+  _addEvents() {
+    const form: HTMLFormElement = this.element.querySelector('.border-list__form')!;
+    const formInputs: NodeListOf<HTMLInputElement> = form.querySelectorAll('input')!;
+
+    formInputs.forEach((el) => {
+      el.addEventListener('blur', () => {
+        const pattern = new RegExp(el.pattern);
+        if (!pattern.test(el.value)) {
+          notifications.addNotification(`Для поля ${el.name} необходимо:\n ${el.title}`, 'warning');
+        }
+      });
+    });
+
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+
+      const {
+        email: { value: email },
+        login: { value: login },
+        first_name: { value: first_name },
+        second_name: { value: second_name },
+        display_name: { value: display_name },
+        phone: { value: phone },
+      } = e.currentTarget! as typeof e.currentTarget & {
+        email: { value: string };
+        login: { value: string };
+        first_name: { value: string };
+        second_name: { value: string };
+        display_name: { value: string };
+        phone: { value: string };
+      };
+
+      formInputs.forEach((el) => {
+        if (!el.checkValidity()) {
+          notifications.addNotification(el.title, 'error');
+        } else {
+          notifications.addNotification(`Поле ${el.name} заполнено верно`, 'success');
+        }
+      });
+
+      console.log({
+        email,
+        login,
+        first_name,
+        second_name,
+        display_name,
+        phone,
+      });
+    });
+    super._addEvents();
   }
 }
 
@@ -35,6 +90,8 @@ const editedEmail = new EditedLabel({
   value: 'pochta@yandex.ru',
   type: 'email',
   name: 'email',
+  inputPattern: checkRegexp.email.pattern,
+  inputTitle: checkRegexp.email.msg,
 });
 const editedLogin = new EditedLabel({
   text: 'Логин',
@@ -42,34 +99,44 @@ const editedLogin = new EditedLabel({
   value: 'ivanivanov',
   type: 'text',
   name: 'login',
+  inputPattern: checkRegexp.login.pattern,
+  inputTitle: checkRegexp.login.msg,
 });
 const editedFirstName = new EditedLabel({
   text: 'Имя',
   editable: true,
-  value: 'Иван',
+  value: 'Maksim',
   type: 'text',
   name: 'first_name',
+  inputPattern: checkRegexp.personalName.pattern,
+  inputTitle: checkRegexp.personalName.msg,
 });
 const editedSecondName = new EditedLabel({
   text: 'Фамилия',
   editable: true,
-  value: 'Иванов',
+  value: 'Berezka',
   type: 'text',
   name: 'second_name',
+  inputPattern: checkRegexp.personalName.pattern,
+  inputTitle: checkRegexp.personalName.msg,
 });
 const editedDisplayName = new EditedLabel({
   text: 'Имя в чате',
   editable: true,
-  value: 'Иван',
+  value: 'Krovorgen',
   type: 'text',
   name: 'display_name',
+  inputPattern: checkRegexp.message.pattern,
+  inputTitle: checkRegexp.message.msg,
 });
 const editedPhone = new EditedLabel({
   text: 'Телефон',
   editable: true,
-  value: '+7 (909) 967 30 30',
+  value: '+79099673030',
   type: 'tel',
   name: 'phone',
+  inputPattern: checkRegexp.phone.pattern,
+  inputTitle: checkRegexp.phone.msg,
 });
 const saveBtn = new Button({
   size: 'sm',
@@ -92,6 +159,7 @@ window.addEventListener('DOMContentLoaded', () => {
     editedDisplayName,
     editedPhone,
     saveBtn,
+    notifications,
   });
 
   renderDom('#app', profileEditablePage);

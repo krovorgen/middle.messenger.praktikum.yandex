@@ -37,12 +37,6 @@ class LoginPage extends Block<LoginPageProps> {
     const formInputs: NodeListOf<HTMLInputElement> = form.querySelectorAll('input')!;
 
     formInputs.forEach((el) => {
-      el.addEventListener('focus', () => {
-        const pattern = new RegExp(el.pattern);
-        if (!pattern.test(el.value)) {
-          notifications.addNotification(`Для поля ${el.placeholder} необходимо:\n ${el.title}`, 'warning');
-        }
-      });
       el.addEventListener('blur', () => {
         const pattern = new RegExp(el.pattern);
         if (!pattern.test(el.value)) {

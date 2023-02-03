@@ -4,6 +4,8 @@ import { Block } from '../../core/Block';
 interface EditedLabelProps {
   text: string
   editable: boolean
+  inputPattern?: string
+  inputTitle?: string
   type?: string
   name?: string
   value: string

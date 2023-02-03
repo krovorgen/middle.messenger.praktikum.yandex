@@ -4,13 +4,12 @@
   "description": "",
   "scripts": {
     "dev": "npm run recreate-dist && parcel src/pages/index.html -p 3000 --open chrome --no-cache",
-    "start": "npm run build && node server.cjs",
+    "start": "npm run build && node server.js",
     "build": "parcel build src/pages/index.html",
     "eslint:fix": "node_modules/.bin/eslint . --fix",
     "stylelint:fix": "node_modules/.bin/stylelint src/**/*.pcss --fix",
     "recreate-dist": "rm -Rf dist"
   },
-  "type": "module",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/krovorgen/messanger.git"

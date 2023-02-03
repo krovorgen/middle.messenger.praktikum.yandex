@@ -2,7 +2,15 @@
     {{text}}
 </span>
 {{#if editable}}
-    <input class="edited-label__input" type="{{type}}" name="{{name}}" value="{{value}}">
+    <input
+        class="edited-label__input"
+        type="{{type}}"
+        name="{{name}}"
+        value="{{value}}"
+        pattern="{{inputPattern}}"
+        title="{{inputTitle}}"
+        autocomplete="off"
+    >
 {{else}}
     <span class="edited-label__value">
         {{value}}
