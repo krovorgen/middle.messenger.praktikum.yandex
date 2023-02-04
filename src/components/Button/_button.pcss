@@ -1,0 +1,43 @@
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  text-align: center;
+  padding: 0;
+  margin: 0;
+  background-color: transparent;
+
+  &--sm {
+    padding: 0 16px;
+    width: 100%;
+    min-width: 280px;
+    min-height: 37px;
+  }
+
+  &--primary {
+    border-radius: 8px;
+    font-weight: 500;
+    font-size: 13px;
+    color: #fff;
+    background-color: $accent-color;
+  }
+
+  &--svg {
+    min-width: 32px;
+    height: 32px;
+    border-radius: 50%;
+  }
+
+  &--ghost {
+    &:hover {
+      background-color: #f8f8f8;
+    }
+  }
+
+  &--center {
+    display: flex;
+    margin: 0 auto;
+    width: fit-content;
+  }
+}

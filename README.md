@@ -8,3 +8,13 @@
 
 ## Netlify
 [тут](https://soft-vacherin-cddc0e.netlify.app/)
+
+## Работа с компонентами
+Для создания компоненты необходимо:
+- extends от ```Block```
+- для указания атрибутов обёртки указываем всё необходимое в ```props.attr```
+- для обработчиков указываем всё необходимое в ```props.events```
+
+## В проект добавлены Notification
+- Для вызова необходимо ```notifications.addNotification(string, 'success' | 'error' | 'warning');```
+- Валидация для ```input``` на событии ```blur```

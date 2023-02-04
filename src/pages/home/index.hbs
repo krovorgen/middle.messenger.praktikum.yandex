@@ -1,0 +1,22 @@
+<div class="column__left">
+    <a href="../profile/index.html" class="profile-link">
+        Мой профиль
+    </a>
+    <ul class="dialog-items">
+        {{{ dialogItem }}}
+    </ul>
+</div>
+<div class="column__center">
+    {{#if isSelectedMessage}}
+        <div class="messages-items">
+            {{{ dateMessages }}}
+            {{{ myMessage }}}
+            {{{ opponentMessage }}}
+            {{{ contentMessage }}}
+        </div>
+        {{{ formSendMessage }}}
+    {{else}}
+        {{{ emptyChooseMessage }}}
+    {{/if}}
+</div>
+{{{ notifications }}}

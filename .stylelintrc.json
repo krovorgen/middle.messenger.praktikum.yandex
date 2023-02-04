@@ -1,0 +1,13 @@
+{
+  "customSyntax": "postcss-scss",
+  "extends": "stylelint-config-standard-scss",
+  "rules": {
+    "scss/at-import-no-partial-leading-underscore": null,
+    "block-no-empty": null,
+    "scss/at-mixin-pattern": null,
+    "selector-class-pattern": null,
+    "scss/at-rule-no-unknown": null,
+    "scss/no-duplicate-mixins": null,
+    "no-descending-specificity": null
+  }
+}
