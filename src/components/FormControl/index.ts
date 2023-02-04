@@ -38,6 +38,17 @@ export class FormControl extends Block<FormControlProps> {
     super._addEvents();
   }
 
+  _removeEvents() {
+    const input = this.element.querySelector('input');
+    if (input && this.props.events?.blur) {
+      input!.removeEventListener('blur', this.props.events.blur);
+    }
+    if (input && this.props.events?.focus) {
+      input!.removeEventListener('focus', this.props.events.focus);
+    }
+    super._removeEvents();
+  }
+
   render() {
     return this.compile(tpl, this.props);
   }
