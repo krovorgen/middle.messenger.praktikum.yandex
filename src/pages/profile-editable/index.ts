@@ -1,12 +1,10 @@
 import tpl from './index.hbs';
-import { renderDom } from '../../core/renderDom';
 import { Block } from '../../core/Block';
 import { LinkBack } from '../../components/LinkBack';
 import { EditedLabel } from '../../components/EditedLabel';
 import { Button } from '../../components/Button';
 import { ProfileAvatar } from '../../components/ProfileAvatar';
 import avatarStub from '../../../static/icons/not-avatar.svg';
-import { notifications } from '../../components/Notification';
 import { checkRegexp } from '../../core/CheckRegexp';
 import { showEventValidation } from '../../core/showEventValidation';
 import { LoadImg } from '../../components/AvatarLoading';
@@ -23,7 +21,6 @@ interface ProfileEditablePageProps {
   editedSecondName: Block
   editedDisplayName: Block
   editedPhone: Block
-  notifications: Block
   addClass?: string
   attr?: Record<string, string>
   events: {
@@ -139,52 +136,47 @@ const saveBtn = new Button({
   },
 });
 
-window.addEventListener('DOMContentLoaded', () => {
-  const profileEditablePage = new ProfileEditablePage('div', {
-    linkBack,
-    profileAvatar,
-    editedEmail,
-    editedLogin,
-    editedFirstName,
-    editedSecondName,
-    editedDisplayName,
-    editedPhone,
-    saveBtn,
-    notifications,
-    events: {
-      submit(e: SubmitEvent) {
-        e.preventDefault();
-        e.stopPropagation();
+export const profileEditablePage = new ProfileEditablePage('div', {
+  linkBack,
+  profileAvatar,
+  editedEmail,
+  editedLogin,
+  editedFirstName,
+  editedSecondName,
+  editedDisplayName,
+  editedPhone,
+  saveBtn,
+  events: {
+    submit(e: SubmitEvent) {
+      e.preventDefault();
+      e.stopPropagation();
 
-        const {
-          email: { value: email },
-          login: { value: login },
-          first_name: { value: first_name },
-          second_name: { value: second_name },
-          display_name: { value: display_name },
-          phone: { value: phone },
-        } = e.target! as typeof e.target & {
-          email: { value: string };
-          login: { value: string };
-          first_name: { value: string };
-          second_name: { value: string };
-          display_name: { value: string };
-          phone: { value: string };
-        };
+      const {
+        email: { value: email },
+        login: { value: login },
+        first_name: { value: first_name },
+        second_name: { value: second_name },
+        display_name: { value: display_name },
+        phone: { value: phone },
+      } = e.target! as typeof e.target & {
+        email: { value: string };
+        login: { value: string };
+        first_name: { value: string };
+        second_name: { value: string };
+        display_name: { value: string };
+        phone: { value: string };
+      };
 
-        ((e.target! as HTMLFormElement).querySelectorAll('input') as NodeListOf<HTMLInputElement>).forEach(checkValidityInput);
+      ((e.target! as HTMLFormElement).querySelectorAll('input') as NodeListOf<HTMLInputElement>).forEach(checkValidityInput);
 
-        console.log({
-          email,
-          login,
-          first_name,
-          second_name,
-          display_name,
-          phone,
-        });
-      },
+      console.log({
+        email,
+        login,
+        first_name,
+        second_name,
+        display_name,
+        phone,
+      });
     },
-  });
-
-  renderDom('#app', profileEditablePage);
+  },
 });

@@ -1,7 +1,7 @@
 import tpl from './index.hbs';
-import { renderDom } from '../../core/renderDom';
 import { Block } from '../../core/Block';
 import { Link } from '../../components/Link';
+import { RoutePath } from '../../core/RoutePath';
 
 interface Error505PageProps {
   addClass?: string
@@ -30,14 +30,10 @@ const link = new Link({
   variant: 'primary',
   size: 'sm',
   attr: {
-    href: '../index.html',
+    href: RoutePath.messenger,
   },
 });
 
-window.addEventListener('DOMContentLoaded', () => {
-  const error505Page = new Error505Page({
-    link,
-  });
-
-  renderDom('#app', error505Page);
+export const error505Page = new Error505Page({
+  link,
 });

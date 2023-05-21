@@ -1,7 +1,7 @@
 import tpl from './index.hbs';
-import { renderDom } from '../../core/renderDom';
 import { Block } from '../../core/Block';
 import { Link } from '../../components/Link';
+import { RoutePath } from '../../core/RoutePath';
 
 interface Error404PageProps {
   addClass?: string
@@ -9,13 +9,13 @@ interface Error404PageProps {
   link: Block
 }
 
-class Error404Page extends Block<Error404PageProps> {
+export class Error404Page extends Block<Error404PageProps> {
   constructor(props: Error404PageProps) {
     super('div', {
       ...props,
       attr: {
-        class: `error-page ${props.addClass ?? ''}`,
-        ...props.attr,
+        class: `error-page ${props?.addClass ?? ''}`,
+        ...props?.attr,
       },
     });
   }
@@ -30,14 +30,10 @@ const link = new Link({
   variant: 'primary',
   size: 'sm',
   attr: {
-    href: '../index.html',
+    href: RoutePath.messenger,
   },
 });
 
-window.addEventListener('DOMContentLoaded', () => {
-  const error404Page = new Error404Page({
-    link,
-  });
-
-  renderDom('#app', error404Page);
+export const error404Page = new Error404Page({
+  link,
 });

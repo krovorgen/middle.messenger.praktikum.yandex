@@ -1,6 +1,5 @@
 import tpl from './index.hbs';
 import { Block } from '../../core/Block';
-import { renderDom } from '../../core/renderDom';
 import { Button } from '../../components/Button';
 import { Link } from '../../components/Link';
 import { FormControl } from '../../components/FormControl';
@@ -8,13 +7,14 @@ import { notifications } from '../../components/Notification';
 import { checkRegexp } from '../../core/CheckRegexp';
 import { showEventValidation } from '../../core/showEventValidation';
 import { checkValidityInput } from '../../core/checkValidityInput';
+import { RoutePath } from '../../core/RoutePath';
+import { AuthApi } from '../../api/Auth';
 
 interface LoginPageProps {
   button: Block
   link: Block
   loginField: Block
   passwordField: Block
-  notifications: Block
   addClass?: string
   attr?: Record<string, string>
   events: {
@@ -57,7 +57,7 @@ const link = new Link({
   size: 'sm',
   variant: 'primary',
   attr: {
-    href: '../index.html',
+    href: RoutePath.messenger,
   },
 });
 const loginField = new FormControl({
@@ -85,35 +85,41 @@ const passwordField = new FormControl({
   },
 });
 
-window.addEventListener('DOMContentLoaded', () => {
-  const loginPage = new LoginPage({
-    button,
-    link,
-    loginField,
-    passwordField,
-    notifications,
-    events: {
-      submit(e: SubmitEvent) {
-        e.preventDefault();
-        e.stopPropagation();
+export const loginPage = new LoginPage({
+  button,
+  link,
+  loginField,
+  passwordField,
+  events: {
+    async submit(e: SubmitEvent) {
+      e.preventDefault();
+      e.stopPropagation();
+      const apiAuth = new AuthApi();
 
-        const {
-          login: { value: login },
-          password: { value: password },
-        } = e.target! as typeof e.target & {
-          login: { value: string };
-          password: { value: string };
-        };
+      const {
+        login: { value: login },
+        password: { value: password },
+      } = e.target! as typeof e.target & {
+        login: { value: string };
+        password: { value: string };
+      };
 
-        ((e.target! as HTMLFormElement).querySelectorAll('input') as NodeListOf<HTMLInputElement>).forEach(checkValidityInput);
+      const arrayInputs: NodeListOf<HTMLInputElement> = (e.target as HTMLFormElement).querySelectorAll('input');
 
-        console.log({
-          login,
-          password,
-        });
-      },
+      arrayInputs.forEach(checkValidityInput);
+
+      const isCorrect = Array.from(arrayInputs).some((el) => el.checkValidity());
+      if (!isCorrect) return;
+
+      try {
+        await apiAuth.login(login, password);
+      } catch (error: any) {
+        notifications.addNotification(JSON.parse(error).reason, 'error');
+      }
+      console.log({
+        login,
+        password,
+      });
     },
-  });
-
-  renderDom('#app', loginPage);
+  },
 });

@@ -3,7 +3,6 @@ import { Button } from '../../components/Button';
 import { LinkBack } from '../../components/LinkBack';
 import { EditedLabel } from '../../components/EditedLabel';
 import { Block } from '../../core/Block';
-import { renderDom } from '../../core/renderDom';
 import { ProfileAvatar } from '../../components/ProfileAvatar';
 import avatarStub from '../../../static/icons/not-avatar.svg';
 import { notifications } from '../../components/Notification';
@@ -20,7 +19,6 @@ interface ProfilePasswordEditablePageProps {
   newPasswordInput: Block
   repeatPasswordInput: Block
   saveBtn: Block
-  notifications: Block
   addClass?: string
   attr?: Record<string, string>
   events: {
@@ -97,45 +95,40 @@ const saveBtn = new Button({
   },
 });
 
-window.addEventListener('DOMContentLoaded', () => {
-  const profilePasswordEditablePage = new ProfilePasswordEditablePage('div', {
-    linkBack,
-    profileAvatar,
-    oldPasswordInput,
-    newPasswordInput,
-    repeatPasswordInput,
-    saveBtn,
-    notifications,
-    events: {
-      submit(e) {
-        e.preventDefault();
-        e.stopPropagation();
+export const profilePasswordEditablePage = new ProfilePasswordEditablePage('div', {
+  linkBack,
+  profileAvatar,
+  oldPasswordInput,
+  newPasswordInput,
+  repeatPasswordInput,
+  saveBtn,
+  events: {
+    submit(e) {
+      e.preventDefault();
+      e.stopPropagation();
 
-        const {
-          oldPassword: { value: oldPassword },
-          newPassword: { value: newPassword },
-          repeat_password: { value: repeat_password },
-        } = e.target! as typeof e.target & {
-          oldPassword: { value: string };
-          newPassword: { value: string };
-          repeat_password: { value: string };
-        };
+      const {
+        oldPassword: { value: oldPassword },
+        newPassword: { value: newPassword },
+        repeat_password: { value: repeat_password },
+      } = e.target! as typeof e.target & {
+        oldPassword: { value: string };
+        newPassword: { value: string };
+        repeat_password: { value: string };
+      };
 
-        if (repeat_password !== newPassword) {
-          notifications.addNotification('Пароли не совпадают', 'warning');
-          return;
-        }
+      if (repeat_password !== newPassword) {
+        notifications.addNotification('Пароли не совпадают', 'warning');
+        return;
+      }
 
-        ((e.target! as HTMLFormElement).querySelectorAll('input') as NodeListOf<HTMLInputElement>).forEach(checkValidityInput);
+      ((e.target! as HTMLFormElement).querySelectorAll('input') as NodeListOf<HTMLInputElement>).forEach(checkValidityInput);
 
-        console.log({
-          oldPassword,
-          newPassword,
-          repeat_password,
-        });
-      },
+      console.log({
+        oldPassword,
+        newPassword,
+        repeat_password,
+      });
     },
-  });
-
-  renderDom('#app', profilePasswordEditablePage);
+  },
 });

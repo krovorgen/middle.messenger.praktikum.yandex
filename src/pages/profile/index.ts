@@ -1,5 +1,4 @@
 import tpl from './index.hbs';
-import { renderDom } from '../../core/renderDom';
 import { Block } from '../../core/Block';
 import { LinkBack } from '../../components/LinkBack';
 import { Link } from '../../components/Link';
@@ -8,6 +7,7 @@ import { ProfileAvatar } from '../../components/ProfileAvatar';
 import avatarStub from '../../../static/icons/not-avatar.svg';
 import { Modal } from '../../core/Modal';
 import { LoadImg } from '../../components/AvatarLoading';
+import { RoutePath } from '../../core/RoutePath';
 
 interface ProfilePageProps {
   linkBack: Block
@@ -80,7 +80,7 @@ const editData = new Link({
   variant: 'primary',
   text: 'Изменить данные',
   attr: {
-    href: '../profile-editable/index.html',
+    href: RoutePath.profileEditable,
   },
 });
 const editPassword = new Link({
@@ -88,7 +88,7 @@ const editPassword = new Link({
   variant: 'primary',
   text: 'Изменить пароль',
   attr: {
-    href: '../profile-password-editable/index.html',
+    href: RoutePath.profilePasswordEditable,
   },
 });
 const exitBtn = new Link({
@@ -96,24 +96,20 @@ const exitBtn = new Link({
   variant: 'accent',
   text: 'Выйти',
   attr: {
-    href: '../index.html',
+    href: RoutePath.login,
   },
 });
 
-window.addEventListener('DOMContentLoaded', () => {
-  const profilePage = new ProfilePage('div', {
-    linkBack,
-    profileAvatar,
-    editedEmail,
-    editedLogin,
-    editedFirstName,
-    editedSecondName,
-    editedDisplayName,
-    editedPhone,
-    editData,
-    editPassword,
-    exitBtn,
-  });
-
-  renderDom('#app', profilePage);
+export const profilePage = new ProfilePage('div', {
+  linkBack,
+  profileAvatar,
+  editedEmail,
+  editedLogin,
+  editedFirstName,
+  editedSecondName,
+  editedDisplayName,
+  editedPhone,
+  editData,
+  editPassword,
+  exitBtn,
 });

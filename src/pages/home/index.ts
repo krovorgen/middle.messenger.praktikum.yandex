@@ -1,5 +1,4 @@
 import tpl from './index.hbs';
-import { renderDom } from '../../core/renderDom';
 import { Block } from '../../core/Block';
 import { EmptyChooseMessage } from '../../components/chat/EmptyChooseMessage';
 import { DialogItem } from '../../components/chat/DialogItem';
@@ -9,7 +8,6 @@ import { Message } from '../../components/chat/Message';
 import { ContentMessage } from '../../components/chat/ContentMessage';
 import { FormSendMessage } from '../../components/chat/FormSendMessage';
 import { checkRegexp } from '../../core/CheckRegexp';
-import { notifications } from '../../components/Notification';
 import { checkValidityInput } from '../../core/checkValidityInput';
 import { Modal } from '../../core/Modal';
 import { LoadImg } from '../../components/AvatarLoading';
@@ -23,7 +21,6 @@ interface HomePageProps {
   opponentMessage: Block
   contentMessage: Block
   formSendMessage: Block
-  notifications: Block
   attr?: Record<string, string>
   isSelectedMessage: boolean
 }
@@ -53,6 +50,7 @@ const contentMessage = new ContentMessage({
   time: '17:00',
   myMessage: true,
 });
+
 const formSendMessage = new FormSendMessage({
   inputPattern: checkRegexp.message.pattern,
   inputTitle: checkRegexp.message.msg,
@@ -80,18 +78,13 @@ const dialogItem = new DialogItem({
   avatarUrl: notAvatarImagePath,
 });
 
-window.addEventListener('DOMContentLoaded', () => {
-  const homePage = new HomePage({
-    emptyChooseMessage,
-    dialogItem,
-    dateMessages,
-    myMessage,
-    opponentMessage,
-    contentMessage,
-    formSendMessage,
-    notifications,
-    isSelectedMessage: true,
-  });
-
-  renderDom('#app', homePage);
+export const homePage = new HomePage({
+  emptyChooseMessage,
+  dialogItem,
+  dateMessages,
+  myMessage,
+  opponentMessage,
+  contentMessage,
+  formSendMessage,
+  isSelectedMessage: true,
 });

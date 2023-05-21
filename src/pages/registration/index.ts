@@ -1,6 +1,5 @@
 import tpl from './index.hbs';
 import { Block } from '../../core/Block';
-import { renderDom } from '../../core/renderDom';
 import { Button } from '../../components/Button';
 import { Link } from '../../components/Link';
 import { FormControl } from '../../components/FormControl';
@@ -8,6 +7,7 @@ import { checkRegexp } from '../../core/CheckRegexp';
 import { notifications } from '../../components/Notification';
 import { showEventValidation } from '../../core/showEventValidation';
 import { checkValidityInput } from '../../core/checkValidityInput';
+import { RoutePath } from '../../core/RoutePath';
 
 interface RegistrationPageProps {
   button: Block
@@ -21,7 +21,6 @@ interface RegistrationPageProps {
   loginField: Block
   passwordField: Block
   repeatPasswordField: Block
-  notifications: Block
   events: {
     submit: (e: SubmitEvent) => void
   }
@@ -42,7 +41,7 @@ const link = new Link({
   size: 'sm',
   variant: 'primary',
   attr: {
-    href: '../index.html',
+    href: RoutePath.messenger,
   },
 });
 const emailField = new FormControl({
@@ -146,60 +145,59 @@ class RegistrationPage extends Block<RegistrationPageProps> {
   }
 }
 
-window.addEventListener('DOMContentLoaded', () => {
-  const registrationPage = new RegistrationPage({
-    button,
-    link,
-    emailField,
-    phoneField,
-    firstNameField,
-    secondNameField,
-    loginField,
-    passwordField,
-    repeatPasswordField,
-    notifications,
-    events: {
-      submit(e) {
-        e.preventDefault();
-        e.stopPropagation();
+export const registrationPage = new RegistrationPage({
+  button,
+  link,
+  emailField,
+  phoneField,
+  firstNameField,
+  secondNameField,
+  loginField,
+  passwordField,
+  repeatPasswordField,
+  events: {
+    submit(e) {
+      e.preventDefault();
+      e.stopPropagation();
 
-        const {
-          email: { value: email },
-          phone: { value: phone },
-          first_name: { value: first_name },
-          second_name: { value: second_name },
-          login: { value: login },
-          password: { value: password },
-          repeat_password: { value: repeat_password },
-        } = e.target! as typeof e.target & {
-          email: { value: string };
-          phone: { value: string };
-          first_name: { value: string };
-          second_name: { value: string };
-          login: { value: string };
-          password: { value: string };
-          repeat_password: { value: string };
-        };
+      const {
+        email: { value: email },
+        phone: { value: phone },
+        first_name: { value: first_name },
+        second_name: { value: second_name },
+        login: { value: login },
+        password: { value: password },
+        repeat_password: { value: repeat_password },
+      } = e.target! as typeof e.target & {
+        email: { value: string };
+        phone: { value: string };
+        first_name: { value: string };
+        second_name: { value: string };
+        login: { value: string };
+        password: { value: string };
+        repeat_password: { value: string };
+      };
 
-        if (password !== repeat_password) {
-          notifications.addNotification('Пароли не совпадают', 'warning');
-          return;
-        }
+      if (password !== repeat_password) {
+        notifications.addNotification('Пароли не совпадают', 'warning');
+        return;
+      }
 
-        ((e.target! as HTMLFormElement).querySelectorAll('input') as NodeListOf<HTMLInputElement>).forEach(checkValidityInput);
+      ((e.target! as HTMLFormElement).querySelectorAll('input') as NodeListOf<HTMLInputElement>).forEach(checkValidityInput);
 
-        console.log({
-          email,
-          phone,
-          first_name,
-          second_name,
-          login,
-          password,
-          repeat_password,
-        });
-      },
+      const isCorrect = Array.from(
+        ((e.target as HTMLFormElement).querySelectorAll('input') as NodeListOf<HTMLInputElement>),
+      ).some((el) => el.checkValidity());
+      if (!isCorrect) return;
+      console.log({
+        email,
+        phone,
+        first_name,
+        second_name,
+        login,
+        password,
+        repeat_password,
+      });
     },
-  });
-
-  renderDom('#app', registrationPage);
+  },
 });
