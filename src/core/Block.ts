@@ -17,7 +17,7 @@ export class Block<P extends Record<string, any> = any> {
 
   private _element: HTMLElement | null = null;
 
-  private _meta: { tagName: string, props: P };
+  public _meta: { tagName: string, props: P };
 
   private eventBus: () => EventBus;
 

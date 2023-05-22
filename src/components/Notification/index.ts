@@ -7,7 +7,10 @@ const createNotification = (message: string, type: 'success' | 'error' | 'warnin
         <p class="notification__msg">{{message}}</p>
       </li>
   `;
-  template = template.replace('{{type}}', type).replace('{{message}}', message).replace('{{id}}', id);
+  template = template
+    .replace('{{type}}', type)
+    .replace('{{message}}', message)
+    .replace('{{id}}', id);
   fragment.innerHTML = template;
   return fragment.content;
 };

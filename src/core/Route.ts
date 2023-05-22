@@ -117,3 +117,5 @@ export class Router {
     route.render();
   }
 }
+
+export const routerApp = new Router('#app');

@@ -1,7 +1,7 @@
 import tpl from './index.hbs';
 import { Block } from '../../core/Block';
 import { Button } from '../../components/Button';
-import { Link } from '../../components/Link';
+import { NavLink } from '../../components/Link';
 import { FormControl } from '../../components/FormControl';
 import { checkRegexp } from '../../core/CheckRegexp';
 import { notifications } from '../../components/Notification';
@@ -35,14 +35,12 @@ const button = new Button({
     type: 'submit',
   },
 });
-const link = new Link({
-  text: 'Назад к чатам',
+const link = new NavLink({
+  text: 'Войти',
   addClass: 'auth-box__link',
   size: 'sm',
   variant: 'primary',
-  attr: {
-    href: RoutePath.messenger,
-  },
+  to: RoutePath.login,
 });
 const emailField = new FormControl({
   type: 'email',

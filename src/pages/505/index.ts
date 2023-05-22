@@ -1,6 +1,6 @@
 import tpl from './index.hbs';
 import { Block } from '../../core/Block';
-import { Link } from '../../components/Link';
+import { NavLink } from '../../components/Link';
 import { RoutePath } from '../../core/RoutePath';
 
 interface Error505PageProps {
@@ -25,13 +25,11 @@ class Error505Page extends Block<Error505PageProps> {
   }
 }
 
-const link = new Link({
+const link = new NavLink({
   text: 'Назад к чатам',
   variant: 'primary',
   size: 'sm',
-  attr: {
-    href: RoutePath.messenger,
-  },
+  to: RoutePath.login,
 });
 
 export const error505Page = new Error505Page({

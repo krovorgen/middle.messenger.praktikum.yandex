@@ -1,7 +1,7 @@
 import tpl from './index.hbs';
 import { Block } from '../../core/Block';
 import { LinkBack } from '../../components/LinkBack';
-import { Link } from '../../components/Link';
+import { NavLink } from '../../components/Link';
 import { EditedLabel } from '../../components/EditedLabel';
 import { ProfileAvatar } from '../../components/ProfileAvatar';
 import avatarStub from '../../../static/icons/not-avatar.svg';
@@ -75,7 +75,7 @@ const editedPhone = new EditedLabel({
   editable: false,
   value: '+7 (909) 967 30 30',
 });
-const editData = new Link({
+const editData = new NavLink({
   size: 'md',
   variant: 'primary',
   text: 'Изменить данные',
@@ -83,7 +83,7 @@ const editData = new Link({
     href: RoutePath.profileEditable,
   },
 });
-const editPassword = new Link({
+const editPassword = new NavLink({
   size: 'md',
   variant: 'primary',
   text: 'Изменить пароль',
@@ -91,7 +91,7 @@ const editPassword = new Link({
     href: RoutePath.profilePasswordEditable,
   },
 });
-const exitBtn = new Link({
+const exitBtn = new NavLink({
   size: 'md',
   variant: 'accent',
   text: 'Выйти',
