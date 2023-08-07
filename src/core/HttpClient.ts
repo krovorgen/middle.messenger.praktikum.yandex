@@ -14,7 +14,7 @@ export class HttpClient {
       xhr.setRequestHeader('Content-Type', 'application/json');
       xhr.onload = () => {
         if (xhr.status >= 200 && xhr.status < 300) {
-          resolve(JSON.parse(xhr.responseText));
+          resolve(xhr.responseText);
         } else {
           reject(xhr.responseText);
         }

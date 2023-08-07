@@ -9,6 +9,7 @@ import { showEventValidation } from '../../core/showEventValidation';
 import { checkValidityInput } from '../../core/checkValidityInput';
 import { RoutePath } from '../../core/RoutePath';
 import { AuthApi } from '../../api/Auth';
+import { routerApp } from '../../core/Route';
 
 interface LoginPageProps {
   button: Block
@@ -111,6 +112,8 @@ export const loginPage = new LoginPage({
 
       try {
         await apiAuth.login(login, password);
+        notifications.addNotification('Вход выполнен успешно', 'success');
+        routerApp.go(RoutePath.messenger);
       } catch (error: any) {
         notifications.addNotification(JSON.parse(error).reason, 'error');
       }

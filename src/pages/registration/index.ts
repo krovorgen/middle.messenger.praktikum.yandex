@@ -8,6 +8,8 @@ import { notifications } from '../../components/Notification';
 import { showEventValidation } from '../../core/showEventValidation';
 import { checkValidityInput } from '../../core/checkValidityInput';
 import { RoutePath } from '../../core/RoutePath';
+import { AuthApi } from '../../api/Auth';
+import { routerApp } from '../../core/Route';
 
 interface RegistrationPageProps {
   button: Block
@@ -154,9 +156,10 @@ export const registrationPage = new RegistrationPage({
   passwordField,
   repeatPasswordField,
   events: {
-    submit(e) {
+    async submit(e) {
       e.preventDefault();
       e.stopPropagation();
+      const apiAuth = new AuthApi();
 
       const {
         email: { value: email },
@@ -187,6 +190,21 @@ export const registrationPage = new RegistrationPage({
         ((e.target as HTMLFormElement).querySelectorAll('input') as NodeListOf<HTMLInputElement>),
       ).some((el) => el.checkValidity());
       if (!isCorrect) return;
+
+      try {
+        await apiAuth.registration(
+          email,
+          phone,
+          first_name,
+          second_name,
+          login,
+          password,
+        );
+        notifications.addNotification('Регистрация прошла успешно', 'success');
+        routerApp.go(RoutePath.messenger);
+      } catch (error: any) {
+        notifications.addNotification(JSON.parse(error).reason, 'error');
+      }
       console.log({
         email,
         phone,
