@@ -79,25 +79,19 @@ const editData = new NavLink({
   size: 'md',
   variant: 'primary',
   text: 'Изменить данные',
-  attr: {
-    href: RoutePath.profileEditable,
-  },
+  to: RoutePath.profileEditable,
 });
 const editPassword = new NavLink({
   size: 'md',
   variant: 'primary',
   text: 'Изменить пароль',
-  attr: {
-    href: RoutePath.profilePasswordEditable,
-  },
+  to: RoutePath.profilePasswordEditable,
 });
 const exitBtn = new NavLink({
   size: 'md',
   variant: 'accent',
   text: 'Выйти',
-  attr: {
-    href: RoutePath.login,
-  },
+  to: RoutePath.login,
 });
 
 export const profilePage = new ProfilePage('div', {
