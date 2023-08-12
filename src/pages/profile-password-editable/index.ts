@@ -11,19 +11,15 @@ import { showEventValidation } from '../../core/showEventValidation';
 import { Modal } from '../../core/Modal';
 import { LoadImg } from '../../components/AvatarLoading';
 import { checkValidityInput } from '../../core/checkValidityInput';
+import { ComponentPropsType } from '../../types/componentPropsType';
 
-interface ProfilePasswordEditablePageProps {
+interface ProfilePasswordEditablePageProps extends ComponentPropsType {
   linkBack: Block
   profileAvatar: Block
   oldPasswordInput: Block
   newPasswordInput: Block
   repeatPasswordInput: Block
   saveBtn: Block
-  addClass?: string
-  attr?: Record<string, string>
-  events: {
-    submit: (e: SubmitEvent) => void
-  }
 }
 
 class ProfilePasswordEditablePage extends Block<ProfilePasswordEditablePageProps> {
@@ -95,7 +91,7 @@ const saveBtn = new Button({
   },
 });
 
-export const profilePasswordEditablePage = new ProfilePasswordEditablePage('div', {
+export const profilePasswordEditablePage = new ProfilePasswordEditablePage({
   linkBack,
   profileAvatar,
   oldPasswordInput,
@@ -103,7 +99,7 @@ export const profilePasswordEditablePage = new ProfilePasswordEditablePage('div'
   repeatPasswordInput,
   saveBtn,
   events: {
-    submit(e) {
+    submit(e: SubmitEvent) {
       e.preventDefault();
       e.stopPropagation();
 

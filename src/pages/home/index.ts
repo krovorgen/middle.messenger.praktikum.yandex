@@ -11,9 +11,9 @@ import { checkRegexp } from '../../core/CheckRegexp';
 import { checkValidityInput } from '../../core/checkValidityInput';
 import { Modal } from '../../core/Modal';
 import { LoadImg } from '../../components/AvatarLoading';
+import { ComponentPropsType } from '../../types/componentPropsType';
 
-interface HomePageProps {
-  addClass?: string
+interface HomePageProps extends ComponentPropsType {
   emptyChooseMessage: Block
   dialogItem: Block
   dateMessages: Block
@@ -21,21 +21,10 @@ interface HomePageProps {
   opponentMessage: Block
   contentMessage: Block
   formSendMessage: Block
-  attr?: Record<string, string>
   isSelectedMessage: boolean
 }
 
 class HomePage extends Block<HomePageProps> {
-  constructor(props: HomePageProps) {
-    super('div', {
-      ...props,
-      attr: {
-        class: `column ${props.addClass ?? ''}`,
-        ...props.attr,
-      },
-    });
-  }
-
   render() {
     return this.compile(tpl, this.props);
   }

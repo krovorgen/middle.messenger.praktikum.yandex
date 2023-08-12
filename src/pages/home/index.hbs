@@ -1,22 +1,24 @@
-<div class="column__left">
-    <a href="/settings" class="profile-link">
-        Мой профиль
-    </a>
-    <ul class="dialog-items">
-        {{{ dialogItem }}}
-    </ul>
+<div class="column {{addClass}}">
+    <div class="column__left">
+        <a href="/settings" class="profile-link">
+            Мой профиль
+        </a>
+        <ul class="dialog-items">
+            {{{ dialogItem }}}
+        </ul>
+    </div>
+    <div class="column__center">
+        {{#if isSelectedMessage}}
+            <div class="messages-items">
+                {{{ dateMessages }}}
+                {{{ myMessage }}}
+                {{{ opponentMessage }}}
+                {{{ contentMessage }}}
+            </div>
+            {{{ formSendMessage }}}
+        {{else}}
+            {{{ emptyChooseMessage }}}
+        {{/if}}
+    </div>
+    {{{ notifications }}}
 </div>
-<div class="column__center">
-    {{#if isSelectedMessage}}
-        <div class="messages-items">
-            {{{ dateMessages }}}
-            {{{ myMessage }}}
-            {{{ opponentMessage }}}
-            {{{ contentMessage }}}
-        </div>
-        {{{ formSendMessage }}}
-    {{else}}
-        {{{ emptyChooseMessage }}}
-    {{/if}}
-</div>
-{{{ notifications }}}

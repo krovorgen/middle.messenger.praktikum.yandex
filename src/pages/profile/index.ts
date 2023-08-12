@@ -8,8 +8,9 @@ import avatarStub from '../../../static/icons/not-avatar.svg';
 import { Modal } from '../../core/Modal';
 import { LoadImg } from '../../components/AvatarLoading';
 import { RoutePath } from '../../core/RoutePath';
+import { ComponentPropsType } from '../../types/componentPropsType';
 
-interface ProfilePageProps {
+interface ProfilePageProps extends ComponentPropsType {
   linkBack: Block
   profileAvatar: Block
   editedEmail: Block
@@ -21,8 +22,6 @@ interface ProfilePageProps {
   editData: Block
   editPassword: Block
   exitBtn: Block
-  addClass?: string
-  attr?: Record<string, string>
 }
 
 class ProfilePage extends Block<ProfilePageProps> {
@@ -94,7 +93,7 @@ const exitBtn = new NavLink({
   to: RoutePath.login,
 });
 
-export const profilePage = new ProfilePage('div', {
+export const profilePage = new ProfilePage({
   linkBack,
   profileAvatar,
   editedEmail,

@@ -2,24 +2,13 @@ import tpl from './index.hbs';
 import { Block } from '../../core/Block';
 import { NavLink } from '../../components/Link';
 import { RoutePath } from '../../core/RoutePath';
+import { ComponentPropsType } from '../../types/componentPropsType';
 
-interface Error505PageProps {
-  addClass?: string
-  attr?: Record<string, string>
+interface Error505PageProps extends ComponentPropsType {
   link: Block
 }
 
 class Error505Page extends Block<Error505PageProps> {
-  constructor(props: Error505PageProps) {
-    super('div', {
-      ...props,
-      attr: {
-        class: `error-page ${props.addClass ?? ''}`,
-        ...props.attr,
-      },
-    });
-  }
-
   render() {
     return this.compile(tpl, this.props);
   }

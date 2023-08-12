@@ -17,11 +17,11 @@ export class Block<P extends Record<string, any> = any> {
 
   private _element: HTMLElement | null = null;
 
-  public _meta: { tagName: string, props: P };
+  public _meta: { props: P };
 
   private eventBus: () => EventBus;
 
-  constructor(tagName = 'div', propsWithChildren: P) {
+  constructor(propsWithChildren: P) {
     const eventBus = new EventBus();
 
     const { children, props } = this._getChildrenAndProps(propsWithChildren);
@@ -31,7 +31,6 @@ export class Block<P extends Record<string, any> = any> {
     this._children = this._makePropsProxy(children);
     this.props = this._makePropsProxy(props) as P;
     this._meta = {
-      tagName,
       props,
     };
 
@@ -57,31 +56,59 @@ export class Block<P extends Record<string, any> = any> {
   }
 
   _registerEvents(eventBus: EventBus) {
-    eventBus.on(Block.EVENTS.INIT, this.init.bind(this));
+    eventBus.on(Block.EVENTS.INIT, this._init.bind(this));
     eventBus.on(Block.EVENTS.FLOW_CDM, this._componentDidMount.bind(this));
     eventBus.on(Block.EVENTS.FLOW_CDU, this._componentDidUpdate.bind(this));
     eventBus.on(Block.EVENTS.FLOW_RENDER, this._render.bind(this));
   }
 
-  _createResources() {
-    const { tagName } = this._meta;
-    this._element = this._createDocumentElement(tagName);
+  private _init() {
+    this.init();
+
     this.eventBus().emit(Block.EVENTS.FLOW_RENDER);
   }
 
   init() {
-    this._createResources();
   }
 
-  _createDocumentElement(tagName: string) {
-    return document.createElement(tagName);
+  _componentDidMount() {
+    this.componentDidMount();
+
+    Object.values(this._children).forEach((child) => {
+      if (Array.isArray(child)) {
+        child.forEach((ch) => ch.dispatchComponentDidMount());
+      } else {
+        child.dispatchComponentDidMount();
+      }
+    });
+  }
+
+  componentDidMount() {}
+
+  _componentDidUpdate(oldProps: P, newProps: P) {
+    const isReRender = this.componentDidUpdate(oldProps, newProps);
+    if (!isReRender) {
+      return;
+    }
+    this.eventBus().emit(Block.EVENTS.FLOW_RENDER);
+  }
+
+  componentDidUpdate(oldProps: P, newProps: P) {
+    console.log(oldProps, newProps);
+    return true;
   }
 
   _render() {
-    const block = this.render();
-    this._removeEvents();
-    this._element!.innerHTML = '';
-    this._element!.appendChild(block);
+    const fragment = this.render();
+
+    const newElement = fragment.firstElementChild as HTMLElement;
+
+    if (this._element && newElement) {
+      this._element.replaceWith(newElement);
+    }
+
+    this._element = newElement;
+
     this._addEvents();
     this._addAttribute();
   }
@@ -162,35 +189,8 @@ export class Block<P extends Record<string, any> = any> {
     return temp.content;
   }
 
-  _componentDidMount() {
-    this.componentDidMount();
-
-    Object.values(this._children).forEach((child) => {
-      if (Array.isArray(child)) {
-        child.forEach((ch) => ch.dispatchComponentDidMount());
-      } else {
-        child.dispatchComponentDidMount();
-      }
-    });
-  }
-
-  componentDidMount() {}
-
   dispatchComponentDidMount() {
     this.eventBus().emit(Block.EVENTS.FLOW_CDM);
-  }
-
-  _componentDidUpdate(oldProps: P, newProps: P) {
-    const isReRender = this.componentDidUpdate(oldProps, newProps);
-    if (!isReRender) {
-      return;
-    }
-    this.eventBus().emit(Block.EVENTS.FLOW_RENDER);
-  }
-
-  componentDidUpdate(oldProps: P, newProps: P) {
-    console.log(oldProps, newProps);
-    return true;
   }
 
   setProps = (nextProps: Partial<P>) => {

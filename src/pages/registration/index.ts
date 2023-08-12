@@ -10,12 +10,11 @@ import { checkValidityInput } from '../../core/checkValidityInput';
 import { RoutePath } from '../../core/RoutePath';
 import { AuthApi } from '../../api/Auth';
 import { routerApp } from '../../core/Route';
+import { ComponentPropsType } from '../../types/componentPropsType';
 
-interface RegistrationPageProps {
+interface RegistrationPageProps extends ComponentPropsType {
   button: Block
   link: Block
-  addClass?: string
-  attr?: Record<string, string>
   emailField: Block
   phoneField: Block
   firstNameField: Block
@@ -130,16 +129,6 @@ const repeatPasswordField = new FormControl({
 });
 
 class RegistrationPage extends Block<RegistrationPageProps> {
-  constructor(props: RegistrationPageProps) {
-    super('div', {
-      ...props,
-      attr: {
-        class: `auth-box ${props.addClass ?? ''}`,
-        ...props.attr,
-      },
-    });
-  }
-
   render() {
     return this.compile(tpl, this.props);
   }
@@ -156,7 +145,7 @@ export const registrationPage = new RegistrationPage({
   passwordField,
   repeatPasswordField,
   events: {
-    async submit(e) {
+    async submit(e: SubmitEvent) {
       e.preventDefault();
       e.stopPropagation();
       const apiAuth = new AuthApi();
@@ -184,7 +173,7 @@ export const registrationPage = new RegistrationPage({
         return;
       }
 
-      ((e.target! as HTMLFormElement).querySelectorAll('input') as NodeListOf<HTMLInputElement>).forEach(checkValidityInput);
+      ((e.target as HTMLFormElement).querySelectorAll('input') as NodeListOf<HTMLInputElement>).forEach(checkValidityInput);
 
       const isCorrect = Array.from(
         ((e.target as HTMLFormElement).querySelectorAll('input') as NodeListOf<HTMLInputElement>),

@@ -10,30 +10,19 @@ import { checkValidityInput } from '../../core/checkValidityInput';
 import { RoutePath } from '../../core/RoutePath';
 import { AuthApi } from '../../api/Auth';
 import { routerApp } from '../../core/Route';
+import { ComponentPropsType } from '../../types/componentPropsType';
 
-interface LoginPageProps {
+interface LoginPageProps extends ComponentPropsType {
   button: Block
   link: Block
   loginField: Block
   passwordField: Block
-  addClass?: string
-  attr?: Record<string, string>
   events: {
     submit: (e: SubmitEvent) => void
   }
 }
 
-class LoginPage extends Block<LoginPageProps> {
-  constructor(props: LoginPageProps) {
-    super('div', {
-      ...props,
-      attr: {
-        class: `auth-box ${props.addClass ?? ''}`,
-        ...props.attr,
-      },
-    });
-  }
-
+class LoginPage extends Block< LoginPageProps> {
   render() {
     return this.compile(tpl, this.props);
   }

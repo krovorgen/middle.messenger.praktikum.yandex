@@ -1,7 +1,10 @@
-<p class="message__text">
-    {{text}}
-    Lorem ipsum dolor sit amet, consectetur adipisicing elit. At beatae corporis cumque eligendi, et facere, fugit id, ipsum laboriosam laborum nihil obcaecati officiis porro totam veritatis. Commodi debitis ipsam totam!
-</p>
-<p class="message__time">
-    {{time}}
-</p>
+<div class="message {{addClass}} {{#if myMessage}}message--my{{else}}message--opponent{{/if}}">
+    <p class="message__text">
+        {{text}}
+        Lorem ipsum dolor sit amet, consectetur adipisicing elit. At beatae corporis cumque eligendi, et facere, fugit
+        id, ipsum laboriosam laborum nihil obcaecati officiis porro totam veritatis. Commodi debitis ipsam totam!
+    </p>
+    <p class="message__time">
+        {{time}}
+    </p>
+</div>

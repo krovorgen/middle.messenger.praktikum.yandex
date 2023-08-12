@@ -1,4 +1,6 @@
-<img src="{{imgPath}}" alt="Картинка">
-<p class="content-message__time">
-    {{time}}
-</p>
+<div class="content-message {{addClass}} {{#if myMessage}}content-message--my{{else}}content-message--opponent{{/if}}">
+    <img src="{{imgPath}}" alt="Картинка">
+    <p class="content-message__time">
+        {{time}}
+    </p>
+</div>

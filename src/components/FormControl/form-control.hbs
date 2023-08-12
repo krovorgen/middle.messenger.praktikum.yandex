@@ -1,14 +1,16 @@
-<input
-    class="form-control__input"
-    type="{{type}}"
-    name="{{name}}"
-    pattern="{{pattern}}"
-    title="{{inputTitle}}"
-    placeholder="{{placeholder}}"
-    autocomplete="off"
->
-{{#if errorMsg}}
-    <span class="form-control__error-msg">
-        {{errorMsg}}
-    </span>
-{{/if}}
+<label class="form-control {{addClass}} {{#if center}}form-control--error{{/if}}">
+    <input
+            class="form-control__input"
+            type="{{type}}"
+            name="{{name}}"
+            pattern="{{pattern}}"
+            title="{{inputTitle}}"
+            placeholder="{{placeholder}}"
+            autocomplete="off"
+    >
+    {{#if errorMsg}}
+        <span class="form-control__error-msg">
+            {{errorMsg}}
+        </span>
+    {{/if}}
+</label>

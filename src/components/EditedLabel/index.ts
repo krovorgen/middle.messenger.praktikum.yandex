@@ -1,7 +1,8 @@
 import tpl from './edited-label.hbs';
 import { Block } from '../../core/Block';
+import { ComponentPropsType } from '../../types/componentPropsType';
 
-interface EditedLabelProps {
+interface EditedLabelProps extends ComponentPropsType {
   text: string
   editable: boolean
   inputPattern?: string
@@ -9,8 +10,6 @@ interface EditedLabelProps {
   type?: string
   name?: string
   value: string
-  addClass?: string
-  attr?: Record<string, string>
   events?: {
     blur: (el: Event) => void
     focus: (el: Event) => void
@@ -18,16 +17,6 @@ interface EditedLabelProps {
 }
 
 export class EditedLabel extends Block<EditedLabelProps> {
-  constructor(props: EditedLabelProps) {
-    super('label', {
-      ...props,
-      attr: {
-        class: `edited-label ${props.addClass ?? ''}`,
-        ...props.attr,
-      },
-    });
-  }
-
   _addEvents() {
     const input = this.element.querySelector('input');
     if (input && this.props.events?.blur) {

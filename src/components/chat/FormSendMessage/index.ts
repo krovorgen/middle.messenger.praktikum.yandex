@@ -1,11 +1,10 @@
 import { Block } from '../../../core/Block';
 import tpl from './form-send-message.hbs';
+import { ComponentPropsType } from '../../../types/componentPropsType';
 
-interface FormSendMessageProps {
+interface FormSendMessageProps extends ComponentPropsType {
   inputPattern: string
   inputTitle: string
-  addClass?: string
-  attr?: Record<string, string>
   events: {
     submit: (e: SubmitEvent) => void
     uploadFile: () => void
@@ -13,16 +12,6 @@ interface FormSendMessageProps {
 }
 
 export class FormSendMessage extends Block<FormSendMessageProps> {
-  constructor(props: FormSendMessageProps) {
-    super('div', {
-      ...props,
-      attr: {
-        class: `form-send-message ${props.addClass ?? ''}`,
-        ...props.attr,
-      },
-    });
-  }
-
   _addEvents() {
     const form: HTMLFormElement = this.element.querySelector('.form-send-message__form')!;
     const uploadFileBtn: HTMLButtonElement = form.querySelector('.form-send-message__file')!;

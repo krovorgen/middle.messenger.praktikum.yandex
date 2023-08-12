@@ -10,8 +10,9 @@ import { showEventValidation } from '../../core/showEventValidation';
 import { LoadImg } from '../../components/AvatarLoading';
 import { Modal } from '../../core/Modal';
 import { checkValidityInput } from '../../core/checkValidityInput';
+import { ComponentPropsType } from '../../types/componentPropsType';
 
-interface ProfileEditablePageProps {
+interface ProfileEditablePageProps extends ComponentPropsType {
   linkBack: Block
   profileAvatar: Block
   saveBtn: Block
@@ -21,11 +22,6 @@ interface ProfileEditablePageProps {
   editedSecondName: Block
   editedDisplayName: Block
   editedPhone: Block
-  addClass?: string
-  attr?: Record<string, string>
-  events: {
-    submit: (e: SubmitEvent) => void
-  }
 }
 
 class ProfileEditablePage extends Block<ProfileEditablePageProps> {
@@ -136,7 +132,7 @@ const saveBtn = new Button({
   },
 });
 
-export const profileEditablePage = new ProfileEditablePage('div', {
+export const profileEditablePage = new ProfileEditablePage({
   linkBack,
   profileAvatar,
   editedEmail,

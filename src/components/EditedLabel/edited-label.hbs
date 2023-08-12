@@ -1,18 +1,20 @@
-<span class="edited-label__label">
-    {{text}}
-</span>
-{{#if editable}}
-    <input
-        class="edited-label__input"
-        type="{{type}}"
-        name="{{name}}"
-        value="{{value}}"
-        pattern="{{inputPattern}}"
-        title="{{inputTitle}}"
-        autocomplete="off"
-    >
-{{else}}
-    <span class="edited-label__value">
-        {{value}}
+<label class="edited-label {{addClass}}">
+    <span class="edited-label__label">
+        {{text}}
     </span>
-{{/if}}
+    {{#if editable}}
+        <input
+            class="edited-label__input"
+            type="{{type}}"
+            name="{{name}}"
+            value="{{value}}"
+            pattern="{{inputPattern}}"
+            title="{{inputTitle}}"
+            autocomplete="off"
+        >
+    {{else}}
+        <span class="edited-label__value">
+            {{value}}
+        </span>
+    {{/if}}
+</label>
