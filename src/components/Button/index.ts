@@ -5,7 +5,7 @@ import { ComponentPropsType } from '../../types/componentPropsType';
 interface ButtonProps extends ComponentPropsType {
   text: string
   size: 'sm'
-  variant: 'primary'
+  variant: 'primary' | 'ghost'
   center?: boolean
 }
 

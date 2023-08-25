@@ -1,5 +1,6 @@
 import { v4 } from 'uuid';
 import { EventBus } from './EventBus';
+import { isEqual } from './isEqual';
 
 export class Block<P extends Record<string, any> = any> {
   static EVENTS = {
@@ -94,8 +95,7 @@ export class Block<P extends Record<string, any> = any> {
   }
 
   componentDidUpdate(oldProps: P, newProps: P) {
-    console.log(oldProps, newProps);
-    return true;
+    return !isEqual(oldProps, newProps);
   }
 
   _render() {

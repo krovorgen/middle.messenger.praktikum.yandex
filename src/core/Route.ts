@@ -2,6 +2,10 @@ import { renderDom } from './renderDom';
 import { Block } from './Block';
 import { RoutePath } from './RoutePath';
 
+export interface BlockConstructable<P extends Record<string, any> = any> {
+  new(props: P): Block<P>;
+}
+
 function isEqual(lhs: string, rhs: string): boolean {
   return lhs === rhs;
 }
@@ -11,7 +15,7 @@ export class Route {
 
   constructor(
     private _pathname: string,
-    private readonly _blockClass: Block,
+    private readonly _blockClass: BlockConstructable,
     private readonly _rootQuery: string,
   ) {
   }
@@ -24,9 +28,7 @@ export class Route {
   }
 
   leave() {
-    if (this._block) {
-      this._block.hide();
-    }
+    this._block = null;
   }
 
   match(pathname: string) {
@@ -35,7 +37,9 @@ export class Route {
 
   render() {
     if (!this._block) {
-      renderDom(this._rootQuery, this._blockClass);
+      this._block = new this._blockClass({});
+
+      renderDom(this._rootQuery, this._block);
     }
   }
 }
@@ -60,7 +64,7 @@ export class Router {
     Router.__instance = this;
   }
 
-  use(pathname: string, block: Block) {
+  use(pathname: string, block: BlockConstructable) {
     const route = new Route(pathname, block, this._rootQuery);
 
     this.routes.push(route);
@@ -109,12 +113,11 @@ export class Router {
   }
 
   render404() {
-    const route = this.routes.find((r) => r.match(RoutePath.page404))!;
+    const route = this.getRoute(RoutePath.page404);
     if (!route) {
       throw new Error('Неверный url страницы ошибки');
     }
-    this._currentRoute = route;
-    route.render();
+    this.go(RoutePath.page404);
   }
 }
 

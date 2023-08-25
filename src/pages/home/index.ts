@@ -14,66 +14,54 @@ import { LoadImg } from '../../components/AvatarLoading';
 import { ComponentPropsType } from '../../types/componentPropsType';
 
 interface HomePageProps extends ComponentPropsType {
-  emptyChooseMessage: Block
-  dialogItem: Block
-  dateMessages: Block
-  myMessage: Block
-  opponentMessage: Block
-  contentMessage: Block
-  formSendMessage: Block
   isSelectedMessage: boolean
 }
 
-class HomePage extends Block<HomePageProps> {
+class HomePageComponent extends Block<HomePageProps> {
+  init() {
+    this._children.emptyChooseMessage = new EmptyChooseMessage({});
+    this._children.dateMessages = new DateMessages({ text: '17 Января' });
+    this._children.myMessage = new Message({ text: '17 Января', time: '17:00', myMessage: true });
+    this._children.opponentMessage = new Message({ text: '17 Января', time: '17:00' });
+    this._children.contentMessage = new ContentMessage({
+      imgPath: 'https://ethnomir.ru/upload/medialibrary/a8a/otkuda_vzyalis_khaski_1.jpg',
+      time: '17:00',
+      myMessage: true,
+    });
+
+    this._children.formSendMessage = new FormSendMessage({
+      inputPattern: checkRegexp.message.pattern,
+      inputTitle: checkRegexp.message.msg,
+      events: {
+        submit(e) {
+          e.preventDefault();
+          e.stopPropagation();
+
+          const { message: { value: message } } = e.target! as typeof e.target & {
+            message: { value: string };
+          };
+
+          ((e.target! as HTMLFormElement).querySelectorAll('input') as NodeListOf<HTMLInputElement>).forEach(checkValidityInput);
+
+          console.log(message);
+        },
+        uploadFile() {
+          new Modal().show(
+            new LoadImg({}).getContent(),
+          );
+        },
+      },
+    });
+    this._children.dialogItem = new DialogItem({
+      avatarUrl: notAvatarImagePath,
+    });
+
+    this.props.isSelectedMessage = false;
+  }
+
   render() {
     return this.compile(tpl, this.props);
   }
 }
 
-const emptyChooseMessage = new EmptyChooseMessage({});
-const dateMessages = new DateMessages({ text: '17 Января' });
-const myMessage = new Message({ text: '17 Января', time: '17:00', myMessage: true });
-const opponentMessage = new Message({ text: '17 Января', time: '17:00' });
-const contentMessage = new ContentMessage({
-  imgPath: 'https://ethnomir.ru/upload/medialibrary/a8a/otkuda_vzyalis_khaski_1.jpg',
-  time: '17:00',
-  myMessage: true,
-});
-
-const formSendMessage = new FormSendMessage({
-  inputPattern: checkRegexp.message.pattern,
-  inputTitle: checkRegexp.message.msg,
-  events: {
-    submit(e) {
-      e.preventDefault();
-      e.stopPropagation();
-
-      const { message: { value: message } } = e.target! as typeof e.target & {
-        message: { value: string };
-      };
-
-      ((e.target! as HTMLFormElement).querySelectorAll('input') as NodeListOf<HTMLInputElement>).forEach(checkValidityInput);
-
-      console.log(message);
-    },
-    uploadFile() {
-      new Modal().show(
-        new LoadImg({}).getContent(),
-      );
-    },
-  },
-});
-const dialogItem = new DialogItem({
-  avatarUrl: notAvatarImagePath,
-});
-
-export const homePage = new HomePage({
-  emptyChooseMessage,
-  dialogItem,
-  dateMessages,
-  myMessage,
-  opponentMessage,
-  contentMessage,
-  formSendMessage,
-  isSelectedMessage: true,
-});
+export const HomePage = HomePageComponent;

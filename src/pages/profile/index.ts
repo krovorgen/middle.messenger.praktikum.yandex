@@ -9,11 +9,12 @@ import { Modal } from '../../core/Modal';
 import { LoadImg } from '../../components/AvatarLoading';
 import { RoutePath } from '../../core/RoutePath';
 import { ComponentPropsType } from '../../types/componentPropsType';
+import { Button } from '../../components/Button';
+import { authController } from '../../controllers/auth.controller';
+import { IUser, withStore } from '../../core/Store';
 
-interface ProfilePageProps extends ComponentPropsType {
-  linkBack: Block
+interface ProfilePageProps extends ComponentPropsType, IUser {
   profileAvatar: Block
-  editedEmail: Block
   editedLogin: Block
   editedFirstName: Block
   editedSecondName: Block
@@ -24,85 +25,84 @@ interface ProfilePageProps extends ComponentPropsType {
   exitBtn: Block
 }
 
-class ProfilePage extends Block<ProfilePageProps> {
+class ProfilePageComponent extends Block<ProfilePageProps> {
+  init() {
+    this._children.editedEmail = new EditedLabel({
+      text: 'Почта',
+      editable: false,
+      value: this.props.email ?? '',
+    });
+    this._children.linkBack = new LinkBack({});
+    this._children.editedLogin = new EditedLabel({
+      text: 'Логин',
+      editable: false,
+      value: this.props.login ?? '',
+    });
+    this._children.editedFirstName = new EditedLabel({
+      text: 'Имя',
+      editable: false,
+      value: this.props.first_name ?? '',
+    });
+    this._children.editedSecondName = new EditedLabel({
+      text: 'Фамилия',
+      editable: false,
+      value: this.props.second_name ?? '',
+    });
+    this._children.editedDisplayName = new EditedLabel({
+      text: 'Имя в чате',
+      editable: false,
+      value: this.props.display_name ?? '',
+    });
+    this._children.editedPhone = new EditedLabel({
+      text: 'Телефон',
+      editable: false,
+      value: this.props.phone ?? '',
+    });
+    this._children.editData = new NavLink({
+      size: 'md',
+      variant: 'primary',
+      text: 'Изменить данные',
+      to: RoutePath.profileEditable,
+    });
+    this._children.editPassword = new NavLink({
+      size: 'md',
+      variant: 'primary',
+      text: 'Изменить пароль',
+      to: RoutePath.profilePasswordEditable,
+    });
+    this._children.exitBtn = new Button({
+      size: 'sm',
+      variant: 'ghost',
+      text: 'Выйти',
+      events: {
+        click: async () => {
+          await authController.logout();
+        },
+      },
+    });
+
+    const modal = new Modal();
+    const loadImg = new LoadImg({});
+    this._children.profileAvatar = new ProfileAvatar({
+      avatarPath: avatarStub,
+      login: this.props.first_name ?? '',
+      events: {
+        click: () => {
+          modal.show(
+            loadImg.getContent(),
+          );
+        },
+      },
+    });
+
+    console.log('this.props.email', this.props.email);
+  }
+
   render() {
     return this.compile(tpl, this.props);
   }
 }
 
-const modal = new Modal();
-const linkBack = new LinkBack({});
-const loadImg = new LoadImg({});
-const profileAvatar = new ProfileAvatar({
-  avatarPath: avatarStub,
-  login: 'Иван',
-  events: {
-    click: () => {
-      modal.show(
-        loadImg.getContent(),
-      );
-    },
-  },
-});
-const editedEmail = new EditedLabel({
-  text: 'Почта',
-  editable: false,
-  value: 'pochta@yandex.ru',
-});
-const editedLogin = new EditedLabel({
-  text: 'Логин',
-  editable: false,
-  value: 'ivanivanov',
-});
-const editedFirstName = new EditedLabel({
-  text: 'Имя',
-  editable: false,
-  value: 'Иван',
-});
-const editedSecondName = new EditedLabel({
-  text: 'Фамилия',
-  editable: false,
-  value: 'Иванов',
-});
-const editedDisplayName = new EditedLabel({
-  text: 'Имя в чате',
-  editable: false,
-  value: 'Иван',
-});
-const editedPhone = new EditedLabel({
-  text: 'Телефон',
-  editable: false,
-  value: '+7 (909) 967 30 30',
-});
-const editData = new NavLink({
-  size: 'md',
-  variant: 'primary',
-  text: 'Изменить данные',
-  to: RoutePath.profileEditable,
-});
-const editPassword = new NavLink({
-  size: 'md',
-  variant: 'primary',
-  text: 'Изменить пароль',
-  to: RoutePath.profilePasswordEditable,
-});
-const exitBtn = new NavLink({
-  size: 'md',
-  variant: 'accent',
-  text: 'Выйти',
-  to: RoutePath.login,
-});
+const withUser = withStore((state) => ({ ...state.user }));
 
-export const profilePage = new ProfilePage({
-  linkBack,
-  profileAvatar,
-  editedEmail,
-  editedLogin,
-  editedFirstName,
-  editedSecondName,
-  editedDisplayName,
-  editedPhone,
-  editData,
-  editPassword,
-  exitBtn,
-});
+export const ProfilePage = withUser(ProfilePageComponent);

@@ -5,22 +5,21 @@ import { RoutePath } from '../../core/RoutePath';
 import { ComponentPropsType } from '../../types/componentPropsType';
 
 interface Error404PageProps extends ComponentPropsType {
-  link: Block
 }
 
-export class Error404Page extends Block<Error404PageProps> {
+class Error404PageComponent extends Block<Error404PageProps> {
+  init() {
+    this._children.link = new NavLink({
+      text: 'Назад к чатам',
+      variant: 'primary',
+      size: 'sm',
+      to: RoutePath.login,
+    });
+  }
+
   render() {
     return this.compile(tpl, this.props);
   }
 }
 
-const link = new NavLink({
-  text: 'Назад к чатам',
-  variant: 'primary',
-  size: 'sm',
-  to: RoutePath.login,
-});
-
-export const error404Page = new Error404Page({
-  link,
-});
+export const Error404Page = Error404PageComponent;

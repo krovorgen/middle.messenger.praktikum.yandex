@@ -12,13 +12,17 @@ export class HttpClient {
       const xhr = new XMLHttpRequest();
       xhr.open(method, url, true);
       xhr.setRequestHeader('Content-Type', 'application/json');
-      xhr.onload = () => {
-        if (xhr.status >= 200 && xhr.status < 300) {
-          resolve(xhr.responseText);
-        } else {
-          reject(xhr.responseText);
+      xhr.onreadystatechange = () => {
+        if (xhr.readyState === XMLHttpRequest.DONE) {
+          if (xhr.status < 400) {
+            resolve(xhr.response);
+          } else {
+            reject(xhr.response);
+          }
         }
       };
+      xhr.withCredentials = true;
+      xhr.responseType = 'json';
       xhr.onerror = () => reject(xhr.responseText);
       xhr.send(data ? JSON.stringify(data) : null);
     });

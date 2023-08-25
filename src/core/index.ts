@@ -1,21 +1,48 @@
 import { routerApp } from './Route';
-import { loginPage } from '../pages/login';
 import { RoutePath } from './RoutePath';
-import { homePage } from '../pages/home';
-import { error404Page } from '../pages/404';
-import { error505Page } from '../pages/505';
-import { registrationPage } from '../pages/registration';
-import { profilePage } from '../pages/profile';
-import { profileEditablePage } from '../pages/profile-editable';
-import { profilePasswordEditablePage } from '../pages/profile-password-editable';
+import { HomePage } from '../pages/home';
+import { ProfilePage } from '../pages/profile';
+import { authController } from '../controllers/auth.controller';
+import { Error404Page } from '../pages/404';
+import { Error505Page } from '../pages/505';
+import { LoginPage } from '../pages/login';
+import { RegistrationPage } from '../pages/registration';
+import { ProfileEditablePage } from '../pages/profile-editable';
+import { ProfilePasswordEditablePage } from '../pages/profile-password-editable';
 
-routerApp
-  .use(RoutePath.messenger, homePage)
-  .use(RoutePath.login, loginPage)
-  .use(RoutePath.registration, registrationPage)
-  .use(RoutePath.profile, profilePage)
-  .use(RoutePath.profileEditable, profileEditablePage)
-  .use(RoutePath.profilePasswordEditable, profilePasswordEditablePage)
-  .use(RoutePath.page404, error404Page)
-  .use(RoutePath.page505, error505Page)
-  .start();
+document.addEventListener('DOMContentLoaded', async () => {
+  routerApp
+    .use(RoutePath.messenger, HomePage)
+    .use(RoutePath.login, LoginPage)
+    .use(RoutePath.registration, RegistrationPage)
+    .use(RoutePath.profile, ProfilePage)
+    .use(RoutePath.profileEditable, ProfileEditablePage)
+    .use(RoutePath.profilePasswordEditable, ProfilePasswordEditablePage)
+    .use(RoutePath.page404, Error404Page)
+    .use(RoutePath.page505, Error505Page);
+
+  // заменить названия
+  let isProtectedRoute = true;
+
+  switch (window.location.pathname) {
+    case RoutePath.login:
+    case RoutePath.registration:
+      isProtectedRoute = false;
+      break;
+  }
+
+  try {
+    await authController.getUser();
+    routerApp.start();
+
+    if (!isProtectedRoute) {
+      routerApp.go(RoutePath.profile);
+    }
+  } catch (e) {
+    routerApp.start();
+
+    if (isProtectedRoute) {
+      routerApp.go(RoutePath.login);
+    }
+  }
+});

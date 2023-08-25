@@ -5,22 +5,21 @@ import { RoutePath } from '../../core/RoutePath';
 import { ComponentPropsType } from '../../types/componentPropsType';
 
 interface Error505PageProps extends ComponentPropsType {
-  link: Block
 }
 
-class Error505Page extends Block<Error505PageProps> {
+class Error505PageComponent extends Block<Error505PageProps> {
+  init() {
+    this._children.link = new NavLink({
+      text: 'Назад к чатам',
+      variant: 'primary',
+      size: 'sm',
+      to: RoutePath.login,
+    });
+  }
+
   render() {
     return this.compile(tpl, this.props);
   }
 }
 
-const link = new NavLink({
-  text: 'Назад к чатам',
-  variant: 'primary',
-  size: 'sm',
-  to: RoutePath.login,
-});
-
-export const error505Page = new Error505Page({
-  link,
-});
+export const Error505Page = Error505PageComponent;

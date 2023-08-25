@@ -8,201 +8,174 @@ import { notifications } from '../../components/Notification';
 import { showEventValidation } from '../../core/showEventValidation';
 import { checkValidityInput } from '../../core/checkValidityInput';
 import { RoutePath } from '../../core/RoutePath';
-import { AuthApi } from '../../api/Auth';
-import { routerApp } from '../../core/Route';
 import { ComponentPropsType } from '../../types/componentPropsType';
+import { authController } from '../../controllers/auth.controller';
 
 interface RegistrationPageProps extends ComponentPropsType {
-  button: Block
-  link: Block
-  emailField: Block
-  phoneField: Block
-  firstNameField: Block
-  secondNameField: Block
-  loginField: Block
-  passwordField: Block
-  repeatPasswordField: Block
-  events: {
-    submit: (e: SubmitEvent) => void
-  }
 }
 
-const button = new Button({
-  text: 'Зарегистрироваться',
-  addClass: 'auth-box__submit',
-  size: 'sm',
-  variant: 'primary',
-  attr: {
-    type: 'submit',
-  },
-});
-const link = new NavLink({
-  text: 'Войти',
-  addClass: 'auth-box__link',
-  size: 'sm',
-  variant: 'primary',
-  to: RoutePath.login,
-});
-const emailField = new FormControl({
-  type: 'email',
-  name: 'email',
-  placeholder: 'Почта',
-  addClass: 'auth-box__label',
-  pattern: checkRegexp.email.pattern,
-  inputTitle: checkRegexp.email.msg,
-  events: {
-    blur: showEventValidation,
-    focus: showEventValidation,
-  },
-});
-const phoneField = new FormControl({
-  type: 'tel',
-  name: 'phone',
-  placeholder: 'Телефон',
-  addClass: 'auth-box__label',
-  pattern: checkRegexp.phone.pattern,
-  inputTitle: checkRegexp.phone.msg,
-  events: {
-    blur: showEventValidation,
-    focus: showEventValidation,
-  },
-});
-const firstNameField = new FormControl({
-  type: 'text',
-  name: 'first_name',
-  placeholder: 'Имя',
-  addClass: 'auth-box__label',
-  pattern: checkRegexp.personalName.pattern,
-  inputTitle: checkRegexp.personalName.msg,
-  events: {
-    blur: showEventValidation,
-    focus: showEventValidation,
-  },
-});
-const secondNameField = new FormControl({
-  type: 'text',
-  name: 'second_name',
-  placeholder: 'Фамилия',
-  addClass: 'auth-box__label',
-  pattern: checkRegexp.personalName.pattern,
-  inputTitle: checkRegexp.personalName.msg,
-  events: {
-    blur: showEventValidation,
-    focus: showEventValidation,
-  },
-});
-const loginField = new FormControl({
-  type: 'text',
-  name: 'login',
-  placeholder: 'Логин',
-  addClass: 'auth-box__label',
-  pattern: checkRegexp.login.pattern,
-  inputTitle: checkRegexp.login.msg,
-  events: {
-    blur: showEventValidation,
-    focus: showEventValidation,
-  },
-});
-const passwordField = new FormControl({
-  type: 'password',
-  name: 'password',
-  placeholder: 'Пароль',
-  addClass: 'auth-box__label',
-  pattern: checkRegexp.password.pattern,
-  inputTitle: checkRegexp.password.msg,
-  events: {
-    blur: showEventValidation,
-    focus: showEventValidation,
-  },
-});
-const repeatPasswordField = new FormControl({
-  type: 'password',
-  name: 'repeat_password',
-  placeholder: 'Пароль (ещё раз)',
-  addClass: 'auth-box__label',
-  pattern: checkRegexp.password.pattern,
-  inputTitle: checkRegexp.password.msg,
-  events: {
-    blur: showEventValidation,
-    focus: showEventValidation,
-  },
-});
+class RegistrationPageComponent extends Block<RegistrationPageProps> {
+  init() {
+    this._children.button = new Button({
+      text: 'Зарегистрироваться',
+      addClass: 'auth-box__submit',
+      size: 'sm',
+      variant: 'primary',
+      attr: {
+        type: 'submit',
+      },
+    });
+    this._children.link = new NavLink({
+      text: 'Войти',
+      addClass: 'auth-box__link',
+      size: 'sm',
+      variant: 'primary',
+      to: RoutePath.login,
+    });
+    this._children.emailField = new FormControl({
+      type: 'email',
+      name: 'email',
+      placeholder: 'Почта',
+      addClass: 'auth-box__label',
+      pattern: checkRegexp.email.pattern,
+      inputTitle: checkRegexp.email.msg,
+      events: {
+        blur: showEventValidation,
+        focus: showEventValidation,
+      },
+    });
+    this._children.phoneField = new FormControl({
+      type: 'tel',
+      name: 'phone',
+      placeholder: 'Телефон',
+      addClass: 'auth-box__label',
+      pattern: checkRegexp.phone.pattern,
+      inputTitle: checkRegexp.phone.msg,
+      events: {
+        blur: showEventValidation,
+        focus: showEventValidation,
+      },
+    });
+    this._children.firstNameField = new FormControl({
+      type: 'text',
+      name: 'first_name',
+      placeholder: 'Имя',
+      addClass: 'auth-box__label',
+      pattern: checkRegexp.personalName.pattern,
+      inputTitle: checkRegexp.personalName.msg,
+      events: {
+        blur: showEventValidation,
+        focus: showEventValidation,
+      },
+    });
+    this._children.secondNameField = new FormControl({
+      type: 'text',
+      name: 'second_name',
+      placeholder: 'Фамилия',
+      addClass: 'auth-box__label',
+      pattern: checkRegexp.personalName.pattern,
+      inputTitle: checkRegexp.personalName.msg,
+      events: {
+        blur: showEventValidation,
+        focus: showEventValidation,
+      },
+    });
+    this._children.loginField = new FormControl({
+      type: 'text',
+      name: 'login',
+      placeholder: 'Логин',
+      addClass: 'auth-box__label',
+      pattern: checkRegexp.login.pattern,
+      inputTitle: checkRegexp.login.msg,
+      events: {
+        blur: showEventValidation,
+        focus: showEventValidation,
+      },
+    });
+    this._children.passwordField = new FormControl({
+      type: 'password',
+      name: 'password',
+      placeholder: 'Пароль',
+      addClass: 'auth-box__label',
+      pattern: checkRegexp.password.pattern,
+      inputTitle: checkRegexp.password.msg,
+      events: {
+        blur: showEventValidation,
+        focus: showEventValidation,
+      },
+    });
+    this._children.repeatPasswordField = new FormControl({
+      type: 'password',
+      name: 'repeat_password',
+      placeholder: 'Пароль (ещё раз)',
+      addClass: 'auth-box__label',
+      pattern: checkRegexp.password.pattern,
+      inputTitle: checkRegexp.password.msg,
+      events: {
+        blur: showEventValidation,
+        focus: showEventValidation,
+      },
+    });
+    this.props.events = {
+      async submit(e: SubmitEvent) {
+        e.preventDefault();
+        e.stopPropagation();
 
-class RegistrationPage extends Block<RegistrationPageProps> {
-  render() {
-    return this.compile(tpl, this.props);
-  }
-}
+        const {
+          email: { value: email },
+          phone: { value: phone },
+          first_name: { value: first_name },
+          second_name: { value: second_name },
+          login: { value: login },
+          password: { value: password },
+          repeat_password: { value: repeat_password },
+        } = e.target! as typeof e.target & {
+          email: { value: string };
+          phone: { value: string };
+          first_name: { value: string };
+          second_name: { value: string };
+          login: { value: string };
+          password: { value: string };
+          repeat_password: { value: string };
+        };
 
-export const registrationPage = new RegistrationPage({
-  button,
-  link,
-  emailField,
-  phoneField,
-  firstNameField,
-  secondNameField,
-  loginField,
-  passwordField,
-  repeatPasswordField,
-  events: {
-    async submit(e: SubmitEvent) {
-      e.preventDefault();
-      e.stopPropagation();
-      const apiAuth = new AuthApi();
+        if (password !== repeat_password) {
+          notifications.addNotification('Пароли не совпадают', 'warning');
+          return;
+        }
 
-      const {
-        email: { value: email },
-        phone: { value: phone },
-        first_name: { value: first_name },
-        second_name: { value: second_name },
-        login: { value: login },
-        password: { value: password },
-        repeat_password: { value: repeat_password },
-      } = e.target! as typeof e.target & {
-        email: { value: string };
-        phone: { value: string };
-        first_name: { value: string };
-        second_name: { value: string };
-        login: { value: string };
-        password: { value: string };
-        repeat_password: { value: string };
-      };
+        const arrayInputs = ((e.target as HTMLFormElement).querySelectorAll('input') as NodeListOf<HTMLInputElement>);
 
-      if (password !== repeat_password) {
-        notifications.addNotification('Пароли не совпадают', 'warning');
-        return;
-      }
+        arrayInputs.forEach(checkValidityInput);
 
-      ((e.target as HTMLFormElement).querySelectorAll('input') as NodeListOf<HTMLInputElement>).forEach(checkValidityInput);
+        const isCorrect = Array.from(arrayInputs).some((el) => el.checkValidity());
+        if (!isCorrect) return;
 
-      const isCorrect = Array.from(
-        ((e.target as HTMLFormElement).querySelectorAll('input') as NodeListOf<HTMLInputElement>),
-      ).some((el) => el.checkValidity());
-      if (!isCorrect) return;
-
-      try {
-        await apiAuth.registration(
+        await authController.registration({
           email,
           phone,
           first_name,
           second_name,
           login,
           password,
-        );
-        notifications.addNotification('Регистрация прошла успешно', 'success');
-        routerApp.go(RoutePath.messenger);
-      } catch (error: any) {
-        notifications.addNotification(JSON.parse(error).reason, 'error');
-      }
-      console.log({
-        email,
-        phone,
-        first_name,
-        second_name,
-        login,
-        password,
-        repeat_password,
-      });
-    },
-  },
-});
+        });
+
+        console.log({
+          email,
+          phone,
+          first_name,
+          second_name,
+          login,
+          password,
+          repeat_password,
+        });
+      },
+    };
+  }
+
+  render() {
+    return this.compile(tpl, this.props);
+  }
+}
+
+export const RegistrationPage = RegistrationPageComponent;
