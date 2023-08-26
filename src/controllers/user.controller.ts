@@ -3,6 +3,7 @@ import { routerApp } from '../core/Route';
 import { RoutePath } from '../core/RoutePath';
 import { userApi } from '../api/User';
 import { authController } from './auth.controller';
+import { store } from '../core/Store';
 
 export type UpdateUserDTOType = {
   first_name: string,
@@ -40,6 +41,17 @@ export class UserController {
     try {
       await this.api.updatePassword(data);
       notifications.addNotification('Пароль успешно обновлен', 'success');
+      routerApp.go(RoutePath.profile);
+    } catch (error: any) {
+      notifications.addNotification(error.reason, 'error');
+    }
+  };
+
+  updateAvatar = async (avatar: File) => {
+    try {
+      const user = await this.api.updateAvatar(avatar);
+      store.set('user', user);
+      notifications.addNotification('Аватар успешно обновлен', 'success');
       routerApp.go(RoutePath.profile);
     } catch (error: any) {
       notifications.addNotification(error.reason, 'error');

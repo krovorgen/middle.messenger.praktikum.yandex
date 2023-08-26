@@ -2,22 +2,22 @@ import { HttpClient } from '../core/HttpClient';
 import { LoginUserDTOType, RegistrationUserDTOType } from '../controllers/auth.controller';
 
 class Authorization {
-  private readonly instance = new HttpClient('https://ya-praktikum.tech/api/v2/auth');
+  private readonly instance = new HttpClient();
 
   login(data: LoginUserDTOType) {
-    return this.instance.post('/signin', data);
+    return this.instance.post('/auth/signin', data);
   }
 
   registration(data: RegistrationUserDTOType) {
-    return this.instance.post('/signup', data);
+    return this.instance.post('/auth/signup', data);
   }
 
   logout() {
-    return this.instance.post('/logout');
+    return this.instance.post('/auth/logout');
   }
 
   getUser() {
-    return this.instance.get('/user');
+    return this.instance.get('/auth/user');
   }
 }
 

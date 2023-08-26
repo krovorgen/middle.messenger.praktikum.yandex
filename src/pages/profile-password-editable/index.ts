@@ -8,22 +8,22 @@ import avatarStub from '../../../static/icons/not-avatar.svg';
 import { notifications } from '../../components/Notification';
 import { checkRegexp } from '../../core/CheckRegexp';
 import { showEventValidation } from '../../core/showEventValidation';
-import { Modal } from '../../core/Modal';
 import { LoadImg } from '../../components/AvatarLoading';
 import { checkValidityInput } from '../../core/checkValidityInput';
 import { ComponentPropsType } from '../../types/componentPropsType';
 import { userController } from '../../controllers/user.controller';
+import { modal } from '../../core/Modal';
+import { IUser, withStore } from '../../core/Store';
 
-interface ProfilePasswordEditablePageProps extends ComponentPropsType {
+interface ProfilePasswordEditablePageProps extends ComponentPropsType, IUser {
 }
 
 class ProfilePasswordEditablePageComponent extends Block<ProfilePasswordEditablePageProps> {
   init() {
-    const modal = new Modal();
     const loadImg = new LoadImg({});
     this._children.profileAvatar = new ProfileAvatar({
-      avatarPath: avatarStub,
-      login: 'Иван',
+      avatarPath: this.props.avatar ?? avatarStub,
+      login: this.props.first_name ?? '',
       events: {
         click: () => {
           modal.show(
@@ -128,4 +128,6 @@ class ProfilePasswordEditablePageComponent extends Block<ProfilePasswordEditable
   }
 }
 
-export const ProfilePasswordEditablePage = ProfilePasswordEditablePageComponent;
+const withUser = withStore((state) => ({ ...state.user }));
+
+export const ProfilePasswordEditablePage = withUser(ProfilePasswordEditablePageComponent);

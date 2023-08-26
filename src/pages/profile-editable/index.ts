@@ -8,7 +8,7 @@ import avatarStub from '../../../static/icons/not-avatar.svg';
 import { checkRegexp } from '../../core/CheckRegexp';
 import { showEventValidation } from '../../core/showEventValidation';
 import { LoadImg } from '../../components/AvatarLoading';
-import { Modal } from '../../core/Modal';
+import { modal } from '../../core/Modal';
 import { checkValidityInput } from '../../core/checkValidityInput';
 import { ComponentPropsType } from '../../types/componentPropsType';
 import { IUser, withStore } from '../../core/Store';
@@ -19,11 +19,10 @@ interface ProfileEditablePageProps extends ComponentPropsType, IUser {
 
 class ProfileEditablePageComponent extends Block<ProfileEditablePageProps> {
   init() {
-    const modal = new Modal();
     const loadImg = new LoadImg({});
     this._children.profileAvatar = new ProfileAvatar({
-      avatarPath: avatarStub,
-      login: 'Иван',
+      avatarPath: this.props.avatar ?? avatarStub,
+      login: this.props.first_name ?? '',
       events: {
         click: () => {
           modal.show(

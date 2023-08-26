@@ -9,9 +9,9 @@ import { ContentMessage } from '../../components/chat/ContentMessage';
 import { FormSendMessage } from '../../components/chat/FormSendMessage';
 import { checkRegexp } from '../../core/CheckRegexp';
 import { checkValidityInput } from '../../core/checkValidityInput';
-import { Modal } from '../../core/Modal';
 import { LoadImg } from '../../components/AvatarLoading';
 import { ComponentPropsType } from '../../types/componentPropsType';
+import { modal } from '../../core/Modal';
 
 interface HomePageProps extends ComponentPropsType {
   isSelectedMessage: boolean
@@ -46,7 +46,7 @@ class HomePageComponent extends Block<HomePageProps> {
           console.log(message);
         },
         uploadFile() {
-          new Modal().show(
+          modal.show(
             new LoadImg({}).getContent(),
           );
         },
