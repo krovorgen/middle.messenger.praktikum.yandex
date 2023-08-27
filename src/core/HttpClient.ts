@@ -18,6 +18,7 @@ export class HttpClient {
 
       const headers = config?.headers || {};
 
+      xhr.setRequestHeader('Content-Type', 'application/json');
       Object.keys(headers).forEach((key) => {
         xhr.setRequestHeader(key, headers[key]);
       });

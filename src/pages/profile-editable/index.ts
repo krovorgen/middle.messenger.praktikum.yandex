@@ -4,7 +4,6 @@ import { LinkBack } from '../../components/LinkBack';
 import { EditedLabel } from '../../components/EditedLabel';
 import { Button } from '../../components/Button';
 import { ProfileAvatar } from '../../components/ProfileAvatar';
-import avatarStub from '../../../static/icons/not-avatar.svg';
 import { checkRegexp } from '../../core/CheckRegexp';
 import { showEventValidation } from '../../core/showEventValidation';
 import { LoadImg } from '../../components/AvatarLoading';
@@ -21,8 +20,6 @@ class ProfileEditablePageComponent extends Block<ProfileEditablePageProps> {
   init() {
     const loadImg = new LoadImg({});
     this._children.profileAvatar = new ProfileAvatar({
-      avatarPath: this.props.avatar ?? avatarStub,
-      login: this.props.first_name ?? '',
       events: {
         click: () => {
           modal.show(

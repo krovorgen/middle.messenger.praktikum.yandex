@@ -4,7 +4,6 @@ import { LinkBack } from '../../components/LinkBack';
 import { EditedLabel } from '../../components/EditedLabel';
 import { Block } from '../../core/Block';
 import { ProfileAvatar } from '../../components/ProfileAvatar';
-import avatarStub from '../../../static/icons/not-avatar.svg';
 import { notifications } from '../../components/Notification';
 import { checkRegexp } from '../../core/CheckRegexp';
 import { showEventValidation } from '../../core/showEventValidation';
@@ -22,8 +21,6 @@ class ProfilePasswordEditablePageComponent extends Block<ProfilePasswordEditable
   init() {
     const loadImg = new LoadImg({});
     this._children.profileAvatar = new ProfileAvatar({
-      avatarPath: this.props.avatar ?? avatarStub,
-      login: this.props.first_name ?? '',
       events: {
         click: () => {
           modal.show(

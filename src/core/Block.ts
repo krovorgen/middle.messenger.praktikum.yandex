@@ -95,7 +95,7 @@ export class Block<P extends Record<string, any> = any> {
   }
 
   componentDidUpdate(oldProps: P, newProps: P) {
-    return !isEqual(oldProps, newProps);
+    return isEqual(oldProps, newProps);
   }
 
   _render() {

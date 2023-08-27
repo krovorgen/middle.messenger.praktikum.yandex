@@ -4,7 +4,6 @@ import { LinkBack } from '../../components/LinkBack';
 import { NavLink } from '../../components/Link';
 import { EditedLabel } from '../../components/EditedLabel';
 import { ProfileAvatar } from '../../components/ProfileAvatar';
-import avatarStub from '../../../static/icons/not-avatar.svg';
 import { LoadImg } from '../../components/AvatarLoading';
 import { RoutePath } from '../../core/RoutePath';
 import { ComponentPropsType } from '../../types/componentPropsType';
@@ -83,8 +82,6 @@ class ProfilePageComponent extends Block<ProfilePageProps> {
 
     const loadImg = new LoadImg({});
     this._children.profileAvatar = new ProfileAvatar({
-      avatarPath: this.props.avatar ?? avatarStub,
-      login: this.props.first_name ?? '',
       events: {
         click: () => {
           modal.show(

@@ -56,7 +56,7 @@ class HomePageComponent extends Block<HomePageProps> {
       avatarUrl: notAvatarImagePath,
     });
 
-    this.props.isSelectedMessage = false;
+    this.props.isSelectedMessage = true;
   }
 
   render() {
