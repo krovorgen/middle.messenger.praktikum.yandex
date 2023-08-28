@@ -22,13 +22,12 @@ document.addEventListener('DOMContentLoaded', async () => {
     .use(RoutePath.page404, Error404Page)
     .use(RoutePath.page505, Error505Page);
 
-  // заменить названия
-  let isProtectedRoute = true;
+  let isPrivateRoute = true;
 
   switch (window.location.pathname) {
     case RoutePath.login:
     case RoutePath.registration:
-      isProtectedRoute = false;
+      isPrivateRoute = false;
       break;
   }
 
@@ -37,13 +36,13 @@ document.addEventListener('DOMContentLoaded', async () => {
     await chatController.getChats();
     routerApp.start();
 
-    if (!isProtectedRoute) {
+    if (!isPrivateRoute) {
       routerApp.go(RoutePath.profile);
     }
   } catch (e) {
     routerApp.start();
 
-    if (isProtectedRoute) {
+    if (isPrivateRoute) {
       routerApp.go(RoutePath.login);
     }
   }
