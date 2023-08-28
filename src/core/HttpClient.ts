@@ -50,18 +50,18 @@ export class HttpClient {
     return `${url}?${queryString}`;
   }
 
-  get: HTTPMethod = (path, params, config?: RequestConfig) => {
+  get: HTTPMethod = (path, params, config) => {
     const url = this.baseUrl + path;
     const queryStringUrl = params ? this.addQueryString(url, params) : url;
     return this.createRequest('GET', queryStringUrl, config);
   };
 
-  post: HTTPMethod = (path, data, config?: RequestConfig) => {
+  post: HTTPMethod = (path, data, config) => {
     const url = this.baseUrl + path;
     return this.createRequest('POST', url, data, config);
   };
 
-  put: HTTPMethod = (path, data, config?: RequestConfig) => {
+  put: HTTPMethod = (path, data, config) => {
     const url = this.baseUrl + path;
     return this.createRequest('PUT', url, data, config);
   };

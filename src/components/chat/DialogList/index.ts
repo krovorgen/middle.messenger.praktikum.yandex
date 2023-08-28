@@ -26,7 +26,7 @@ class DialogListComponent extends Block<DialogListProps> {
       new DialogItem(
         {
           ...el,
-          avatar: el.avatar ?? notAvatarImagePath,
+          avatar: el.avatar ? `https://ya-praktikum.tech/api/v2/resources${el.avatar}` : notAvatarImagePath,
           last_message: {
             ...el.last_message,
             time: el.last_message ? formatDate(el.last_message.time) : '',

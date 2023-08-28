@@ -84,7 +84,7 @@ export class Store extends EventBus {
 
 export const store = new Store();
 
-export function withStore<SP extends Record<string, any>>(mapStateToProps: (state: State) => SP) {
+export function withStore<SP extends Record<string, unknown>>(mapStateToProps: (state: State) => SP) {
   return function wrap<P>(Component: typeof Block<SP & P>) {
     return class WithStore extends Component {
       constructor(props: Omit<P, keyof SP>) {

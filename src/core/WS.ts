@@ -1,4 +1,5 @@
 import { EventBus } from './EventBus';
+import { notifications } from '../components/Notification';
 
 export enum WSTransportEvents {
   Connected = 'connected',
@@ -75,13 +76,17 @@ export default class WS extends EventBus {
     });
 
     socket.addEventListener('message', (message) => {
-      const data = JSON.parse(message.data);
+      try {
+        const data = JSON.parse(message.data);
 
-      if (data.type && data.type === 'pong') {
-        return;
+        if (data.type && data.type === 'pong') {
+          return;
+        }
+
+        this.emit(WSTransportEvents.Message, data);
+      } catch (error: any) {
+        notifications.addNotification(error.reason, 'error');
       }
-
-      this.emit(WSTransportEvents.Message, data);
     });
   }
 }
