@@ -190,6 +190,7 @@ class HomePageComponent extends Block<HomePageProps> {
                   };
 
                   await chatController.createChat({ title });
+                  await chatController.getChats();
 
                   modal.hide();
                 },
@@ -240,6 +241,7 @@ class HomePageComponent extends Block<HomePageProps> {
                   };
 
                   await chatController.deleteChat({ chatId });
+                  await chatController.getChats();
 
                   modal.hide();
                 },
@@ -249,7 +251,7 @@ class HomePageComponent extends Block<HomePageProps> {
         },
       },
     });
-    // @ts-ignore
+
     this._children.messagesBox = new MessagesBox({});
   }
 

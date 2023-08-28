@@ -12,7 +12,17 @@ interface DialogListProps extends ComponentPropsType {
 
 class DialogListComponent extends Block<DialogListProps> {
   init() {
-    this._children.dialogs = this.props.chats.map((el) => (
+    this._children.dialogs = this.getContentDialogs(this.props);
+  }
+
+  componentDidUpdate(_oldProps: DialogListProps, newProps: DialogListProps): boolean {
+    this._children.dialogs = this.getContentDialogs(newProps);
+
+    return true;
+  }
+
+  getContentDialogs(props: DialogListProps) {
+    return props.chats.map((el) => (
       new DialogItem(
         {
           ...el,
@@ -36,7 +46,6 @@ class DialogListComponent extends Block<DialogListProps> {
   }
 }
 
-// TODO state.chats || []
-const withUser = withStore((state) => ({ chats: [...(state.chats || [])] }));
+const withUser = withStore((state) => ({ chats: state.chats || [] }));
 
 export const DialogList = withUser(DialogListComponent);

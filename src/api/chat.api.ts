@@ -25,6 +25,10 @@ class ChatApi {
     return this.instance.get('/chats');
   }
 
+  getToken(id: number) {
+    return this.instance.post(`/chats/token/${id}`);
+  }
+
   createChat(data: CreateChatDTOType) {
     return this.instance.post('/chats', data);
   }

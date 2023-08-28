@@ -29,7 +29,7 @@ export class Block<P extends Record<string, any> = any> {
 
     this.eventBus = () => eventBus;
     this.id = v4();
-    this._children = this._makePropsProxy(children);
+    this._children = children;
     this.props = this._makePropsProxy(props) as P;
     this._meta = {
       props,
@@ -113,7 +113,6 @@ export class Block<P extends Record<string, any> = any> {
     this._addAttribute();
   }
 
-  // Может переопределять пользователь, необязательно трогать
   render(): DocumentFragment {
     return new DocumentFragment();
   }

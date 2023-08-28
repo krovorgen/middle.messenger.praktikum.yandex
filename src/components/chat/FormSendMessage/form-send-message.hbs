@@ -1,17 +1,14 @@
-<div class="form-send-message {{addClass}}">
-    <form class="form-send-message__form">
-        <input
-                type="text"
-                pattern="{{inputPattern}}"
-                title="{{inputTitle}}"
-                class="form-send-message__input"
-                name="message"
-                required
-                placeholder="Сообщение"
-                autocomplete="off"
-        >
-        <button class="form-send-message__send btn btn--xs btn--circle btn--primary btn--svg" type="submit">
-            <svg width="13" height="12" fill="none" xmlns="http://www.w3.org/2000/svg"><path fill="#fff" d="M0 5.2h11v1.6H0z"/><path d="m7 1 4 5-4 5" stroke="#fff" stroke-width="1.6"/></svg>
-        </button>
-    </form>
-</div>
+<form class="form-send-message {{addClass}}">
+    <input
+            type="text"
+            title="{{inputTitle}}"
+            class="form-send-message__input"
+            name="message"
+            required
+            placeholder="Сообщение"
+            autocomplete="off"
+    >
+    <button class="form-send-message__send btn btn--xs btn--circle btn--primary btn--svg" type="submit">
+        <svg width="13" height="12" fill="none" xmlns="http://www.w3.org/2000/svg"><path fill="#fff" d="M0 5.2h11v1.6H0z"/><path d="m7 1 4 5-4 5" stroke="#fff" stroke-width="1.6"/></svg>
+    </button>
+</form>

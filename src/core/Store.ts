@@ -27,6 +27,25 @@ export interface IChats {
   last_message: LastMessageType
 }
 
+export interface IMessages {
+  chat_id: number
+  content: string
+  id: number
+  is_read: boolean
+  time: string
+  type: string
+  user_id: number
+  file?: {
+    id: number;
+    user_id: number;
+    path: string;
+    filename: string;
+    content_type: string;
+    content_size: number;
+    upload_date: string;
+  }
+}
+
 type LastMessageType = {
   user: {
     first_name: string,
@@ -44,6 +63,7 @@ interface State {
   selectedChat: number | null;
   user?: IUser
   chats?: IChats[];
+  messages?: Record<number, IMessages[]>;
 }
 
 export class Store extends EventBus {

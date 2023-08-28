@@ -6,7 +6,8 @@ import {
   DeleteChatDTOType,
   DeleteUserFromChatDTOType,
 } from '../api/chat.api';
-import { store } from '../core/Store';
+import { IChats, store } from '../core/Store';
+import { messagesController } from './messages.controller';
 
 class ChatController {
   private readonly api: typeof chatApi;
@@ -19,10 +20,21 @@ class ChatController {
     try {
       const chats = await this.api.getChats();
 
+      (chats as IChats[]).map(async (chat) => {
+        const token = await this.getToken(chat.id);
+
+        await messagesController.connect(chat.id, token);
+      });
+
       store.set('chats', chats);
     } catch (error: any) {
       notifications.addNotification(error.reason, 'error');
     }
+  };
+
+  getToken = async (id: number) => {
+    const data = (await this.api.getToken(id) as { token: string });
+    return data.token;
   };
 
   createChat = async (data: CreateChatDTOType) => {
