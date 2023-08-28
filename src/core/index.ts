@@ -24,11 +24,8 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   let isPrivateRoute = true;
 
-  switch (window.location.pathname) {
-    case RoutePath.login:
-    case RoutePath.registration:
-      isPrivateRoute = false;
-      break;
+  if (([RoutePath.login, RoutePath.registration] as string[]).includes(window.location.pathname)) {
+    isPrivateRoute = false;
   }
 
   try {
