@@ -20,6 +20,7 @@ class RegistrationPageComponent extends Block<RegistrationPageProps> {
       text: 'Зарегистрироваться',
       addClass: 'auth-box__submit',
       size: 'sm',
+      block: true,
       variant: 'primary',
       attr: {
         type: 'submit',

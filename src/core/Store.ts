@@ -18,23 +18,37 @@ export interface IUser {
   second_name: string | null
 }
 
+export interface IChats {
+  id: number,
+  title: string,
+  avatar: null | string,
+  created_by: number,
+  unread_count: number,
+  last_message: LastMessageType
+}
+
+type LastMessageType = {
+  user: {
+    first_name: string,
+    second_name: string,
+    display_name: null | string,
+    login: string,
+    avatar: null | string
+  },
+  time: string,
+  content: string,
+  id: number
+};
+
 interface State {
-  selectedChat?: number;
-  user: IUser
+  selectedChat: number | null;
+  user?: IUser
+  chats?: IChats[];
 }
 
 export class Store extends EventBus {
   private state: State = {
-    user: {
-      avatar: null,
-      display_name: null,
-      email: null,
-      first_name: null,
-      id: null,
-      login: null,
-      phone: null,
-      second_name: null,
-    },
+    selectedChat: null,
   };
 
   public set(path: string, value: unknown) {

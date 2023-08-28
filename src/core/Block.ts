@@ -12,7 +12,7 @@ export class Block<P extends Record<string, any> = any> {
 
   protected props: P;
 
-  public _children: Record<string, Block>;
+  public _children: Record<string, Block | Block[]>;
 
   public id: string;
 
@@ -177,8 +177,7 @@ export class Block<P extends Record<string, any> = any> {
       stub.replaceWith(component.getContent()!);
     };
 
-    Object.entries(this._children).forEach(([name, component]) => {
-      console.log(name);
+    Object.entries(this._children).forEach(([, component]) => {
       if (Array.isArray(component)) {
         component.forEach(replaceStub);
       } else {

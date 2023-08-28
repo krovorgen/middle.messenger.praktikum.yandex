@@ -1,7 +1,19 @@
 import { HttpClient } from '../core/HttpClient';
-import { UpdateUserDTOType, UpdatePasswordDTOType } from '../controllers/user.controller';
 
-class User {
+export type UpdateUserDTOType = {
+  first_name: string,
+  second_name: string,
+  display_name: string,
+  login: string,
+  email: string,
+  phone: string
+};
+export type UpdatePasswordDTOType = {
+  oldPassword: string,
+  newPassword: string
+};
+
+class UserApi {
   private readonly instance = new HttpClient();
 
   updateUser(data: UpdateUserDTOType) {
@@ -19,4 +31,4 @@ class User {
   }
 }
 
-export const userApi = new User();
+export const userApi = new UserApi();

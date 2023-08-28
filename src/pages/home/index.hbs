@@ -1,24 +1,15 @@
 <div class="column {{addClass}}">
     <div class="column__left">
-        <a href="/settings" class="profile-link">
-            Мой профиль
-        </a>
-        <ul class="dialog-items">
-            {{{ dialogItem }}}
-        </ul>
+        <div class="nav-head">
+            {{{ profileLink }}}
+            {{{ addChatBtn }}}
+            {{{ deleteChatBtn }}}
+            {{{ addUserBtn }}}
+            {{{ deleteUserBtn }}}
+        </div>
+        {{{ dialogItem }}}
     </div>
     <div class="column__center">
-        {{#if isSelectedMessage}}
-            <div class="messages-items">
-                {{{ dateMessages }}}
-                {{{ myMessage }}}
-                {{{ opponentMessage }}}
-                {{{ contentMessage }}}
-            </div>
-            {{{ formSendMessage }}}
-        {{else}}
-            {{{ emptyChooseMessage }}}
-        {{/if}}
+        {{{ messagesBox }}}
     </div>
-    {{{ notifications }}}
 </div>

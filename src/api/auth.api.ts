@@ -1,7 +1,19 @@
 import { HttpClient } from '../core/HttpClient';
-import { LoginUserDTOType, RegistrationUserDTOType } from '../controllers/auth.controller';
 
-class Authorization {
+export type LoginUserDTOType = {
+  login: string;
+  password: string;
+};
+export type RegistrationUserDTOType = {
+  email: string;
+  phone: string;
+  first_name: string;
+  second_name: string;
+  login: string;
+  password: string;
+};
+
+class AuthApi {
   private readonly instance = new HttpClient();
 
   login(data: LoginUserDTOType) {
@@ -21,4 +33,4 @@ class Authorization {
   }
 }
 
-export const authApi = new Authorization();
+export const authApi = new AuthApi();

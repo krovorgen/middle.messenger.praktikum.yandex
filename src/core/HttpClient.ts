@@ -18,7 +18,6 @@ export class HttpClient {
 
       const headers = config?.headers || {};
 
-      xhr.setRequestHeader('Content-Type', 'application/json');
       Object.keys(headers).forEach((key) => {
         xhr.setRequestHeader(key, headers[key]);
       });
@@ -38,6 +37,7 @@ export class HttpClient {
       if (data instanceof FormData) {
         xhr.send(data);
       } else {
+        xhr.setRequestHeader('Content-Type', 'application/json');
         xhr.send(data ? JSON.stringify(data) : null);
       }
     });
@@ -66,8 +66,8 @@ export class HttpClient {
     return this.createRequest('PUT', url, data, config);
   };
 
-  delete: HTTPMethod = (path) => {
+  delete: HTTPMethod = (path, data) => {
     const url = this.baseUrl + path;
-    return this.createRequest('DELETE', url);
+    return this.createRequest('DELETE', url, data);
   };
 }

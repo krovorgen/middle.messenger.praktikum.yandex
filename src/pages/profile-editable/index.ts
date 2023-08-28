@@ -110,7 +110,7 @@ class ProfileEditablePageComponent extends Block<ProfileEditablePageProps> {
     this._children.saveBtn = new Button({
       size: 'sm',
       variant: 'primary',
-      center: true,
+      block: true,
       text: 'Сохранить',
       attr: {
         type: 'submit',

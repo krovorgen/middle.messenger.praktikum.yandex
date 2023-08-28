@@ -13,15 +13,6 @@ import { IUser, withStore } from '../../core/Store';
 import { modal } from '../../core/Modal';
 
 interface ProfilePageProps extends ComponentPropsType, IUser {
-  profileAvatar: Block
-  editedLogin: Block
-  editedFirstName: Block
-  editedSecondName: Block
-  editedDisplayName: Block
-  editedPhone: Block
-  editData: Block
-  editPassword: Block
-  exitBtn: Block
 }
 
 class ProfilePageComponent extends Block<ProfilePageProps> {
@@ -72,6 +63,7 @@ class ProfilePageComponent extends Block<ProfilePageProps> {
     this._children.exitBtn = new Button({
       size: 'sm',
       variant: 'ghost',
+      block: true,
       text: 'Выйти',
       events: {
         click: async () => {
@@ -90,8 +82,6 @@ class ProfilePageComponent extends Block<ProfilePageProps> {
         },
       },
     });
-
-    console.log('this.props.email', this.props.email);
   }
 
   render() {

@@ -1,0 +1,13 @@
+<div class="messages-box">
+    {{#if selectedChat}}
+        <div class="messages-items">
+            {{{ dateMessages }}}
+            {{{ myMessage }}}
+            {{{ opponentMessage }}}
+            {{{ contentMessage }}}
+        </div>
+        {{{ formSendMessage }}}
+    {{else}}
+        {{{ emptyChooseMessage }}}
+    {{/if}}
+</div>

@@ -1,25 +1,11 @@
 import { notifications } from '../components/Notification';
 import { routerApp } from '../core/Route';
 import { RoutePath } from '../core/RoutePath';
-import { userApi } from '../api/User';
+import { UpdatePasswordDTOType, UpdateUserDTOType, userApi } from '../api/user.api';
 import { authController } from './auth.controller';
 import { store } from '../core/Store';
 
-export type UpdateUserDTOType = {
-  first_name: string,
-  second_name: string,
-  display_name: string,
-  login: string,
-  email: string,
-  phone: string
-};
-
-export type UpdatePasswordDTOType = {
-  oldPassword: string,
-  newPassword: string
-};
-
-export class UserController {
+class UserController {
   private readonly api: typeof userApi;
 
   constructor() {

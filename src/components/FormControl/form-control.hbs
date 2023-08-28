@@ -3,7 +3,7 @@
             class="form-control__input"
             type="{{type}}"
             name="{{name}}"
-            pattern="{{pattern}}"
+            {{#if pattern}}pattern="{{pattern}}"{{/if}}
             title="{{inputTitle}}"
             placeholder="{{placeholder}}"
             autocomplete="off"

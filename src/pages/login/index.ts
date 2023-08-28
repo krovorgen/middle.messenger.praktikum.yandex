@@ -22,6 +22,7 @@ class LoginPageComponent extends Block< LoginPageProps> {
       text: 'Авторизоваться',
       addClass: 'auth-box__submit',
       size: 'sm',
+      block: true,
       variant: 'primary',
       attr: {
         type: 'submit',

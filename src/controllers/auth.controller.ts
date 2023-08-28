@@ -1,24 +1,10 @@
-import { authApi } from '../api/Authorization';
+import { authApi, LoginUserDTOType, RegistrationUserDTOType } from '../api/auth.api';
 import { notifications } from '../components/Notification';
 import { routerApp } from '../core/Route';
 import { RoutePath } from '../core/RoutePath';
 import { store } from '../core/Store';
 
-export type LoginUserDTOType = {
-  login: string;
-  password: string;
-};
-
-export type RegistrationUserDTOType = {
-  email: string;
-  phone: string;
-  first_name: string;
-  second_name: string;
-  login: string;
-  password: string;
-};
-
-export class AuthController {
+class AuthController {
   private readonly api: typeof authApi;
 
   constructor() {

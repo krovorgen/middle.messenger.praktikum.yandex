@@ -9,6 +9,7 @@ import { LoginPage } from '../pages/login';
 import { RegistrationPage } from '../pages/registration';
 import { ProfileEditablePage } from '../pages/profile-editable';
 import { ProfilePasswordEditablePage } from '../pages/profile-password-editable';
+import { chatController } from '../controllers/chat.controller';
 
 document.addEventListener('DOMContentLoaded', async () => {
   routerApp
@@ -33,6 +34,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   try {
     await authController.getUser();
+    await chatController.getChats();
     routerApp.start();
 
     if (!isProtectedRoute) {
