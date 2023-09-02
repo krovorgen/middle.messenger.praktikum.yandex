@@ -1,26 +1,18 @@
 import tpl from './button.hbs';
 import { Block } from '../../core/Block';
+import { ComponentPropsType } from '../../types/componentPropsType';
 
-interface ButtonProps {
-  text: string
-  addClass?: string
+interface ButtonProps extends ComponentPropsType {
+  text?: string
   size: 'sm'
-  variant: 'primary'
+  variant: 'primary' | 'ghost'
   center?: boolean
-  attr?: Record<string, string>
+  block?: boolean
+  svg?: boolean
+  iconPath?: string
 }
 
 export class Button extends Block<ButtonProps> {
-  constructor(props: ButtonProps) {
-    super('button', {
-      ...props,
-      attr: {
-        class: `btn btn--${props.size} btn--${props.variant} ${props.center ? 'btn--center' : ''} ${props.addClass ?? ''}`,
-        ...props.attr,
-      },
-    });
-  }
-
   render() {
     return this.compile(tpl, this.props);
   }

@@ -1,165 +1,124 @@
 import tpl from './index.hbs';
 import { Block } from '../../core/Block';
-import { renderDom } from '../../core/renderDom';
 import { Button } from '../../components/Button';
-import { Link } from '../../components/Link';
+import { NavLink } from '../../components/Link';
 import { FormControl } from '../../components/FormControl';
 import { checkRegexp } from '../../core/CheckRegexp';
 import { notifications } from '../../components/Notification';
 import { showEventValidation } from '../../core/showEventValidation';
 import { checkValidityInput } from '../../core/checkValidityInput';
+import { RoutePath } from '../../core/RoutePath';
+import { ComponentPropsType } from '../../types/componentPropsType';
+import { authController } from '../../controllers/auth.controller';
 
-interface RegistrationPageProps {
-  button: Block
-  link: Block
-  addClass?: string
-  attr?: Record<string, string>
-  emailField: Block
-  phoneField: Block
-  firstNameField: Block
-  secondNameField: Block
-  loginField: Block
-  passwordField: Block
-  repeatPasswordField: Block
-  notifications: Block
-  events: {
-    submit: (e: SubmitEvent) => void
-  }
+interface RegistrationPageProps extends ComponentPropsType {
 }
 
-const button = new Button({
-  text: 'Зарегистрироваться',
-  addClass: 'auth-box__submit',
-  size: 'sm',
-  variant: 'primary',
-  attr: {
-    type: 'submit',
-  },
-});
-const link = new Link({
-  text: 'Назад к чатам',
-  addClass: 'auth-box__link',
-  size: 'sm',
-  variant: 'primary',
-  attr: {
-    href: '../index.html',
-  },
-});
-const emailField = new FormControl({
-  type: 'email',
-  name: 'email',
-  placeholder: 'Почта',
-  addClass: 'auth-box__label',
-  pattern: checkRegexp.email.pattern,
-  inputTitle: checkRegexp.email.msg,
-  events: {
-    blur: showEventValidation,
-    focus: showEventValidation,
-  },
-});
-const phoneField = new FormControl({
-  type: 'tel',
-  name: 'phone',
-  placeholder: 'Телефон',
-  addClass: 'auth-box__label',
-  pattern: checkRegexp.phone.pattern,
-  inputTitle: checkRegexp.phone.msg,
-  events: {
-    blur: showEventValidation,
-    focus: showEventValidation,
-  },
-});
-const firstNameField = new FormControl({
-  type: 'text',
-  name: 'first_name',
-  placeholder: 'Имя',
-  addClass: 'auth-box__label',
-  pattern: checkRegexp.personalName.pattern,
-  inputTitle: checkRegexp.personalName.msg,
-  events: {
-    blur: showEventValidation,
-    focus: showEventValidation,
-  },
-});
-const secondNameField = new FormControl({
-  type: 'text',
-  name: 'second_name',
-  placeholder: 'Фамилия',
-  addClass: 'auth-box__label',
-  pattern: checkRegexp.personalName.pattern,
-  inputTitle: checkRegexp.personalName.msg,
-  events: {
-    blur: showEventValidation,
-    focus: showEventValidation,
-  },
-});
-const loginField = new FormControl({
-  type: 'text',
-  name: 'login',
-  placeholder: 'Логин',
-  addClass: 'auth-box__label',
-  pattern: checkRegexp.login.pattern,
-  inputTitle: checkRegexp.login.msg,
-  events: {
-    blur: showEventValidation,
-    focus: showEventValidation,
-  },
-});
-const passwordField = new FormControl({
-  type: 'password',
-  name: 'password',
-  placeholder: 'Пароль',
-  addClass: 'auth-box__label',
-  pattern: checkRegexp.password.pattern,
-  inputTitle: checkRegexp.password.msg,
-  events: {
-    blur: showEventValidation,
-    focus: showEventValidation,
-  },
-});
-const repeatPasswordField = new FormControl({
-  type: 'password',
-  name: 'repeat_password',
-  placeholder: 'Пароль (ещё раз)',
-  addClass: 'auth-box__label',
-  pattern: checkRegexp.password.pattern,
-  inputTitle: checkRegexp.password.msg,
-  events: {
-    blur: showEventValidation,
-    focus: showEventValidation,
-  },
-});
-
-class RegistrationPage extends Block<RegistrationPageProps> {
-  constructor(props: RegistrationPageProps) {
-    super('div', {
-      ...props,
+class RegistrationPageComponent extends Block<RegistrationPageProps> {
+  init() {
+    this._children.button = new Button({
+      text: 'Зарегистрироваться',
+      addClass: 'auth-box__submit',
+      size: 'sm',
+      block: true,
+      variant: 'primary',
       attr: {
-        class: `auth-box ${props.addClass ?? ''}`,
-        ...props.attr,
+        type: 'submit',
       },
     });
-  }
-
-  render() {
-    return this.compile(tpl, this.props);
-  }
-}
-
-window.addEventListener('DOMContentLoaded', () => {
-  const registrationPage = new RegistrationPage({
-    button,
-    link,
-    emailField,
-    phoneField,
-    firstNameField,
-    secondNameField,
-    loginField,
-    passwordField,
-    repeatPasswordField,
-    notifications,
-    events: {
-      submit(e) {
+    this._children.link = new NavLink({
+      text: 'Войти',
+      addClass: 'auth-box__link',
+      size: 'sm',
+      variant: 'primary',
+      to: RoutePath.login,
+    });
+    this._children.emailField = new FormControl({
+      type: 'email',
+      name: 'email',
+      placeholder: 'Почта',
+      addClass: 'auth-box__label',
+      pattern: checkRegexp.email.pattern,
+      inputTitle: checkRegexp.email.msg,
+      events: {
+        blur: showEventValidation,
+        focus: showEventValidation,
+      },
+    });
+    this._children.phoneField = new FormControl({
+      type: 'tel',
+      name: 'phone',
+      placeholder: 'Телефон',
+      addClass: 'auth-box__label',
+      pattern: checkRegexp.phone.pattern,
+      inputTitle: checkRegexp.phone.msg,
+      events: {
+        blur: showEventValidation,
+        focus: showEventValidation,
+      },
+    });
+    this._children.firstNameField = new FormControl({
+      type: 'text',
+      name: 'first_name',
+      placeholder: 'Имя',
+      addClass: 'auth-box__label',
+      pattern: checkRegexp.personalName.pattern,
+      inputTitle: checkRegexp.personalName.msg,
+      events: {
+        blur: showEventValidation,
+        focus: showEventValidation,
+      },
+    });
+    this._children.secondNameField = new FormControl({
+      type: 'text',
+      name: 'second_name',
+      placeholder: 'Фамилия',
+      addClass: 'auth-box__label',
+      pattern: checkRegexp.personalName.pattern,
+      inputTitle: checkRegexp.personalName.msg,
+      events: {
+        blur: showEventValidation,
+        focus: showEventValidation,
+      },
+    });
+    this._children.loginField = new FormControl({
+      type: 'text',
+      name: 'login',
+      placeholder: 'Логин',
+      addClass: 'auth-box__label',
+      pattern: checkRegexp.login.pattern,
+      inputTitle: checkRegexp.login.msg,
+      events: {
+        blur: showEventValidation,
+        focus: showEventValidation,
+      },
+    });
+    this._children.passwordField = new FormControl({
+      type: 'password',
+      name: 'password',
+      placeholder: 'Пароль',
+      addClass: 'auth-box__label',
+      pattern: checkRegexp.password.pattern,
+      inputTitle: checkRegexp.password.msg,
+      events: {
+        blur: showEventValidation,
+        focus: showEventValidation,
+      },
+    });
+    this._children.repeatPasswordField = new FormControl({
+      type: 'password',
+      name: 'repeat_password',
+      placeholder: 'Пароль (ещё раз)',
+      addClass: 'auth-box__label',
+      pattern: checkRegexp.password.pattern,
+      inputTitle: checkRegexp.password.msg,
+      events: {
+        blur: showEventValidation,
+        focus: showEventValidation,
+      },
+    });
+    this.props.events = {
+      async submit(e: SubmitEvent) {
         e.preventDefault();
         e.stopPropagation();
 
@@ -186,7 +145,21 @@ window.addEventListener('DOMContentLoaded', () => {
           return;
         }
 
-        ((e.target! as HTMLFormElement).querySelectorAll('input') as NodeListOf<HTMLInputElement>).forEach(checkValidityInput);
+        const arrayInputs = ((e.target as HTMLFormElement).querySelectorAll('input') as NodeListOf<HTMLInputElement>);
+
+        arrayInputs.forEach(checkValidityInput);
+
+        const isCorrect = Array.from(arrayInputs).some((el) => el.checkValidity());
+        if (!isCorrect) return;
+
+        await authController.registration({
+          email,
+          phone,
+          first_name,
+          second_name,
+          login,
+          password,
+        });
 
         console.log({
           email,
@@ -198,8 +171,12 @@ window.addEventListener('DOMContentLoaded', () => {
           repeat_password,
         });
       },
-    },
-  });
+    };
+  }
 
-  renderDom('#app', registrationPage);
-});
+  render() {
+    return this.compile(tpl, this.props);
+  }
+}
+
+export const RegistrationPage = RegistrationPageComponent;

@@ -1,22 +1,15 @@
-<div class="column__left">
-    <a href="../profile/index.html" class="profile-link">
-        Мой профиль
-    </a>
-    <ul class="dialog-items">
-        {{{ dialogItem }}}
-    </ul>
-</div>
-<div class="column__center">
-    {{#if isSelectedMessage}}
-        <div class="messages-items">
-            {{{ dateMessages }}}
-            {{{ myMessage }}}
-            {{{ opponentMessage }}}
-            {{{ contentMessage }}}
+<div class="column {{addClass}}">
+    <div class="column__left">
+        <div class="nav-head">
+            {{{ profileLink }}}
+            {{{ addChatBtn }}}
+            {{{ deleteChatBtn }}}
+            {{{ addUserBtn }}}
+            {{{ deleteUserBtn }}}
         </div>
-        {{{ formSendMessage }}}
-    {{else}}
-        {{{ emptyChooseMessage }}}
-    {{/if}}
+        {{{ dialogItem }}}
+    </div>
+    <div class="column__center">
+        {{{ messagesBox }}}
+    </div>
 </div>
-{{{ notifications }}}

@@ -1,23 +1,29 @@
 import tpl from './link.hbs';
 import { Block } from '../../core/Block';
+import { routerApp } from '../../core/Route';
+import { ComponentPropsType } from '../../types/componentPropsType';
 
-interface LinkProps {
+interface LinkProps extends ComponentPropsType {
   text: string
-  addClass?: string
+  to: string;
   size: 'sm' | 'md'
   variant: 'primary' | 'accent'
-  attr?: Record<string, string> | HTMLLinkElement
+  router?: typeof routerApp
 }
 
-export class Link extends Block<LinkProps> {
+export class NavLink extends Block<LinkProps> {
   constructor(props: LinkProps) {
-    super('a', {
+    super({
       ...props,
-      attr: {
-        class: `link link--${props.size} link--${props.variant} ${props.addClass ?? ''}`,
-        ...props.attr,
+      router: routerApp,
+      events: {
+        click: () => this.navigate(),
       },
     });
+  }
+
+  navigate() {
+    this.props!.router!.go(this.props.to);
   }
 
   render() {

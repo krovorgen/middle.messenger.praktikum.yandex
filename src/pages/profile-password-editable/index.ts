@@ -3,111 +3,84 @@ import { Button } from '../../components/Button';
 import { LinkBack } from '../../components/LinkBack';
 import { EditedLabel } from '../../components/EditedLabel';
 import { Block } from '../../core/Block';
-import { renderDom } from '../../core/renderDom';
 import { ProfileAvatar } from '../../components/ProfileAvatar';
-import avatarStub from '../../../static/icons/not-avatar.svg';
 import { notifications } from '../../components/Notification';
 import { checkRegexp } from '../../core/CheckRegexp';
 import { showEventValidation } from '../../core/showEventValidation';
-import { Modal } from '../../core/Modal';
 import { LoadImg } from '../../components/AvatarLoading';
 import { checkValidityInput } from '../../core/checkValidityInput';
+import { ComponentPropsType } from '../../types/componentPropsType';
+import { userController } from '../../controllers/user.controller';
+import { modal } from '../../core/Modal';
+import { IUser, withStore } from '../../core/Store';
 
-interface ProfilePasswordEditablePageProps {
-  linkBack: Block
-  profileAvatar: Block
-  oldPasswordInput: Block
-  newPasswordInput: Block
-  repeatPasswordInput: Block
-  saveBtn: Block
-  notifications: Block
-  addClass?: string
-  attr?: Record<string, string>
-  events: {
-    submit: (e: SubmitEvent) => void
-  }
+interface ProfilePasswordEditablePageProps extends ComponentPropsType, IUser {
 }
 
-class ProfilePasswordEditablePage extends Block<ProfilePasswordEditablePageProps> {
-  render() {
-    return this.compile(tpl, this.props);
-  }
-}
+class ProfilePasswordEditablePageComponent extends Block<ProfilePasswordEditablePageProps> {
+  init() {
+    const loadImg = new LoadImg({});
+    this._children.profileAvatar = new ProfileAvatar({
+      events: {
+        click: () => {
+          modal.show(
+            loadImg.getContent(),
+          );
+        },
+      },
+    });
+    this._children.linkBack = new LinkBack({});
+    this._children.oldPasswordInput = new EditedLabel({
+      text: 'Старый пароль',
+      editable: true,
+      value: '',
+      type: 'password',
+      name: 'oldPassword',
+      inputPattern: checkRegexp.password.pattern,
+      inputTitle: checkRegexp.password.msg,
+      events: {
+        blur: showEventValidation,
+        focus: showEventValidation,
+      },
+    });
+    this._children.newPasswordInput = new EditedLabel({
+      text: 'Новый пароль',
+      editable: true,
+      value: '',
+      type: 'password',
+      name: 'newPassword',
+      inputPattern: checkRegexp.password.pattern,
+      inputTitle: checkRegexp.password.msg,
+      events: {
+        blur: showEventValidation,
+        focus: showEventValidation,
+      },
+    });
+    this._children.repeatPasswordInput = new EditedLabel({
+      text: 'Повторите новый пароль',
+      editable: true,
+      value: '',
+      type: 'password',
+      name: 'repeat_password',
+      inputPattern: checkRegexp.password.pattern,
+      inputTitle: checkRegexp.password.msg,
+      events: {
+        blur: showEventValidation,
+        focus: showEventValidation,
+      },
+    });
+    this._children.saveBtn = new Button({
+      size: 'sm',
+      variant: 'primary',
+      block: true,
+      text: 'Сохранить',
+      attr: {
+        type: 'submit',
+      },
+    });
 
-const modal = new Modal();
-const linkBack = new LinkBack({});
-const loadImg = new LoadImg({});
-const profileAvatar = new ProfileAvatar({
-  avatarPath: avatarStub,
-  login: 'Иван',
-  events: {
-    click: () => {
-      modal.show(
-        loadImg.getContent(),
-      );
-    },
-  },
-});
-const oldPasswordInput = new EditedLabel({
-  text: 'Старый пароль',
-  editable: true,
-  value: '123123123A',
-  type: 'password',
-  name: 'oldPassword',
-  inputPattern: checkRegexp.password.pattern,
-  inputTitle: checkRegexp.password.msg,
-  events: {
-    blur: showEventValidation,
-    focus: showEventValidation,
-  },
-});
-const newPasswordInput = new EditedLabel({
-  text: 'Новый пароль',
-  editable: true,
-  value: '1234567890A',
-  type: 'password',
-  name: 'newPassword',
-  inputPattern: checkRegexp.password.pattern,
-  inputTitle: checkRegexp.password.msg,
-  events: {
-    blur: showEventValidation,
-    focus: showEventValidation,
-  },
-});
-const repeatPasswordInput = new EditedLabel({
-  text: 'Повторите новый пароль',
-  editable: true,
-  value: '1234567890A',
-  type: 'password',
-  name: 'repeat_password',
-  inputPattern: checkRegexp.password.pattern,
-  inputTitle: checkRegexp.password.msg,
-  events: {
-    blur: showEventValidation,
-    focus: showEventValidation,
-  },
-});
-const saveBtn = new Button({
-  size: 'sm',
-  variant: 'primary',
-  center: true,
-  text: 'Сохранить',
-  attr: {
-    type: 'submit',
-  },
-});
-
-window.addEventListener('DOMContentLoaded', () => {
-  const profilePasswordEditablePage = new ProfilePasswordEditablePage('div', {
-    linkBack,
-    profileAvatar,
-    oldPasswordInput,
-    newPasswordInput,
-    repeatPasswordInput,
-    saveBtn,
-    notifications,
-    events: {
-      submit(e) {
+    this.props.events = {
+      async submit(e: SubmitEvent) {
         e.preventDefault();
         e.stopPropagation();
 
@@ -126,7 +99,17 @@ window.addEventListener('DOMContentLoaded', () => {
           return;
         }
 
-        ((e.target! as HTMLFormElement).querySelectorAll('input') as NodeListOf<HTMLInputElement>).forEach(checkValidityInput);
+        const arrayInputs = ((e.target! as HTMLFormElement).querySelectorAll('input') as NodeListOf<HTMLInputElement>);
+
+        arrayInputs.forEach(checkValidityInput);
+
+        const isCorrect = Array.from(arrayInputs).some((el) => el.checkValidity());
+        if (!isCorrect) return;
+
+        await userController.updatePassword({
+          newPassword,
+          oldPassword,
+        });
 
         console.log({
           oldPassword,
@@ -134,8 +117,14 @@ window.addEventListener('DOMContentLoaded', () => {
           repeat_password,
         });
       },
-    },
-  });
+    };
+  }
 
-  renderDom('#app', profilePasswordEditablePage);
-});
+  render() {
+    return this.compile(tpl, this.props);
+  }
+}
+
+const withUser = withStore((state) => ({ ...state.user }));
+
+export const ProfilePasswordEditablePage = withUser(ProfilePasswordEditablePageComponent);

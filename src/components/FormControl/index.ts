@@ -1,7 +1,8 @@
 import tpl from './form-control.hbs';
 import { Block } from '../../core/Block';
+import { ComponentPropsType } from '../../types/componentPropsType';
 
-interface FormControlProps {
+interface FormControlProps extends ComponentPropsType {
   type: string
   name: string
   placeholder: string
@@ -10,23 +11,11 @@ interface FormControlProps {
     focus: (el: Event) => void
   }
   errorMsg?: string
-  attr?: Record<string, string>
-  addClass?: string
   pattern?: string
   inputTitle?: string
 }
 
 export class FormControl extends Block<FormControlProps> {
-  constructor(props: FormControlProps) {
-    super('label', {
-      ...props,
-      attr: {
-        class: `form-control ${props.addClass ?? ''} ${props.errorMsg ? 'form-control--error' : ''}`,
-        ...props.attr,
-      },
-    });
-  }
-
   _addEvents() {
     const input = this.element.querySelector('input');
     if (input && this.props.events?.blur) {

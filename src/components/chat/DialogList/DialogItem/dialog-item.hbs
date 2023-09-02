@@ -1,0 +1,25 @@
+<li class="dialog-item {{addClass}} {{#if isSelected}}dialog-item--active{{/if}}">
+    <div class="dialog-item__avatar">
+        <img src="{{avatar}}" alt="Чат без аватара">
+        <p class="dialog-item__counter">
+            {{unread_count}}
+        </p>
+    </div>
+    <div class="dialog-item__info">
+        <div class="dialog-item__head">
+            <p class="dialog-item__name">
+                {{title}}
+            </p>
+            <time class="dialog-item__time" datetime="{{last_message.time}}">
+                {{last_message.time}} <nobr>{{id}}</nobr>
+            </time>
+        </div>
+        {{#if last_message}}
+            <div class="dialog-item__body">
+                <p class="dialog-item__msg">
+                    {{last_message.content}}
+                </p>
+            </div>
+        {{/if}}
+    </div>
+</li>

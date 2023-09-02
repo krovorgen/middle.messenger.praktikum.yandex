@@ -1,22 +1,19 @@
 import tpl from './index.hbs';
-import { renderDom } from '../../core/renderDom';
 import { Block } from '../../core/Block';
-import { Link } from '../../components/Link';
+import { NavLink } from '../../components/Link';
+import { RoutePath } from '../../core/RoutePath';
+import { ComponentPropsType } from '../../types/componentPropsType';
 
-interface Error505PageProps {
-  addClass?: string
-  attr?: Record<string, string>
-  link: Block
+interface Error505PageProps extends ComponentPropsType {
 }
 
-class Error505Page extends Block<Error505PageProps> {
-  constructor(props: Error505PageProps) {
-    super('div', {
-      ...props,
-      attr: {
-        class: `error-page ${props.addClass ?? ''}`,
-        ...props.attr,
-      },
+class Error505PageComponent extends Block<Error505PageProps> {
+  init() {
+    this._children.link = new NavLink({
+      text: 'Назад к чатам',
+      variant: 'primary',
+      size: 'sm',
+      to: RoutePath.login,
     });
   }
 
@@ -25,19 +22,4 @@ class Error505Page extends Block<Error505PageProps> {
   }
 }
 
-const link = new Link({
-  text: 'Назад к чатам',
-  variant: 'primary',
-  size: 'sm',
-  attr: {
-    href: '../index.html',
-  },
-});
-
-window.addEventListener('DOMContentLoaded', () => {
-  const error505Page = new Error505Page({
-    link,
-  });
-
-  renderDom('#app', error505Page);
-});
+export const Error505Page = Error505PageComponent;

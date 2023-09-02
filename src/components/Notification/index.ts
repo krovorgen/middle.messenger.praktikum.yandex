@@ -1,45 +1,22 @@
 import { v4 } from 'uuid';
-import { Block } from '../../core/Block';
-import tpl from './notification.hbs';
 
-class Notification {
-  message: string;
+export class NotificationService {
+  public rootElement: HTMLElement | null = null;
 
-  type: 'success' | 'error' | 'warning';
+  public notificationsId: string[] = [];
 
-  id: string;
-
-  constructor(message: string, type: 'success' | 'error' | 'warning', id: string) {
-    this.message = message;
-    this.type = type;
-    this.id = id;
-  }
-}
-
-interface NotificationServiceProps {
-  notifications?: Notification[]
-  attr?: Record<string, string>
-}
-
-export class NotificationService extends Block<NotificationServiceProps> {
-  constructor(props: NotificationServiceProps) {
-    super('div', {
-      ...props,
-      attr: {
-        ...props.attr,
-        class: 'notification',
-      },
-    });
+  constructor() {
+    this.init();
   }
 
   public addNotification(message: string, type: 'success' | 'error' | 'warning') {
     const id = v4();
-    const notification = new Notification(message, type, id);
-
-    if (this.props.notifications) {
-      this.props.notifications = [...this.props.notifications, notification];
+    const notification = this.createNotification(message, type, id);
+    this.rootElement?.append(notification);
+    if (this.notificationsId) {
+      this.notificationsId = [...this.notificationsId, id];
     } else {
-      this.props.notifications = [notification];
+      this.notificationsId = [id];
     }
 
     setTimeout(() => {
@@ -47,15 +24,31 @@ export class NotificationService extends Block<NotificationServiceProps> {
     }, 4000);
   }
 
-  private removeNotification(id: string) {
-    this.props.notifications = this.props.notifications!.filter(
-      (notification) => notification.id !== id,
-    );
+  private removeNotification(removeId: string) {
+    this.rootElement?.querySelector(`[data-id="${removeId}"]`)?.remove();
   }
 
-  render() {
-    return this.compile(tpl, this.props);
+  private init() {
+    const ul = document.createElement('ul');
+    ul.classList.add('notification');
+    document.body.append(ul);
+    this.rootElement = ul;
   }
+
+  private createNotification = (message: string, type: 'success' | 'error' | 'warning', id: string) => {
+    const fragment = document.createElement('template');
+    let template = `
+      <li class="notification__item {{type}}" data-id="{{id}}">
+        <p class="notification__msg">{{message}}</p>
+      </li>
+  `;
+    template = template
+      .replace('{{type}}', type)
+      .replace('{{message}}', message)
+      .replace('{{id}}', id);
+    fragment.innerHTML = template;
+    return fragment.content;
+  };
 }
 
-export const notifications = new NotificationService({});
+export const notifications = new NotificationService();

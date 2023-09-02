@@ -1,1 +1,7 @@
-{{text}}
+<button class="btn btn--{{size}} btn--{{variant}} {{addClass}} {{#if center}}btn--center{{/if}} {{#if block}}btn--block{{/if}} {{#if svg}}btn--svg{{/if}}" type="button">
+    {{#if iconPath}}
+        <img src="{{iconPath}}" alt="Иконка">
+    {{/if}}
+    {{text}}
+</button>
+

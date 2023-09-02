@@ -16,22 +16,45 @@
   }
 
   &__avatar {
+    position: relative;
     margin-right: 10px;
 
     img {
       display: block;
       height: 47px;
       min-width: 47px;
+      width: 47px;
       border-radius: 50%;
       object-fit: cover;
+      overflow: hidden;
     }
   }
 
-  &__info {
+  &__counter {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 3px;
+    height: 20px;
+    min-width: 20px;
+    border-radius: 10px;
+    font-weight: 500;
+    line-height: 20px;
+    font-size: 11px;
+    text-align: center;
+    color: #fff;
+    background: $accent-color;
+  }
 
+  &__info {
+    width: 100%;
   }
 
   &__head {
+    width: 100%;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -52,6 +75,10 @@
     font-size: 9px;
     white-space: nowrap;
     color: #999;
+
+    nobr {
+      color: #f00;
+    }
   }
 
   &__body {
@@ -60,27 +87,11 @@
   }
 
   &__msg {
-    margin-right: 20px;
     font-weight: 500;
     font-size: 12px;
     line-height: 1.25;
     color: #999;
 
     @mixin line-clamp 2;
-  }
-
-  &__counter {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 0 3px;
-    height: 20px;
-    min-width: 20px;
-    border-radius: 10px;
-    font-weight: 500;
-    font-size: 11px;
-    text-align: center;
-    color: #fff;
-    background: $accent-color;
   }
 }

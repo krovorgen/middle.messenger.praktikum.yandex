@@ -1,4 +1,4 @@
-export class Modal {
+export class ModalComponent {
   modal: HTMLElement = document.querySelector('.modal')!;
 
   modalCross: HTMLElement = document.querySelector('.modal__close')!;
@@ -21,3 +21,5 @@ export class Modal {
     this.modalContent.innerHTML = '';
   }
 }
+
+export const modal = new ModalComponent();

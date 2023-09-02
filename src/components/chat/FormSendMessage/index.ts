@@ -1,38 +1,33 @@
 import { Block } from '../../../core/Block';
 import tpl from './form-send-message.hbs';
+import { ComponentPropsType } from '../../../types/componentPropsType';
+import { withStore } from '../../../core/Store';
+import { messagesController } from '../../../controllers/messages.controller';
 
-interface FormSendMessageProps {
-  inputPattern: string
-  inputTitle: string
-  addClass?: string
-  attr?: Record<string, string>
-  events: {
-    submit: (e: SubmitEvent) => void
-    uploadFile: () => void
-  }
+interface FormSendMessageProps extends ComponentPropsType {
+  selectedChat: number
 }
 
-export class FormSendMessage extends Block<FormSendMessageProps> {
-  constructor(props: FormSendMessageProps) {
-    super('div', {
-      ...props,
-      attr: {
-        class: `form-send-message ${props.addClass ?? ''}`,
-        ...props.attr,
+class FormSendMessageComponent extends Block<FormSendMessageProps> {
+  init() {
+    this.props.events = {
+      submit: (e: SubmitEvent) => {
+        e.preventDefault();
+
+        const { message: { value: message } } = e.target! as typeof e.target & {
+          message: { value: string };
+        };
+        messagesController.sendMessage(this.props.selectedChat, message);
+        (e.target as HTMLFormElement).reset();
       },
-    });
-  }
-
-  _addEvents() {
-    const form: HTMLFormElement = this.element.querySelector('.form-send-message__form')!;
-    const uploadFileBtn: HTMLButtonElement = form.querySelector('.form-send-message__file')!;
-
-    uploadFileBtn.addEventListener('click', this.props.events.uploadFile);
-
-    super._addEvents();
+    };
   }
 
   render() {
     return this.compile(tpl, this.props);
   }
 }
+
+const withSelectedChat = withStore((state) => ({ selectedChat: state.selectedChat }));
+
+export const FormSendMessage = withSelectedChat(FormSendMessageComponent);
