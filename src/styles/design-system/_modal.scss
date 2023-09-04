@@ -17,10 +17,6 @@
     border-radius: 12px;
     box-shadow: 0 0 6px rgb(0 0 0 / 14%);
     background-color: #fff;
-
-    @mixin media $xs {
-      padding: 16px 30px;
-    }
   }
 
   &__close {
@@ -31,9 +27,5 @@
     padding: 0;
     border: none;
     background-color: transparent;
-
-    @mixin media $xs {
-      right: 4px;
-    }
   }
 }

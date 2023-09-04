@@ -1,14 +1,17 @@
 {
-  "name": "messanger",
+  "name": "my-webpack-project",
   "version": "1.0.0",
-  "description": "",
+  "description": "My webpack project",
   "scripts": {
-    "dev": "npm run recreate-dist && parcel src/pages/index.html -p 3000 --open chrome --no-cache",
     "start": "npm run build && node server.js",
-    "build": "parcel build src/pages/index.html",
+    "build": "webpack --mode=production --node-env=production",
     "eslint:fix": "node_modules/.bin/eslint . --fix",
-    "stylelint:fix": "node_modules/.bin/stylelint src/**/*.pcss --fix",
-    "recreate-dist": "rimraf dist"
+    "stylelint:fix": "node_modules/.bin/stylelint src/**/*.scss --fix",
+    "recreate-dist": "rimraf dist",
+    "build:dev": "webpack --mode=development",
+    "build:prod": "webpack --mode=production --node-env=production",
+    "watch": "webpack --watch",
+    "serve": "webpack serve"
   },
   "repository": {
     "type": "git",
@@ -22,27 +25,35 @@
   },
   "homepage": "https://github.com/krovorgen/messanger#readme",
   "devDependencies": {
-    "@parcel/transformer-inline-string": "2.9.3",
     "@types/uuid": "9.0.3",
     "@typescript-eslint/eslint-plugin": "5.47.0",
     "@typescript-eslint/parser": "5.47.0",
+    "@webpack-cli/generators": "^3.0.7",
+    "autoprefixer": "^10.4.15",
+    "css-loader": "^6.8.1",
     "eslint": "8.48.0",
     "eslint-config-airbnb-base": "15.0.0",
     "eslint-config-airbnb-typescript": "17.1.0",
-    "parcel": "2.9.3",
-    "parcel-transformer-hbs": "1.0.4",
-    "postcss-import": "15.1.0",
-    "postcss-mixins": "9.0.4",
-    "postcss-nested": "6.0.1",
-    "postcss-simple-vars": "7.0.1",
+    "html-webpack-plugin": "^5.5.3",
+    "mini-css-extract-plugin": "^2.7.6",
     "rimraf": "5.0.1",
+    "sass": "^1.66.1",
+    "sass-loader": "^13.3.2",
+    "style-loader": "^3.3.3",
     "stylelint": "15.10.3",
     "stylelint-config-standard": "34.0.0",
     "stylelint-config-standard-scss": "10.0.0",
-    "typescript": "4.9.4"
+    "ts-loader": "^9.4.4",
+    "typescript": "^4.9.4",
+    "webpack": "^5.88.2",
+    "webpack-cli": "^5.1.4",
+    "webpack-dev-server": "^4.15.1"
   },
   "dependencies": {
+    "browserslist": "^4.21.10",
     "express": "4.18.2",
+    "handlebars": "4.7.8",
+    "handlebars-loader": "1.7.3",
     "uuid": "9.0.0"
   }
 }
