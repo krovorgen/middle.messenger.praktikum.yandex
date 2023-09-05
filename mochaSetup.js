@@ -6,6 +6,4 @@ const jsdom = new JSDOM('<html><head></head><body><div id="app"></div></body></h
 
 global.window = jsdom.window;
 global.document = jsdom.window.document;
-global.history = jsdom.window.History;
-global.XMLHttpRequest = jsdom.window.XMLHttpRequest;
 global.FormData = jsdom.window.FormData;
