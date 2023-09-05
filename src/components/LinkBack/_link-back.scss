@@ -9,11 +9,4 @@
   width: 64px;
   background-color: #fbfbfb;
   cursor: pointer;
-
-  @mixin media $md {
-    right: 0;
-    bottom: auto;
-    width: auto;
-    height: 64px;
-  }
 }

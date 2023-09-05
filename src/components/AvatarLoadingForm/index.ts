@@ -1,8 +1,8 @@
 import tpl from './avatar-loading-form.hbs';
-import { Block } from '../../../core/Block';
-import { ComponentPropsType } from '../../../types/componentPropsType';
-import { userController } from '../../../controllers/user.controller';
-import { modal } from '../../../core/Modal';
+import { Block } from '../../core/Block';
+import { ComponentPropsType } from '../../types/componentPropsType';
+import { userController } from '../../controllers/user.controller';
+import { modal } from '../../core/Modal';
 
 interface AvatarLoadingFormProps extends ComponentPropsType {
 }

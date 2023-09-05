@@ -14,7 +14,7 @@ export class Route {
   _block: Block | null = null;
 
   constructor(
-    private _pathname: string,
+    public _pathname: string,
     private readonly _blockClass: BlockConstructable,
     private readonly _rootQuery: string,
   ) {
@@ -49,7 +49,7 @@ export class Router {
 
   private routes: Route[] = [];
 
-  private _currentRoute: Route | null = null;
+  public _currentRoute: Route | null = null;
 
   private history = window.history;
 

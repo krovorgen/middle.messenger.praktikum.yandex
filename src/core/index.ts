@@ -10,6 +10,7 @@ import { RegistrationPage } from '../pages/registration';
 import { ProfileEditablePage } from '../pages/profile-editable';
 import { ProfilePasswordEditablePage } from '../pages/profile-password-editable';
 import { chatController } from '../controllers/chat.controller';
+import '../styles/styles.scss';
 
 document.addEventListener('DOMContentLoaded', async () => {
   routerApp

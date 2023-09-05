@@ -11,7 +11,7 @@ export class HttpClient {
     this.baseUrl = 'https://ya-praktikum.tech/api/v2';
   }
 
-  private createRequest(method: string, url: string, data?: any, config?: RequestConfig) {
+  createRequest(method: string, url: string, data?: any, config?: RequestConfig) {
     return new Promise((resolve, reject) => {
       const xhr = new XMLHttpRequest();
       xhr.open(method, url, true);
@@ -43,7 +43,7 @@ export class HttpClient {
     });
   }
 
-  private addQueryString(url: string, params: any) {
+  addQueryString(url: string, params: any) {
     const queryString = Object.entries(params)
       .map(([key, value]) => `${key}=${value}`)
       .join('&');

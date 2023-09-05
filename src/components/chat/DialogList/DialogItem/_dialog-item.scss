@@ -67,7 +67,7 @@
     font-size: 13px;
     color: #1e1e1e;
 
-    @mixin line-clamp 1;
+    @include line-clamp(1);
   }
 
   &__time {
@@ -92,6 +92,6 @@
     line-height: 1.25;
     color: #999;
 
-    @mixin line-clamp 2;
+    @include line-clamp(2);
   }
 }
