@@ -10,7 +10,6 @@
     "eslint:fix": "node_modules/.bin/eslint . --fix",
     "stylelint": "node_modules/.bin/stylelint src/**/*.scss",
     "stylelint:fix": "node_modules/.bin/stylelint src/**/*.scss --fix",
-    "recreate-dist": "rimraf dist",
     "build:dev": "webpack --mode=development",
     "build:prod": "webpack --mode=production --node-env=production",
     "watch": "webpack --watch",
