@@ -3,9 +3,12 @@
   "version": "1.0.0",
   "description": "My webpack project",
   "scripts": {
+    "test": "mocha",
     "start": "npm run build && node server.js",
     "build": "webpack --mode=production --node-env=production",
+    "eslint": "node_modules/.bin/eslint .",
     "eslint:fix": "node_modules/.bin/eslint . --fix",
+    "stylelint": "node_modules/.bin/stylelint src/**/*.scss",
     "stylelint:fix": "node_modules/.bin/stylelint src/**/*.scss --fix",
     "recreate-dist": "rimraf dist",
     "build:dev": "webpack --mode=development",
@@ -25,11 +28,13 @@
   },
   "homepage": "https://github.com/krovorgen/messanger#readme",
   "devDependencies": {
+    "@types/chai": "^4.3.6",
+    "@types/jsdom": "^21.1.2",
+    "@types/mocha": "^10.0.1",
+    "@types/sinon-chai": "^3.2.9",
     "@types/uuid": "9.0.3",
     "@typescript-eslint/eslint-plugin": "5.47.0",
     "@typescript-eslint/parser": "5.47.0",
-    "@webpack-cli/generators": "^3.0.7",
-    "autoprefixer": "^10.4.15",
     "css-loader": "^6.8.1",
     "eslint": "8.48.0",
     "eslint-config-airbnb-base": "15.0.0",
@@ -44,16 +49,22 @@
     "stylelint-config-standard": "34.0.0",
     "stylelint-config-standard-scss": "10.0.0",
     "ts-loader": "^9.4.4",
+    "ts-node": "^10.9.1",
     "typescript": "^4.9.4",
     "webpack": "^5.88.2",
     "webpack-cli": "^5.1.4",
     "webpack-dev-server": "^4.15.1"
   },
   "dependencies": {
-    "browserslist": "^4.21.10",
+    "chai": "^4.3.8",
     "express": "4.18.2",
     "handlebars": "4.7.8",
     "handlebars-loader": "1.7.3",
+    "husky": "^8.0.3",
+    "jsdom": "^22.1.0",
+    "mocha": "^10.2.0",
+    "sinon": "^15.2.0",
+    "sinon-chai": "^3.7.0",
     "uuid": "9.0.0"
   }
 }

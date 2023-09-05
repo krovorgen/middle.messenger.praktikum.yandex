@@ -16,7 +16,8 @@
     "no-console": "off",
     "max-classes-per-file": "off",
     "no-useless-escape": "off",
-    "@typescript-eslint/naming-convention": "off"
+    "@typescript-eslint/naming-convention": "off",
+    "import/no-extraneous-dependencies": "off"
   },
   "globals": {
     "document": false
